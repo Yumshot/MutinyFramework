@@ -121,6 +121,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+.header_text {
+    font-family: "Poppins", sans-serif;
+    font-size: 44px;
+    opacity: 0.3;
+    font-weight: 700;
+}
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -165,7 +172,10 @@ export default {
 }
 
 .card-body {
-  color: rgb(37, 2, 0);
+  color: whitesmoke;
+  font-family: "Poppins", sans-serif;
+  text-shadow: rgb(0, 0, 0) 1.5px 0 2.5px;
+  font-weight: 400;
   padding-left :20px;
   padding-right :20px;
   padding-top :20px;
@@ -175,7 +185,10 @@ export default {
 .card-title {
   color: whitesmoke;
   text-shadow: rgb(0, 0, 0) 1.5px 0 2.5px;
-
+ font-family: "Poppins", sans-serif;
+    font-size: 44px;
+    opacity: 0.3;
+    font-weight: 700;
 }
 
 .navigation {
