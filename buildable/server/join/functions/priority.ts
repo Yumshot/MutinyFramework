@@ -1,17 +1,7 @@
 import { DATABASE_COLLECTION_USERS } from "init";
+import { Priority } from "utils/interfaces/Priority";
 
-export interface IPriority {
-  name: string;
-  steam: string;
-  discord: string;
-  priority?: number;
-  is_banned?: boolean;
-  first_join?: boolean;
-  characters?: [];
-  ban_info?: [];
-}
-
-export const PRIORITY_CHECK = async (options: IPriority) => {
+export const PRIORITY_CHECK = async (options: Priority) => {
   let user = await DATABASE_COLLECTION_USERS.findOne(options);
   const document = {
     name: options.name,
@@ -20,6 +10,7 @@ export const PRIORITY_CHECK = async (options: IPriority) => {
     priority: 0,
     is_banned: false,
     first_join: true,
+    permission_level: 0,
     characters: new Array(),
     ban_info: new Array(),
   };
