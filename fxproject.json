@@ -1,0 +1,37 @@
+{
+  "assets": {
+    "mutiny_core": {
+      "enabled": true,
+      "restartOnChange": true
+    },
+    "mutiny_core_build": {
+      "enabled": true,
+      "restartOnChange": true
+    },
+    "core": {
+      "enabled": true,
+      "restartOnChange": true
+    },
+    "buildable": {
+      "enabled": true,
+      "restartOnChange": true
+    },
+    "mutiny_test": {
+      "enabled": true,
+      "restartOnChange": true
+    }
+  },
+  "serverUpdateChannel": "latest",
+  "systemResources": [
+    "basic-gamemode",
+    "playernames",
+    "mapmanager",
+    "spawnmanager",
+    "sessionmanager",
+    "hardcap",
+    "map-skater"
+  ],
+  "name": "MutinyFramework",
+  "createdAt": "2023-10-12T23:07:05.603Z",
+  "variables": {}
+}
