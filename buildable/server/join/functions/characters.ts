@@ -4,7 +4,6 @@ import { RETURN_STEAM_ID } from "utils/steam";
 on("playerJoining", async (source: any, oldID: any) => {
     const query = RETURN_STEAM_ID(source);
     const GATHERED_USER = await DATABASE_COLLECTION_USERS.findOne(query);
-    console.log(Object.keys(GATHERED_USER));
     emitNet("MUTINY:CORE:CLIENT:SPAWN_HANDLER", source, GATHERED_USER);
 });
 
