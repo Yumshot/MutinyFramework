@@ -24,5 +24,8 @@ onNet("MUTINY:CORE:SERVER:SAVE_CHARACTER_OUTFIT", async (character_index: number
         user.characters[character_index].last_location
       );
     }
-    
 })
+
+on("playerDropped", (reason: any) => console.log(
+  `Player ${GetPlayerName(global.source.toString())} dropped (Reason: ${reason}).`
+));

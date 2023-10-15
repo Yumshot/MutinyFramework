@@ -1,9 +1,10 @@
+import { Delay } from "utils/functions";
 import { ADAPTIVE_CARD } from "./constants/adaptive";
 import { PRIORITY_CHECK } from "./functions/priority";
 
 on(
   "playerConnecting",
-  (
+  async (
     name: any,
     setKickReason: any,
     deferrals: {
@@ -15,7 +16,7 @@ on(
   ) => {
     deferrals.defer();
     const src = source as unknown as string;
-    setTimeout(() => {
+    await Delay(1000);
       deferrals.update(`Hello ${name}. Initalizing Checks.`);
       let steamIdentifier: string = null;
       let discordIdentifier: string = null;
@@ -31,7 +32,7 @@ on(
           discordIdentifier = identifier;
         }
       }
-      setTimeout(async () => {
+      await Delay(2500);
         if (steamIdentifier === null) {
           deferrals.done(
             "You are not connected to Steam, Close Fivem, Open Steam & Reconnect"
@@ -54,11 +55,8 @@ on(
             );
           const defCard = ADAPTIVE_CARD(99, name, "Yeaaah Hommmeeeh!");
           deferrals.presentCard(defCard);
-          setTimeout(() => {
+          await Delay(15000);
             deferrals.done();
-          }, 15000);
         }
-      }, 2500);
-    }, 0);
   }
 );

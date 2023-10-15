@@ -1,20 +1,20 @@
 <template>
     <div>
-        <div class="block register_container" v-if="value">
+        <div class="register_container" v-if="value">
             <div class="block header_text">WELCOME TO MUTINY ROLEPLAY</div>
-            <q-form ref="form" :model="model" class="form">
+            <q-form ref="form" :model="model" class=" block form">
                 <q-form-item label="First Name" prop="fname">
-                    <q-input v-model="model.first_name" type="text" style="background: transparent !important;" />
+                    <q-input v-model="model.first_name" type="text"  />
                 </q-form-item>
                 <q-form-item label="Last Name" prop="lname">
-                    <q-input v-model="model.last_name" type="text" style="background: transparent !important;" />
+                    <q-input v-model="model.last_name" type="text"  />
                 </q-form-item>
                 <q-form-item label="Birthday" prop="date">
                     <q-date-picker v-model="model.birthdate" placeholder="Birthdate" type="date" format="MM/dd/yyyy"
-                        style="background: transparent !important;" />
+                         />
                 </q-form-item>
                 <q-form-item label="Sex" prop="sex">
-                    <q-select v-model="model.sex" style="background: transparent !important;">
+                    <q-select v-model="model.sex" >
                         <q-option v-for="item in genders" :key="item" :label="item" :value="item" />
                     </q-select>
                 </q-form-item>
@@ -97,7 +97,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: transparent !important;
+    background: rgba(0, 0, 0, 0.658);
 }
 
 .register_container {
