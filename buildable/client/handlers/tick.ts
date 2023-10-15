@@ -30,16 +30,21 @@ setTick(async () => {
   if (hasPlayerStatusChanged()) {
     // emitNet("MUTINY:CORE:SERVER:PLAYER_STATUS_UPDATE", playerStatus);
     DisplayRadar(playerStatus.isInVehicle);
+
   }
 });
 
+const minimap = RequestScaleformMovie("minimap");
+
+DisplayHud(false);
+SetRadarBigmapEnabled(true, false);
+
 setTick(async () => {
   await Delay(100);
-  const minimap = RequestScaleformMovie("minimap");
+  if (minimap === 0) return;
   BeginScaleformMovieMethod(minimap, "SETUP_HEALTH_ARMOUR");
-  ScaleformMovieMethodAddParamInt(0);
+  ScaleformMovieMethodAddParamInt(3);
   EndScaleformMovieMethod();
-  ThefeedSpsExtendWidescreenOff();
 });
 
 // Check if the player's status has changed

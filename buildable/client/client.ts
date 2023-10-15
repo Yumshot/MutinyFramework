@@ -1,6 +1,6 @@
 import "./character/spawn";
-import "./events/callbacks";
-import "./events/teleport";
+import "./handlers/callbacks";
+import "./handlers/teleport";
 // import './events/vehicle'
 import "./character/discord";
-import "./tick";
+import "./handlers/tick";
