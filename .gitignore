@@ -1,3 +1,4 @@
 .fxdk
 dist
 node_modules
+buildable/yarn-error.log
