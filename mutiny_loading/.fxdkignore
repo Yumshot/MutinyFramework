@@ -1,0 +1,8 @@
+client/*
+server/*
+node_modules/*
+interface/*
+.yarn.installed
+yarn.lock
+package.json
+build.js
