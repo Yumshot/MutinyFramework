@@ -1,4 +1,5 @@
 // Importing a Delay function from a module called "utils/functions"
+import { CAM_FOR_CHARACTER_SELECT } from "character/spawn";
 import { Delay } from "utils/functions";
 
 // Creating a variable called "exp" that references the global "exports" object
@@ -10,7 +11,10 @@ const baseModels = ["mp_m_freemode_01", "mp_f_freemode_01"];
 // An asynchronous function that creates the first character for a player
 const createFirstCharacter = async (context: any, idents: any) => {
   // Emitting a network event to create the first character with the given context and identifiers
-  emitNet("MUTINY:CORE:SERVER:CREATE_FIRST_CHARACTER", [context, idents]);
+  emitNet("MUTINY:CORE:SERVER:CHARACTER:CREATE:CREATE_FIRST_CHARACTER", [
+    context,
+    idents,
+  ]);
   // Calling a function to close the NUI (Native UI) completely
   CLOSE_NUI_COMPLETELY();
 };
@@ -59,7 +63,11 @@ const registerCharacter = async (data: any) => {
   exp["mutiny_appearance"].startPlayerCustomization((appearance: any) => {
     // Emitting a network event to save the character's outfit with the given appearance data
     if (appearance) {
-      emitNet("MUTINY:CORE:SERVER:SAVE_CHARACTER_OUTFIT", 0, appearance);
+      emitNet(
+        "MUTINY:CORE:SERVER:CHARACTER:SAVE:SAVE_CHARACTER_OUTFIT",
+        0,
+        appearance
+      );
     }
   }, config);
 };
@@ -69,7 +77,7 @@ const selectCharacter = async (context: any) => {
   // Logging a message to the console
   console.log(`${context.model} : NUI CALLBACK`);
   // Emitting a network event to select the character with the given context
-  emitNet("MUTINY:CORE:SERVER:SELECTED_CHARACTER", context);
+  emitNet("MUTINY:CORE:SERVER:CHARACTER:SELECTED:SELECTED_CHARACTER", context);
 };
 
 // An asynchronous function that loads a character with the given context
@@ -82,7 +90,6 @@ const loadCharacter = async (context: any) => {
   while (!HasModelLoaded(model.model)) {
     await Delay(500);
   }
-  
 
   // Setting the auto-spawn callback for the "spawnmanager" export
   exp.spawnmanager.setAutoSpawnCallback(() => {
@@ -92,17 +99,25 @@ const loadCharacter = async (context: any) => {
         x: last_location.x,
         y: last_location.y,
         z: last_location.z,
+        skipFade: true,
         model: model.model,
       },
-      () => {
+      async () => {
+        DoScreenFadeOut(10000);
         exp["mutiny_appearance"].setPlayerAppearance(model);
+        CLOSE_NUI_COMPLETELY();
+        await Delay(10000);
         // Getting the ID of the player's character
         const ped = PlayerPedId();
         SetEntityVisible(ped, true, false);
         // Setting the heading of the player's character to the last location's heading
         SetEntityHeading(ped, last_location.heading);
+        RenderScriptCams(false, false, 0, true, true);
+        SetCamActive(CAM_FOR_CHARACTER_SELECT, false);
+        DestroyCam(CAM_FOR_CHARACTER_SELECT, true);
+        DoScreenFadeIn(10000);
+        await Delay(10000);
         // Calling a function to close the NUI completely
-        CLOSE_NUI_COMPLETELY();
       }
     );
   });
@@ -135,14 +150,17 @@ RegisterNuiCallback("create_user_credentials", async (data: any, cb: any) => {
 });
 
 // Listening for a network event for when a character is registered
-onNet("MUTINY:CORE:CLIENT:REGISTERED_CHARACTER", async (data: any) => {
-  // If no data is provided, return
-  if (!data) {
-    return;
+onNet(
+  "MUTINY:CORE:CLIENT:HANDLERS:CALLBACKS:REGISTERED_CHARACTER",
+  async (data: any) => {
+    // If no data is provided, return
+    if (!data) {
+      return;
+    }
+    // Calling the registerCharacter function with the given data
+    await registerCharacter(data);
   }
-  // Calling the registerCharacter function with the given data
-  await registerCharacter(data);
-});
+);
 
 // Registering a NUI callback for selecting a character
 RegisterNuiCallback("selected_character", async (data: any, cb: any) => {
@@ -159,11 +177,14 @@ RegisterNuiCallback("selected_character", async (data: any, cb: any) => {
 });
 
 // Listening for a network event for loading a character
-onNet("MUTINY:CORE:CLIENT:LOAD_CHARACTER", async (context: any) => {
-  // If context, model, or last_location are missing, return
-  if (!context || !context.model || !context.last_location) {
-    return;
+onNet(
+  "MUTINY:CORE:CLIENT:HANDLERS:CALLBACKS:LOAD_CHARACTER",
+  async (context: any) => {
+    // If context, model, or last_location are missing, return
+    if (!context || !context.model || !context.last_location) {
+      return;
+    }
+    // Calling the loadCharacter function with the given context
+    await loadCharacter(context);
   }
-  // Calling the loadCharacter function with the given context
-  await loadCharacter(context);
-});
+);

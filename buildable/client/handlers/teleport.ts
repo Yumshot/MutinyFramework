@@ -3,15 +3,12 @@ import { Delay } from "utils/functions";
 // The duration of the screen fade in and out when teleporting.
 const FADE_DURATION = 10000;
 
-// The delay between the screen fade and the teleport.
-const TELEPORT_DELAY = 2500;
-
 /**
  * Handles the "MUTINY:CORE:CLIENT:HANDLE_TELEPORT" event, which teleports the player to the specified coordinates.
  * @param coords The coordinates to teleport the player to.
  */
 onNet(
-  "MUTINY:CORE:CLIENT:HANDLE_TELEPORT",
+  "MUTINY:CORE:CLIENT:HANDLERS:TELEPORT",
   async (coords: { x: number; y: number; z: number; heading: number }) => {
     // Check if the coordinates are valid.
     if (!isValidCoords(coords)) {
@@ -29,7 +26,7 @@ onNet(
     FreezeEntityPosition(ped, true);
 
     // Wait for the teleport delay.
-    await Delay(TELEPORT_DELAY);
+    await Delay(FADE_DURATION);
 
     // Make the player invincible.
     SetEntityInvincible(ped, true);
@@ -47,7 +44,7 @@ onNet(
     SetEntityHeading(ped, coords.heading);
 
     // Wait for the teleport delay.
-    await Delay(TELEPORT_DELAY);
+    await Delay(FADE_DURATION);
 
     // Fade the screen back in.
     DoScreenFadeIn(FADE_DURATION);

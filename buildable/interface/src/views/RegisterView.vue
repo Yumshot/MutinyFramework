@@ -1,28 +1,32 @@
 <template>
-    <div>
+    <div class="overlay_register">
         <div class="register_container" v-if="value">
-            <div class="block header_text">WELCOME TO MUTINY ROLEPLAY</div>
+            <div class="block header_text">WELCOME TO MUTINY</div>
             <q-form ref="form" :model="model" class=" block form">
-                <q-form-item label="First Name" prop="fname">
-                    <q-input v-model="model.first_name" type="text"  />
+                <q-form-item prop="fname" style="color: whitesmoke;">
+                    <span>First Name</span>
+                    <q-input v-model="model.first_name" type="text" />
                 </q-form-item>
-                <q-form-item label="Last Name" prop="lname">
-                    <q-input v-model="model.last_name" type="text"  />
+                <q-form-item prop="lname" style="color: whitesmoke;">
+                    <span>Last Name</span>
+                    <q-input v-model="model.last_name" type="text" />
                 </q-form-item>
-                <q-form-item label="Birthday" prop="date">
-                    <q-date-picker v-model="model.birthdate" placeholder="Birthdate" type="date" format="MM/dd/yyyy"
-                         />
+                <q-form-item prop="date" style="color: whitesmoke;">
+                    <span>Birthday</span>
+                    <q-date-picker v-model="model.birthdate" placeholder="Birthdate" type="date" format="MM/dd/yyyy" />
                 </q-form-item>
-                <q-form-item label="Sex" prop="sex">
-                    <q-select v-model="model.sex" >
+                <q-form-item prop="sex" style="color: whitesmoke;">
+                    <span>Gender</span>
+                    <q-select v-model="model.sex">
                         <q-option v-for="item in genders" :key="item" :label="item" :value="item" />
                     </q-select>
                 </q-form-item>
                 <q-form-item style="margin: 10px;">
-                    <q-button size="small" theme="secondary" icon="q-icon-refresh-fill" v-on:click="resetForm" style="float: right;"> Reset
+                    <q-button size="small" icon="q-icon-refresh-fill" v-on:click="resetForm" style="float: right;"> Reset
                     </q-button>
                 </q-form-item>
-                    <q-button size="small" icon="q-icon-check" v-on:click="createCharacter" fullWidth>Create</q-button>
+                <q-button size="small" icon="q-icon-check" v-on:click="createCharacter" fullWidth
+                    style="background:#2c2d44;background-image:-moz-linear-gradient(45deg,#3f3251 2%,#002025 100%);background-image:-webkit-linear-gradient(45deg,#3f3251 2%,#002025 100%);background-image:linear-gradient(45deg,#3f3251 2%,#002025 100%);">Create</q-button>
             </q-form>
 
         </div>
@@ -91,61 +95,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.658);
-}
-
-.register_container {
-    color: white;
-    padding: 75px;
-    width: 45%;
-    height: 100%;
-    margin-right: 15vw;
-    transform: rotateX(-15deg) rotateY(30deg) scale(1.25, 1.05);
-    overflow: hidden;
-
-}
-
-.header_text {
-    font-family: "Poppins", sans-serif;
-    font-size: 44px;
-    opacity: 0.3;
-    font-weight: 700;
-}
-
-.register_container:before,
-.register_container:after {
-    content: "";
-    position: absolute;
-    top: -5px;
-    // bottom: -5px;
-    left: -5px;
-    right: -5px;
-    border: solid 1px #00494F;
-    transform: rotateX(-15deg) rotateY(30deg) scale(1.25, 1.05);
-    pointer-events: none;
-}
-
-.register_container:before {
-    border-width: 2px;
-    top: -2.5px;
-    // bottom: -2.5px;
-    left: -2.5px;
-    right: -2.5px;
-}
-
-
-.form {
-    color: white;
-    border-radius: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
+@import url('../assets/register_view.scss');
 </style>

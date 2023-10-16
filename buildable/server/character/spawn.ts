@@ -1,0 +1,12 @@
+import { GATHER_USER_DATA_FOR_SERVER } from "database/functions";
+
+onNet("MUTINY:CORE:SERVER:CHARACTER:SPAWN:SET_DATA", async (identifiers: any) => {
+  console.log("MUTINY:CORE:SERVER:CHARACTER:SPAWN:SET_DATA (identifiers) ", identifiers);
+  const src = source;
+  const GATHERED_USER = await GATHER_USER_DATA_FOR_SERVER(src);
+  emitNet(
+    "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",
+    src,
+    GATHERED_USER.characters
+  );
+});
