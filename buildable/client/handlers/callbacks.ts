@@ -74,6 +74,7 @@ const registerCharacter = async (data: any) => {
 
 // An asynchronous function that selects a character with the given context
 const selectCharacter = async (context: any) => {
+  DisplayRadar(false);
   // Logging a message to the console
   console.log(`${context.model} : NUI CALLBACK`);
   // Emitting a network event to select the character with the given context

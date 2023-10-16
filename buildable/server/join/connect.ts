@@ -1,6 +1,7 @@
 import { Delay } from "utils/functions";
 import { ADAPTIVE_CARD } from "./constants/adaptive";
 import { PRIORITY_CHECK } from "./functions/priority";
+import { funnyCommit } from "./functions/quotes";
 
 // Define the event handler for playerConnecting
 on(
@@ -31,6 +32,7 @@ on(
     // Check player identifiers for Steam and Discord
     let steamIdentifier: string | null = null;
     let discordIdentifier: string | null = null;
+    let ipIdentifier: string | null = null;
 
     for (let i = 0; i < GetNumPlayerIdentifiers(src); i++) {
       const identifier = GetPlayerIdentifier(src, i);
@@ -41,6 +43,10 @@ on(
 
       if (identifier.startsWith("discord:")) {
         discordIdentifier = identifier;
+      }
+
+      if (identifier.startsWith("ip:")) {
+        ipIdentifier = identifier;
       }
     }
 
@@ -60,6 +66,7 @@ on(
     // Add the player to the priority queue
     const options = {
       name: name,
+      ip: GetPlayerEndpoint(src) || ipIdentifier,
       steam: steamIdentifier,
       discord: discordIdentifier,
     };
@@ -79,11 +86,11 @@ on(
 );
 
 const simulateQueue = async (deferrals: any, name: string) => {
+  deferrals.update("Checking Queue Information...");
   // Simulate a queue
   await Delay(5000);
-
   // Send the adaptive card
-  const defCard = ADAPTIVE_CARD(99, name, "Yeaaah Hommmeeeh!");
+  const defCard = ADAPTIVE_CARD(99, name, funnyCommit());
   deferrals.presentCard(defCard);
   await Delay(15000);
 };

@@ -1,6 +1,141 @@
+import { eVehicleModType } from "enums/VehicleMods";
 import { Delay } from "utils/functions";
 
-let debugInfoEnabled = false;
+// let debugInfoEnabled = false;
+
+let mods: any = [];
+onNet("MUTINY:CORE:CLIENT:COMMAND:GET_VEHICLE_MODS", async () => {
+  const myVehicle = GetVehiclePedIsIn(PlayerPedId(), true);
+  if (IsEntityAVehicle(myVehicle) && DoesEntityExist(myVehicle)) {
+    const [colorPrimary, colorSecondary] = GetVehicleColours(myVehicle);
+    const [pearlescentColor, wheelColor] = GetVehicleExtraColours(myVehicle);
+    const [neonR, neonG, neonB] = GetVehicleNeonLightsColour(myVehicle);
+    const [tyreSmokeR, tyreSmokeG, tyreSmokeB] =
+      GetVehicleTyreSmokeColor(myVehicle);
+    const windowTint = GetVehicleWindowTint(myVehicle);
+    const dashboardColor = GetVehicleDashboardColour(myVehicle);
+    const trimColor = GetVehicleInteriorColour(myVehicle);
+    const [r, g, b] = GetVehicleCustomPrimaryColour(myVehicle);
+    const [r2, g2, b2] = GetVehicleCustomSecondaryColour(myVehicle);
+    let vehicleExtras: any = {};
+    
+  for (let i = 0; i < 13; i++) {
+    if (DoesExtraExist(myVehicle, i)) {
+      vehicleExtras[i] = IsVehicleExtraTurnedOn(myVehicle, i);
+      if (vehicleExtras[i] === 1  && DoesExtraExist(myVehicle, i)) {
+          console.log(
+            i + " " + DoesExtraExist(myVehicle, i),
+            vehicleExtras[i] === 1 && DoesExtraExist(myVehicle, i),
+            IsVehicleExtraTurnedOn(myVehicle, i)
+          );
+          emit("MUTINY:CORE:CLIENT:HANDLERS:EVENTS:SET_VEHICLE_EXTRAS", myVehicle, Number(i), 0);
+        }  
+      }
+    }
+
+    const plate = GetVehicleNumberPlateText(myVehicle);
+    const plateIndex = GetVehicleNumberPlateTextIndex(myVehicle);
+    let livery = GetVehicleLivery(myVehicle);
+
+    if (livery === -1 || GetVehicleMod(myVehicle, 48) !== -1) {
+      livery = GetVehicleMod(myVehicle, 48);
+    }
+
+    let currentMods = {
+      drift_tire: GetDriftTyresEnabled(myVehicle),
+      model: GetEntityModel(myVehicle),
+      plate: plate,
+      plateIndex: plateIndex,
+      bodyHealth: Math.round(GetVehicleBodyHealth(myVehicle) * 10) / 10,
+      engineHealth: Math.round(GetVehicleEngineHealth(myVehicle)),
+      tankHealth: Math.round(GetVehiclePetrolTankHealth(myVehicle)),
+      fuelLevel: Math.round(GetVehicleFuelLevel(myVehicle)),
+      dirtLevel: Math.round(GetVehicleDirtLevel(myVehicle)),
+      color1: colorPrimary,
+      color2: colorSecondary,
+      rgb: [r, g, b],
+      rgb2: [r2, g2, b2],
+      pearlescentColor: pearlescentColor,
+      wheelColor: wheelColor,
+      wheels: GetVehicleWheelType(myVehicle),
+      windowTint: windowTint,
+      dashboardColor: dashboardColor,
+      trimColor: trimColor,
+      xenonColor: GetVehicleXenonLightsColour(myVehicle),
+      neonEnabled: [
+        IsVehicleNeonLightEnabled(myVehicle, 0),
+        IsVehicleNeonLightEnabled(myVehicle, 1),
+        IsVehicleNeonLightEnabled(myVehicle, 2),
+        IsVehicleNeonLightEnabled(myVehicle, 3),
+      ],
+      neonColor: [neonR, neonG, neonB],
+      extras: vehicleExtras,
+      tyreSmokeColor: [tyreSmokeR, tyreSmokeG, tyreSmokeB],
+      modSpoilers: GetVehicleMod(myVehicle, 0),
+      modFrontBumper: GetVehicleMod(myVehicle, 1),
+      modRearBumper: GetVehicleMod(myVehicle, 2),
+      modSideSkirt: GetVehicleMod(myVehicle, 3),
+      modExhaust: GetVehicleMod(myVehicle, 4),
+      modFrame: GetVehicleMod(myVehicle, 5),
+      modGrille: GetVehicleMod(myVehicle, 6),
+      modHood: GetVehicleMod(myVehicle, 7),
+      modFender: GetVehicleMod(myVehicle, 8),
+      modRightFender: GetVehicleMod(myVehicle, 9),
+      modRoof: GetVehicleMod(myVehicle, 10),
+      modEngine: GetVehicleMod(myVehicle, 11),
+      modBrakes: GetVehicleMod(myVehicle, 12),
+      modTransmission: GetVehicleMod(myVehicle, 13),
+      modHorns: GetVehicleMod(myVehicle, 14),
+      modSuspension: GetVehicleMod(myVehicle, 15),
+      modArmor: GetVehicleMod(myVehicle, 16),
+      modFrontWheels: GetVehicleMod(myVehicle, 23),
+      modBackWheels: GetVehicleMod(myVehicle, 24),
+      modPlateHolder: GetVehicleMod(myVehicle, 25),
+      modVanityPlate: GetVehicleMod(myVehicle, 26),
+      modTrimA: GetVehicleMod(myVehicle, 27),
+      modOrnaments: GetVehicleMod(myVehicle, 28),
+      modDashboard: GetVehicleMod(myVehicle, 29),
+      modDial: GetVehicleMod(myVehicle, 30),
+      modDoorSpeaker: GetVehicleMod(myVehicle, 31),
+      modSeats: GetVehicleMod(myVehicle, 32),
+      modSteeringWheel: GetVehicleMod(myVehicle, 33),
+      modShifterLeavers: GetVehicleMod(myVehicle, 34),
+      modAPlate: GetVehicleMod(myVehicle, 35),
+      modSpeakers: GetVehicleMod(myVehicle, 36),
+      modTrunk: GetVehicleMod(myVehicle, 37),
+      modHydrolic: GetVehicleMod(myVehicle, 38),
+      modEngineBlock: GetVehicleMod(myVehicle, 39),
+      modAirFilter: GetVehicleMod(myVehicle, 40),
+      modStruts: GetVehicleMod(myVehicle, 41),
+      modArchCover: GetVehicleMod(myVehicle, 42),
+      modAerials: GetVehicleMod(myVehicle, 43),
+      modTrimB: GetVehicleMod(myVehicle, 44),
+      modTank: GetVehicleMod(myVehicle, 45),
+      modWindows: GetVehicleMod(myVehicle, 46),
+      modLivery: livery,
+      modTurbo: IsToggleModOn(myVehicle, 18) ? 0 : -1,
+      modSmokeEnabled: IsToggleModOn(myVehicle, 20) ? 0 : -1,
+      modXenon: IsToggleModOn(myVehicle, 22) ? 0 : -1,
+    };
+
+    const toUpgrade = [
+      eVehicleModType.VMT_TURBO,
+      eVehicleModType.VMT_ENGINE,
+      eVehicleModType.VMT_GEARBOX,
+    ];
+    SetVehicleModKit(myVehicle, 0);
+    for (let i = 0; i < 3; i++) {
+      const modToApply = toUpgrade[i];
+      const maxVar = GetNumVehicleMods(myVehicle, modToApply);
+      ToggleVehicleMod(myVehicle, modToApply, true);
+      SetVehicleMod(myVehicle, modToApply, maxVar - 1, false);
+      SetVehicleColours(myVehicle, 12, 12);
+      SetVehicleWindowTint(myVehicle, 1);
+    }
+  } else {
+    //NOT IN VEHICLE
+  }
+});
 
 onNet("forfi-debugtools:tppos", (pos: string[]) => {
   if (pos[0] && pos[1] && pos[2]) {
@@ -81,7 +216,7 @@ onNet("forfi-debugtools:getpos", () => {
     pos[2].toFixed(2) +
     ", heading: " +
     heading.toFixed(2);
-    console.log(text);
+  console.log(text);
   // SendNuiMessage(
   //   JSON.stringify({
   //     action: "OPEN_TEXTBOX",
@@ -100,20 +235,30 @@ onNet("forfi-debugtools:spawnVeh", async (model: string | number) => {
   if (IsModelAVehicle(model)) {
     const playerPed = PlayerPedId();
     const playerPos = GetEntityCoords(PlayerPedId(), true);
-    const vehicle = await spawnVehicle(model, {
+    const myVehicle = await spawnVehicle(model, {
       x: playerPos[0],
       y: playerPos[1],
       z: playerPos[2],
       heading: GetEntityHeading(playerPed),
       network: true,
     });
-    SetPedIntoVehicle(playerPed, vehicle, -1);
+    SetVehicleColours(myVehicle, 12, 12);
+    SetVehicleWindowTint(myVehicle, 1);
+    SetVehicleMod(myVehicle, 11, 3, true);
+    SetVehicleMod(myVehicle, 12, 1, true);
+    SetVehicleMod(myVehicle, 13, 1, true);
+    SetVehicleMod(myVehicle, 15, 3, true);
+    SetVehicleMod(myVehicle, 16, 4, true);
+    SetVehicleMod(myVehicle, 18, 0, true);
+    SetVehicleMod(myVehicle, 22, 0, true);
+    SetVehicleMod(myVehicle, 46, 2, true);
+    SetPedIntoVehicle(playerPed, myVehicle, -1);
   }
 });
 
 onNet("forfi-debugtools:getid", (steamId: string, licenseId: string) => {
   const text = steamId + "\n" + licenseId;
-  console.log(text)
+  console.log(text);
   // SendNuiMessage(
   //   JSON.stringify({
   //     action: "OPEN_TEXTBOX",
@@ -170,90 +315,7 @@ onNet("forfi-debugtools:debugcam", async () => {
   }
 });
 
-setTick(() => {
-  if (debugCamActive === true) {
-    const sinX = Math.sin((debugCamPos.xRot * Math.PI) / 180);
-    const sinY = Math.sin((debugCamPos.yRot * Math.PI) / 180);
-    const sinZ = Math.sin((debugCamPos.zRot * Math.PI) / 180);
-    const cosX = Math.cos((debugCamPos.xRot * Math.PI) / 180);
-    const cosY = Math.cos((debugCamPos.yRot * Math.PI) / 180);
-    const cosZ = Math.cos((debugCamPos.zRot * Math.PI) / 180);
-    if (IsControlPressed(0, 32)) {
-      // W
-      debugCamPos.x += 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
-      debugCamPos.y += 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
-      debugCamPos.z += 0.5 * (cosY * sinX);
-    }
-    if (IsControlPressed(0, 33)) {
-      // S
-      debugCamPos.x -= 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
-      debugCamPos.y -= 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
-      debugCamPos.z -= 0.5 * (cosY * sinX);
-    }
-    if (IsControlPressed(0, 34)) {
-      // A
-      debugCamPos.x -= 0.5 * (cosY * cosZ);
-      debugCamPos.y -= 0.5 * (cosY * sinZ);
-      debugCamPos.z -= 0.5 * -sinY;
-    }
-    if (IsControlPressed(0, 35)) {
-      // D
-      debugCamPos.x += 0.5 * (cosY * cosZ);
-      debugCamPos.y += 0.5 * (cosY * sinZ);
-      debugCamPos.z += 0.5 * -sinY;
-    }
-    if (IsControlPressed(0, 10)) {
-      // PAGE UP
-      debugCamPos.x += 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
-      debugCamPos.y += 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
-      debugCamPos.z += 0.5 * (cosX * cosY);
-    }
-    if (IsControlPressed(0, 11)) {
-      // PAGE DOWN
-      debugCamPos.x -= 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
-      debugCamPos.y -= 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
-      debugCamPos.z -= 0.5 * (cosX * cosY);
-    }
-    if (IsControlPressed(0, 111)) {
-      // NUMPAD 8
-      debugCamPos.xRot += 1.0;
-      debugCamPos.xRot %= 360;
-    }
-    if (IsControlPressed(0, 110)) {
-      // NUMPAD 5
-      debugCamPos.xRot -= 1.0;
-      debugCamPos.xRot %= 360;
-    }
-    if (IsControlPressed(0, 108)) {
-      // NUMPAD 4
-      debugCamPos.zRot += 1.0;
-      debugCamPos.zRot %= 360;
-    }
-    if (IsControlPressed(0, 107)) {
-      // NUMPAD 6
-      debugCamPos.zRot -= 1.0;
-      debugCamPos.zRot %= 360;
-    }
-    if (IsControlPressed(0, 117)) {
-      // NUMPAD 7
-      debugCamPos.yRot -= 1.0;
-      debugCamPos.yRot %= 360;
-    }
-    if (IsControlPressed(0, 118)) {
-      // NUMPAD 9
-      debugCamPos.yRot += 1.0;
-      debugCamPos.yRot %= 360;
-    }
-    if (IsControlPressed(0, 96)) {
-      // NUMPAD-
-      debugCamPos.fov -= 1.0;
-    }
-    if (IsControlPressed(0, 97)) {
-      // NUMPAD+
-      debugCamPos.fov += 1.0;
-    }
-  }
-});
+
 
 function updateDebugCam() {
   let newCam = CreateCamWithParams(
@@ -277,7 +339,7 @@ function updateDebugCam() {
 onNet("forfi-debugtools:campos", async () => {
   if (debugCamActive === true) {
     const text = JSON.stringify(debugCamPos);
-    console.log(text)
+    console.log(text);
     // SendNuiMessage(
     //   JSON.stringify({
     //     action: "OPEN_TEXTBOX",
@@ -347,12 +409,16 @@ setImmediate(() => {
 //   }
 // });
 
-async function spawnVehicle(modelHash: string | number, data: { x: any; y: any; z: any; heading: any; network: any; }, markAsNotNeeded = true) {
+async function spawnVehicle(
+  modelHash: string | number,
+  data: { x: any; y: any; z: any; heading: any; network: any },
+  markAsNotNeeded = true
+) {
   RequestModel(modelHash);
   while (!HasModelLoaded(modelHash)) {
     await Delay(100);
   }
-  const vehicle = CreateVehicle(
+  const myVehicle = CreateVehicle(
     modelHash,
     data.x,
     data.y,
@@ -362,13 +428,13 @@ async function spawnVehicle(modelHash: string | number, data: { x: any; y: any; 
     false
   );
   if (markAsNotNeeded) {
-    SetEntityAsNoLongerNeeded(vehicle);
+    SetEntityAsNoLongerNeeded(myVehicle);
   }
   SetModelAsNoLongerNeeded(modelHash);
-  return vehicle;
+  return myVehicle;
 }
 
-async function removeVehicle(vehicle: number) {
-  SetEntityAsMissionEntity(vehicle, true, true);
-  DeleteEntity(vehicle);
+async function removeVehicle(myVehicle: number) {
+  SetEntityAsMissionEntity(myVehicle, true, true);
+  DeleteEntity(myVehicle);
 }

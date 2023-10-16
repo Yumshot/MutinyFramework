@@ -1,6 +1,6 @@
 export interface Priority {
   name: string;
-  hex: string;
+  hex?: string;
   ip: string;
   steam: string;
   discord: string;

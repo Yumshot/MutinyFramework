@@ -20,40 +20,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   return (
     <>
-      <div>
-        <div id="particles-background" class="vertical-centered-box"></div>
-        <div id="particles-foreground" class="vertical-centered-box">
-          <div class="wrapper">
-            <svg>
-              <text x="50%" y="50%" dy=".35em" text-anchor="middle">
-                Welcome to Mutiny Rp
-              </text>
-            </svg>
-          </div>
+      <audio id="myAudio" hidden loop autoplay>
+        <source
+          src="https://cdn.discordapp.com/attachments/1161385720053760070/1163521300636119161/Ghostrifter-Official-Devyzed-Downtown-Glowchosic.com.mp3"
+          type="audio/mpeg"
+        />
+        Your browser does not support the audio element.
+      </audio>
 
-          {/* <h3 class="subtitle">
-            SPACE <TiVolumeMute size={24} /> <br /> UP <TiVolumeUp size={24} />
-            <br /> DOWN <TiVolumeDown size={24} />
-          </h3> */}
-        </div>
-        <audio id="myAudio" hidden loop autoplay>
-          <source
-            src="https://cdn.discordapp.com/attachments/1161385720053760070/1163521300636119161/Ghostrifter-Official-Devyzed-Downtown-Glowchosic.com.mp3"
-            type="audio/mpeg"
-          />
-          Your browser does not support the audio element.
-        </audio>
-
-        <div class="vertical-centered-box">
-          <div class="content">
-            <div class="loader-circle"></div>
-            <div class="loader-line-mask">
-              <div class="loader-line"></div>
-            </div>
+      <div class="vertical-centered-box">
+        <div class="content">
+          <div class="loader-circle">
             <img
               src="https://cdn.discordapp.com/attachments/1161385720053760070/1161385816979943576/logo.png?"
-              style="width: 100px; height: 100px; padding-top: 1.5vh;"
+              style="width: 100px; height: 100px; margin: 0 auto; display: block; filter: invert(1); -webkit-filter: invert(1); top: 2.5vh; position: relative;"
             />
+        <div class="wrapper">
+          <svg>
+            <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+              Welcome to Mutiny Rp
+            </text>
+          </svg>
+        </div>
+          </div>
+
+          <div class="loader-line-mask">
+            <div class="loader-line"></div>
           </div>
         </div>
       </div>

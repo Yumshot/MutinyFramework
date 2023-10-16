@@ -95,3 +95,8 @@ RegisterCommand(
 RegisterCommand("dv", (source: any, args: any, raw: any) => {
   emitNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", source);
 }, false);
+
+
+RegisterCommand("vmodkit", (source: any, args: any, raw: any) => {
+  emitNet("MUTINY:CORE:CLIENT:COMMAND:GET_VEHICLE_MODS", source);
+}, false);

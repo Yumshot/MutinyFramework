@@ -1,9 +1,5 @@
 import { Delay } from "utils/functions";
 
-setTick(async () => {
-
-    await Delay(15000);
-   
-    
-
-})
+// setTick(async () => {
+//     await Delay(15000);
+// })

@@ -4,7 +4,7 @@ import solid from 'vite-plugin-solid'
 export default defineConfig({
   base: '',
   build: {
-    outDir: "../dist",
+    outDir: "../../../../mutiny-server/resources/mutiny_loading",
   },
   plugins: [solid()],
 })

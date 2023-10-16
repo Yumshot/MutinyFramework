@@ -37,6 +37,8 @@ onNet("MUTINY:CORE:CLIENT:SPAWN:SET_DATA", (options: CharacterValues) => {
 
 // Listening to the `onClientGameTypeStart` event.
 on("onClientGameTypeStart", async () => {
+  DisplayHud(false);
+  DisplayRadar(false);
   // If `CHAR_VALS` is `null`, wait for 500ms and return.
   if (!CHAR_VALS) {
     await Delay(500);

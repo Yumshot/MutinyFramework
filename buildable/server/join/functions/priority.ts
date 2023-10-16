@@ -1,12 +1,11 @@
 import { DATABASE_COLLECTION_USERS } from "database/init";
 import { Priority } from "interfaces/Priority";
-import { UUID } from "mongodb";
-
+import { v4 as uuidv4 } from "uuid";
 export const PRIORITY_CHECK = async (src: string | number, options: Priority) => {
   let user = await DATABASE_COLLECTION_USERS.findOne(options);
   const document = {
     name: options.name,
-    hex: UUID.generate(),
+    hex: uuidv4(),
     steam: options.steam,
     discord: options.discord,
     priority: 0,
