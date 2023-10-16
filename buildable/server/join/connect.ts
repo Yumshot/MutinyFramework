@@ -63,7 +63,7 @@ on(
       steam: steamIdentifier,
       discord: discordIdentifier,
     };
-    const dbEntry = await PRIORITY_CHECK(options);
+    const dbEntry = await PRIORITY_CHECK(src, options);
 
     if (!dbEntry) {
       setKickReason("An error occurred. Please report this issue to the server developers.");

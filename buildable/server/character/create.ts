@@ -2,14 +2,18 @@
  * Creates a new character for a player and updates the database with the new character.
  * @param data - An array containing the new character object and the player's priority data.
  */
-import { DATABASE_COLLECTION_USERS } from "init";
-import { DataParameterCreateUserCredentials, NewCharacter } from "utils/interfaces/Character";
-import { Job } from "utils/interfaces/Job";
-import { Priority } from "utils/interfaces/Priority";
+import { DATABASE_COLLECTION_USERS } from "database/init";
+import {
+  DataParameterCreateUserCredentials,
+  NewCharacter,
+} from "interfaces/Character";
+import { Job } from "interfaces/Job";
+import { Priority } from "interfaces/Priority";
+import { Logger } from "utils/logger";
 
 // Define the function to create a new character
 onNet(
-  "MUTINY:CORE:SERVER:CREATE_FIRST_CHARACTER",
+  "MUTINY:CORE:SERVER:CHARACTER:CREATE:CREATE_FIRST_CHARACTER",
   async (data: DataParameterCreateUserCredentials) => {
     const source = global.source;
 
@@ -53,9 +57,11 @@ onNet(
         },
       ],
     };
+    const defaultIndex = 0;
 
     // Construct the new character object with default values
     const newCharacter: NewCharacter = {
+      index: data[0].index + 1 || defaultIndex,
       ...data[0],
       last_location: data[0].last_location || defaultLocation,
       job: data[0].job && data[0].job.length > 0 ? data[0].job : [defaultJob],
@@ -76,8 +82,17 @@ onNet(
       DropPlayer(source.toString(), "Database Error, Retry");
     } else {
       // If the database update succeeded, emit an event to the client
-      console.log("A document matched the provided query.");
-      emitNet("MUTINY:CORE:CLIENT:REGISTERED_CHARACTER", source, data);
+      const Log = new Logger();
+      Log.info("A document matched the provided query.", {
+        source,
+        resource: GetCurrentResourceName().toUpperCase(),
+        function: "MUTINY:CORE:SERVER:CHARACTER:CREATE:CREATE_FIRST_CHARACTER",
+      });
+      emitNet(
+        "MUTINY:CORE:CLIENT:HANDLERS:CALLBACKS:REGISTERED_CHARACTER",
+        source,
+        data
+      );
     }
   }
 );

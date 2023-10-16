@@ -1,10 +1,12 @@
-import { DATABASE_COLLECTION_USERS } from "init";
-import { Priority } from "utils/interfaces/Priority";
+import { DATABASE_COLLECTION_USERS } from "database/init";
+import { Priority } from "interfaces/Priority";
+import { UUID } from "mongodb";
 
-export const PRIORITY_CHECK = async (options: Priority) => {
+export const PRIORITY_CHECK = async (src: string | number, options: Priority) => {
   let user = await DATABASE_COLLECTION_USERS.findOne(options);
   const document = {
     name: options.name,
+    hex: UUID.generate(),
     steam: options.steam,
     discord: options.discord,
     priority: 0,
@@ -12,14 +14,21 @@ export const PRIORITY_CHECK = async (options: Priority) => {
     first_join: true,
     permission_level: 0,
     characters: new Array(),
+    last_character: 0,
     ban_info: new Array(),
   };
 
   if (!user) {
-    DATABASE_COLLECTION_USERS.insertOne(document);
+    try {
+      await DATABASE_COLLECTION_USERS.insertOne(document);
+    } catch (error) {
+      return DropPlayer(src as string, "An error occurred. Please report this issue to the server developers.");
+    }
     user = await DATABASE_COLLECTION_USERS.findOne(options);
     return user;
   } else {
     return user;
   }
 };
+
+

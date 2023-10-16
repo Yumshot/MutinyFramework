@@ -1,9 +1,9 @@
-import { DATABASE_COLLECTION_USERS } from "init";
-import { RETURN_STEAM_ID } from "utils/steam"
+import { DATABASE_COLLECTION_USERS } from "database/init";
+import { findSteam } from "utils/functions";
 
-onNet("MUTINY:CORE:SERVER:SAVE_CHARACTER_OUTFIT", async (character_index: number, data: any) => {
+onNet("MUTINY:CORE:SERVER:CHARACTER:SAVE:SAVE_CHARACTER_OUTFIT", async (character_index: number, data: any) => {
   const src = source;
-  const query = RETURN_STEAM_ID(src);
+  const query = findSteam(src);
     const characterIndex = "characters." + character_index + ".model";
     const update = {
       $set: { [characterIndex]: data },
@@ -19,7 +19,7 @@ onNet("MUTINY:CORE:SERVER:SAVE_CHARACTER_OUTFIT", async (character_index: number
       // }
       const user = await DATABASE_COLLECTION_USERS.findOne(query, { limit: 1 });
       emitNet(
-        "MUTINY:CORE:CLIENT:HANDLE_TELEPORT",
+        "MUTINY:CORE:CLIENT:HANDLERS:TELEPORT",
         src,
         user.characters[character_index].last_location
       );
