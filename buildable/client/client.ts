@@ -5,3 +5,4 @@ import "./handlers/teleport";
 import "./character/discord";
 import "./handlers/tick";
 import './character/identity';
+import "./handlers/commands";

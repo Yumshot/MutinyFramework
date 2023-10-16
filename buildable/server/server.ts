@@ -7,3 +7,4 @@ import './character/selected'
 import './character/save'
 import './character/spawn'
 import './database/events'
+import "./character/commands";
