@@ -6,17 +6,17 @@ export const DISCORD = {
   UPDATE_TIME: 45,
   RPT: {
     ACTIVE: true,
-    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny⌡",
+    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny Rp⌡",
   },
   LARGE_IMAGE: {
     ACTIVE: true,
     NAME: "lrg",
-    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny⌡",
+    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny Rp⌡",
   },
   SMALL_IMAGE: {
     ACTIVE: false,
     NAME: "lrg",
-    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny⌡",
+    TEXT: "UNDER DEVELOPMENT \n ⌠Mutiny Rp⌡",
   },
   BUTTONS: {
     ACTIVE: true,
