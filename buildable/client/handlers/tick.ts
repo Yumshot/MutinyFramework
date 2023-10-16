@@ -26,11 +26,10 @@ let playerStatus: PlayerStatus = {
 };
 
 setTick(async () => {
-  await Delay(2500);
+  await Delay(1500);
   if (hasPlayerStatusChanged()) {
-    // emitNet("MUTINY:CORE:SERVER:PLAYER_STATUS_UPDATE", playerStatus);
     DisplayRadar(playerStatus.isInVehicle);
-
+    // emitNet("MUTINY:CORE:SERVER:PLAYER_STATUS_UPDATE", playerStatus);
   }
 });
 
