@@ -4,3 +4,4 @@ import "./handlers/teleport";
 // import './events/vehicle'
 import "./character/discord";
 import "./handlers/tick";
+import './character/identity';
