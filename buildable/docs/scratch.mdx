@@ -1,0 +1,84 @@
+setTick(() => {
+  if (debugCamActive === true) {
+    const sinX = Math.sin((debugCamPos.xRot * Math.PI) / 180);
+    const sinY = Math.sin((debugCamPos.yRot * Math.PI) / 180);
+    const sinZ = Math.sin((debugCamPos.zRot * Math.PI) / 180);
+    const cosX = Math.cos((debugCamPos.xRot * Math.PI) / 180);
+    const cosY = Math.cos((debugCamPos.yRot * Math.PI) / 180);
+    const cosZ = Math.cos((debugCamPos.zRot * Math.PI) / 180);
+    if (IsControlPressed(0, 32)) {
+      // W
+      debugCamPos.x += 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
+      debugCamPos.y += 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
+      debugCamPos.z += 0.5 * (cosY * sinX);
+    }
+    if (IsControlPressed(0, 33)) {
+      // S
+      debugCamPos.x -= 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
+      debugCamPos.y -= 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
+      debugCamPos.z -= 0.5 * (cosY * sinX);
+    }
+    if (IsControlPressed(0, 34)) {
+      // A
+      debugCamPos.x -= 0.5 * (cosY * cosZ);
+      debugCamPos.y -= 0.5 * (cosY * sinZ);
+      debugCamPos.z -= 0.5 * -sinY;
+    }
+    if (IsControlPressed(0, 35)) {
+      // D
+      debugCamPos.x += 0.5 * (cosY * cosZ);
+      debugCamPos.y += 0.5 * (cosY * sinZ);
+      debugCamPos.z += 0.5 * -sinY;
+    }
+    if (IsControlPressed(0, 10)) {
+      // PAGE UP
+      debugCamPos.x += 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
+      debugCamPos.y += 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
+      debugCamPos.z += 0.5 * (cosX * cosY);
+    }
+    if (IsControlPressed(0, 11)) {
+      // PAGE DOWN
+      debugCamPos.x -= 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
+      debugCamPos.y -= 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
+      debugCamPos.z -= 0.5 * (cosX * cosY);
+    }
+    if (IsControlPressed(0, 111)) {
+      // NUMPAD 8
+      debugCamPos.xRot += 1.0;
+      debugCamPos.xRot %= 360;
+    }
+    if (IsControlPressed(0, 110)) {
+      // NUMPAD 5
+      debugCamPos.xRot -= 1.0;
+      debugCamPos.xRot %= 360;
+    }
+    if (IsControlPressed(0, 108)) {
+      // NUMPAD 4
+      debugCamPos.zRot += 1.0;
+      debugCamPos.zRot %= 360;
+    }
+    if (IsControlPressed(0, 107)) {
+      // NUMPAD 6
+      debugCamPos.zRot -= 1.0;
+      debugCamPos.zRot %= 360;
+    }
+    if (IsControlPressed(0, 117)) {
+      // NUMPAD 7
+      debugCamPos.yRot -= 1.0;
+      debugCamPos.yRot %= 360;
+    }
+    if (IsControlPressed(0, 118)) {
+      // NUMPAD 9
+      debugCamPos.yRot += 1.0;
+      debugCamPos.yRot %= 360;
+    }
+    if (IsControlPressed(0, 96)) {
+      // NUMPAD-
+      debugCamPos.fov -= 1.0;
+    }
+    if (IsControlPressed(0, 97)) {
+      // NUMPAD+
+      debugCamPos.fov += 1.0;
+    }
+  }
+});

@@ -12,6 +12,7 @@
     "@citizenfx/client": "latest",
     "@citizenfx/server": "latest",
     "@types/node": "^16.3.1",
+    "@types/uuid": "^9.0.5",
     "esbuild": "^0.14.10"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "mongodb": "^6.1.0",
     "mongoose": "^7.6.2",
     "pino": "^8.16.0",
-    "pino-pretty": "^10.2.3"
+    "pino-pretty": "^10.2.3",
+    "uuid": "^9.0.1"
   }
 }
