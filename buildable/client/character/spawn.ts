@@ -115,6 +115,14 @@ function setNuiFocus() {
   SetNuiFocusKeepInput(false);
 }
 
+ const CAM_LOC = {
+   x: 4845.76025390625,
+   y: -4929.52001953125,
+   z: 30.754070281982422,
+   heading: 271.0299072265625,
+   rotation: [-42.83732223510742, 0, -93.886474609375],
+ };
+
 // Listening to the `MUTINY:CORE:CLIENT:OPEN_CHARACTER_SELECTOR` event. !NOTE: MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR
 onNet(
   "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",
@@ -123,17 +131,32 @@ onNet(
     ShutdownLoadingScreenNui();
     exp.spawnmanager.spawnPlayer(
       {
-        x: 0,
-        y: 0,
-        z: 0,
+        x: CAM_LOC.x,
+        y: CAM_LOC.y,
+        z: CAM_LOC.z,
+        heading: CAM_LOC.heading,
         model: "a_m_m_skater_01",
       },
       async () => {
+        const ped = PlayerPedId();
+        SetEntityVisible(ped, false, false);
+        FreezeEntityPosition(ped, true);
         SetCloudHatOpacity(0.1);
-
-        CAM_FOR_CHARACTER_SELECT = CreateCam("DEFAULT_SCRIPTED_CAMERA", true);
-        SetCamCoord(CAM_FOR_CHARACTER_SELECT, 7614.787, 1064.8, 1678.407);
-        PointCamAtCoord(CAM_FOR_CHARACTER_SELECT, 7614.787, 1064.8, 1678.407);
+       
+        // make sure the area is loaded in before we try to create the camera
+        CAM_FOR_CHARACTER_SELECT = CreateCameraWithParams(
+          "DEFAULT_SCRIPTED_CAMERA",
+          CAM_LOC.x,
+          CAM_LOC.y,
+          CAM_LOC.z,
+          CAM_LOC.rotation[0],
+          CAM_LOC.rotation[1],
+          CAM_LOC.rotation[2],
+          60.0,
+          true,
+          2
+        );
+        await Delay(1000);
         SetCamActive(CAM_FOR_CHARACTER_SELECT, true);
         RenderScriptCams(true, true, 1, true, false);
         await Delay(2500);

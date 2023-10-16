@@ -117,6 +117,7 @@ const loadCharacter = async (context: any) => {
         DestroyCam(CAM_FOR_CHARACTER_SELECT, true);
         DoScreenFadeIn(10000);
         await Delay(10000);
+        FreezeEntityPosition(ped, false);
         // Calling a function to close the NUI completely
       }
     );
