@@ -1,5 +1,5 @@
 import { Delay } from "utils/functions";
-import { PlayerStatus } from "utils/interfaces/PlayerStatus";
+import { PlayerStatus } from "interfaces/PlayerStatus";
 
 // Define the initial player status
 let playerStatus: PlayerStatus = {
@@ -26,7 +26,7 @@ let playerStatus: PlayerStatus = {
 };
 
 setTick(async () => {
-  await Delay(1000);
+  await Delay(2500);
   if (hasPlayerStatusChanged()) {
     // emitNet("MUTINY:CORE:SERVER:PLAYER_STATUS_UPDATE", playerStatus);
     DisplayRadar(playerStatus.isInVehicle);
@@ -35,9 +35,7 @@ setTick(async () => {
 });
 
 const minimap = RequestScaleformMovie("minimap");
-
 DisplayHud(false);
-SetRadarBigmapEnabled(true, false);
 
 setTick(async () => {
   await Delay(100);
