@@ -1,9 +1,9 @@
+import { DebugLocation } from "handlers/debug";
 import { Delay } from "utils/functions";
 
 let characterIdentity: any = null;
 
 onNet("MUTINY:CORE:CLIENT:CHARACTER:IDENTITY", async (reference: any) => {
-    // console.log("MUTINY>CORE>CLIENT>CHARACTER>IDENTITY (reference) ", reference);
     characterIdentity = reference;
 })
 
@@ -16,27 +16,12 @@ RegisterCommand(
       "MUTINY:CORE:CLIENT:CHARACTER:IDENTITY"
     );
     await Delay(1000);
-    const message = `${characterIdentity}[characters[0]]${args[0]}`
-    console.log("MUTINY>CORE>CLIENT>CHARACTER>IDENTITY>COMMAND (message) ", characterIdentity.characters[0]);
+    console.log("MUTINY>CORE>CLIENT>CHARACTER>IDENTITY>COMMAND (message) ", characterIdentity.characters[characterIdentity.last_character]);
       emit("chat:addMessage", {
-        args: [characterIdentity.characters[0]],
+        args: [characterIdentity.characters[characterIdentity.last_character]],
       });
   },
   false
 );
 
-const debugLocation = () => {
-  const ped = PlayerPedId();
-  const coords = GetEntityCoords(ped, true);
-  const heading = GetEntityHeading(ped);
-  const rotation = GetGameplayCamRot(2);
-  const output = `{x: ${coords[0]}, y: ${coords[1]}, z: ${coords[2]}, heading: ${heading}, rotation: ${rotation}}`;
-  emit("chat:addMessage", {
-    args: [output],
-  });
-
-  console.log(output);
-}
-
-
-RegisterCommand("loc", debugLocation, false)
+RegisterCommand("loc", DebugLocation, false)

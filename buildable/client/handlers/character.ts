@@ -38,7 +38,7 @@ export const SelectCharacter = async (context: any) => {
 export const LoadCharacter = async (context: any) => {
   const { model, last_location } = context;
   MakeModelRequest(model, 100);
-
+console.log("LoadCharacter ", context, model, last_location)
   // Setting the auto-spawn callback for the "spawnmanager" export
   exp.spawnmanager.setAutoSpawnCallback(() => {
     // Spawning the player with the given model and last location using the "spawnmanager" export
@@ -71,7 +71,7 @@ export const LoadCharacter = async (context: any) => {
     );
   });
   // Setting auto-spawn to true for the "spawnmanager" export
-  exp.spawnmanager.setAutoSpawn(false);
+  exp.spawnmanager.setAutoSpawn(true);
   // Forcing a respawn using the "spawnmanager" export
   exp.spawnmanager.forceRespawn();
 };

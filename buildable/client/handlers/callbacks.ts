@@ -1,6 +1,5 @@
 // Importing a Delay function from a module called "utils/functions"
-import { CAM_FOR_CHARACTER_SELECT } from "character/spawn";
-import { Delay } from "utils/functions";
+import { Delay, GtaHudRadar, MakeModelRequest } from "utils/functions";
 import { BASE_MODELS, CHARACTER_CREATE_APPEARANCE_CONFIG } from "../../common/globals";
 import { CloseNuiCompletely } from "./nui";
 import { LoadCharacter, SelectCharacter } from "./character";
@@ -26,8 +25,7 @@ const createFirstCharacter = async (context: any, idents: any) => {
  * @param data The appearance data for the character.
  */
 const registerCharacter = async (data: any) => {
-  DisplayHud(false);
-  DisplayRadar(false);
+  GtaHudRadar(false, false);
   // Setting the NUI focus to false
   SetNuiFocus(false, false);
   // Getting the ID of the player's character
@@ -43,11 +41,7 @@ const registerCharacter = async (data: any) => {
   // Waiting for 500 milliseconds
   await Delay(500);
   // Requesting the model to be loaded
-  RequestModel(model);
-  // Waiting until the model is loaded
-  while (!HasModelLoaded(model)) {
-    await Delay(500);
-  }
+  MakeModelRequest({ model: model as string }, 100);
   // Setting the player's model to the loaded model using the "mutiny_appearance" export
   exp["mutiny_appearance"].setPlayerModel(model);
  
