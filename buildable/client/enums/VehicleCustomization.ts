@@ -51,3 +51,20 @@ export enum eVehicleModType
 	VMT_LIVERY_MOD = 48,
 	VMT_LIGHTBAR = 49,
 };
+
+export enum headlightColors {
+  Default = -1,
+  White = 0,
+  Blue = 1,
+  Electric_Blue = 2,
+  Mint_Green = 3,
+  Lime_Green = 4,
+  Yellow = 5,
+  Golden_Shower = 6,
+  Orange = 7,
+  Red = 8,
+  Pony_Pink = 9,
+  Hot_Pink = 10,
+  Purple = 11,
+  Blacklight = 12,
+}

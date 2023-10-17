@@ -1,3 +1,4 @@
+//!SECTION
 export const BARBERSHOP_BLIPS = [
   {
     name: "BARBER SHOP",
@@ -30,7 +31,7 @@ export const BARBERSHOP_BLIPS = [
     hidden: false,
   },
 ];
-
+//!SECTION
 export const CLOTHING_STORE_BLIPS = [
   {
     name: "CLOTHING STORE",
@@ -183,7 +184,7 @@ export const CLOTHING_STORE_BLIPS = [
     hidden: false,
   },
 ];
-
+//!SECTION
 export const GAS_BLIPS = [
   {
     name: "GAS STATION",

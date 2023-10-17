@@ -3,6 +3,7 @@ import { ATM_MODELS } from "./models";
 import { BANNED_PICKUPS } from "./pickups";
 
 export const IS_DEBUGGING: boolean = true;
+
 export const DISCORD = {
   WEBHOOK_URL: "",
   APP_ID: "763496995968516117",
@@ -77,6 +78,28 @@ export const WEATHER_TYPES = [
   "SNOWLIGHT",
 ];
 
-export const MODELS = {
+export const TARGET_MODELS = {
   ATMS: ATM_MODELS,
+};
+
+export const BASE_MODELS = ["mp_m_freemode_01", "mp_f_freemode_01"];
+
+ // Creating a configuration object for the player's customization
+  export const CHARACTER_CREATE_APPEARANCE_CONFIG = {
+    ped: false,
+    headBlend: true,
+    faceFeatures: true,
+    headOverlays: true,
+    components: true,
+    props: true,
+    allowExit: false,
+    tattoos: false,
+  };
+
+export const SPAWN_CAM_LOC = {
+  x: 4845.76025390625,
+  y: -4929.52001953125,
+  z: 30.754070281982422,
+  heading: 271.0299072265625,
+  rotation: [-42.83732223510742, 0, -93.886474609375],
 };

@@ -17,19 +17,16 @@
  */
 
 // Importing the `Delay` function from the `utils/functions` module.
-import { Delay } from "utils/functions";
+import { Delay, GtaHudRadar } from "utils/functions";
 import { CharacterValues } from "interfaces/Character";
-import { Location } from "interfaces/Location";
+import { BASE_MODELS, LOCATIONS, SPAWN_CAM_LOC } from "../../common/globals";
 
 // Initializing the `CHAR_VALS` variable as `null`.
 let CHAR_VALS: CharacterValues | null = null;
-
-// Defining the `DEFAULT_SPAWN` constant object.
-let DEFAULT_SPAWN: Location = { x: 7614.787, y: 1064.8, z: 1678.407 };
+const exp = global.exports;
 
 export let CAM_FOR_CHARACTER_SELECT: any;
-// Exporting the `CHAR_VALS`, `DEFAULT_SPAWN`, `firstSpawn()`, `openCharacterCreator()`, and `setNuiFocus()` functions.
-const exp = global.exports;
+
 // Listening to the `MUTINY:CORE:CLIENT:SPAWN_HANDLER` event. !NOTE: MUTINY:CORE:CLIENT:SPAWN:SET_DATA
 onNet("MUTINY:CORE:CLIENT:SPAWN:SET_DATA", (options: CharacterValues) => {
   CHAR_VALS = options;
@@ -37,13 +34,13 @@ onNet("MUTINY:CORE:CLIENT:SPAWN:SET_DATA", (options: CharacterValues) => {
 
 // Listening to the `onClientGameTypeStart` event.
 on("onClientGameTypeStart", async () => {
-  DisplayHud(false);
-  DisplayRadar(false);
+  GtaHudRadar(false, false);
   // If `CHAR_VALS` is `null`, wait for 500ms and return.
   if (!CHAR_VALS) {
     await Delay(500);
     return;
   }
+
   console.log("MUTINY:CORE:CLIENT:SPAWN:SET_DATA (CHAR_VALS)", CHAR_VALS);
 
   // If it's the player's first join, call the `firstSpawn()` function.
@@ -69,18 +66,18 @@ async function firstSpawn() {
   // If there are no existing characters, spawn the player at the default location with the default model.
   if (CHAR_VALS.characters.length === 0) {
     spawnPlayerOptions = {
-      x: DEFAULT_SPAWN.x,
-      y: DEFAULT_SPAWN.y,
-      z: DEFAULT_SPAWN.z,
-      model: "mp_m_freemode_01",
+      x: LOCATIONS.DEFAULT_SPAWN.x,
+      y: LOCATIONS.DEFAULT_SPAWN.y,
+      z: LOCATIONS.DEFAULT_SPAWN.z,
+      model: BASE_MODELS[0],
     };
   } else {
     // Otherwise, spawn the player at the last location of the first character in the `CHAR_VALS` array with their model.
     spawnPlayerOptions = {
-      x: CHAR_VALS.characters[0].last_location.x,
-      y: CHAR_VALS.characters[0].last_location.y,
-      z: CHAR_VALS.characters[0].last_location.z,
-      model: CHAR_VALS.characters[0].model.model,
+      x: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.x,
+      y: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.y,
+      z: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.z,
+      model: CHAR_VALS.characters[CHAR_VALS.last_character].model.model,
     };
   }
 
@@ -117,13 +114,7 @@ function setNuiFocus() {
   SetNuiFocusKeepInput(false);
 }
 
- const CAM_LOC = {
-   x: 4845.76025390625,
-   y: -4929.52001953125,
-   z: 30.754070281982422,
-   heading: 271.0299072265625,
-   rotation: [-42.83732223510742, 0, -93.886474609375],
- };
+
 
 // Listening to the `MUTINY:CORE:CLIENT:OPEN_CHARACTER_SELECTOR` event. !NOTE: MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR
 onNet(
@@ -133,10 +124,10 @@ onNet(
     ShutdownLoadingScreenNui();
     exp.spawnmanager.spawnPlayer(
       {
-        x: CAM_LOC.x,
-        y: CAM_LOC.y,
-        z: CAM_LOC.z,
-        heading: CAM_LOC.heading,
+        x: SPAWN_CAM_LOC.x,
+        y: SPAWN_CAM_LOC.y,
+        z: SPAWN_CAM_LOC.z,
+        heading: SPAWN_CAM_LOC.heading,
         model: "a_m_m_skater_01",
       },
       async () => {
@@ -148,12 +139,12 @@ onNet(
         // make sure the area is loaded in before we try to create the camera
         CAM_FOR_CHARACTER_SELECT = CreateCameraWithParams(
           "DEFAULT_SCRIPTED_CAMERA",
-          CAM_LOC.x,
-          CAM_LOC.y,
-          CAM_LOC.z,
-          CAM_LOC.rotation[0],
-          CAM_LOC.rotation[1],
-          CAM_LOC.rotation[2],
+          SPAWN_CAM_LOC.x,
+          SPAWN_CAM_LOC.y,
+          SPAWN_CAM_LOC.z,
+          SPAWN_CAM_LOC.rotation[0],
+          SPAWN_CAM_LOC.rotation[1],
+          SPAWN_CAM_LOC.rotation[2],
           60.0,
           true,
           2
