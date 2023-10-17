@@ -5,5 +5,5 @@ export const funnyCommit = () => {
     ADAPTIVE_CARD_QUOTES[
       Math.floor(Math.random() * ADAPTIVE_CARD_QUOTES.length)
     ];
-  return(`\x1b[34m${message}\x1b[89m`);
+  return message;
 };

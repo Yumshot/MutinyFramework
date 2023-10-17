@@ -36,7 +36,6 @@ on(
 
     for (let i = 0; i < GetNumPlayerIdentifiers(src); i++) {
       const identifier = GetPlayerIdentifier(src, i);
-
       if (identifier.startsWith("steam:")) {
         steamIdentifier = identifier;
       }
@@ -62,26 +61,24 @@ on(
       deferrals.done();
       return;
     }
-
     // Add the player to the priority queue
     const options = {
       name: name,
+      //!TODO - add IP to the Connection Options interface
       ip: GetPlayerEndpoint(src) || ipIdentifier,
       steam: steamIdentifier,
       discord: discordIdentifier,
     };
     const dbEntry = await PRIORITY_CHECK(src, options);
-
     if (!dbEntry) {
       setKickReason("An error occurred. Please report this issue to the server developers.");
       deferrals.done();
       return;
     }
-    simulateQueue(deferrals, name).then(() => {
-    deferrals.done();
-    }).catch((err) => {
-      console.log(err);
-    });
+
+    deferrals.update("Checking Queue Information...");
+    await Delay(5000);
+    simulateQueue(deferrals, name);
   }
 );
 
@@ -90,7 +87,9 @@ const simulateQueue = async (deferrals: any, name: string) => {
   // Simulate a queue
   await Delay(5000);
   // Send the adaptive card
-  const defCard = ADAPTIVE_CARD(99, name, funnyCommit());
+  const defCard = ADAPTIVE_CARD(99, name, funnyCommit().toString());
   deferrals.presentCard(defCard);
   await Delay(15000);
+  // Complete the connection
+  deferrals.done();
 };
