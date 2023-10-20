@@ -44,7 +44,7 @@ export class Logger {
     this.determineLevel("warn", opts);
   }
 
-  determineLevel(level: string, opts: DiscordLogOptions) {
+  async determineLevel(level: string, opts: DiscordLogOptions) {
     const embedBuilders: any = {
       1: new MessageBuilder()
         .setTitle(opts.title)
@@ -74,9 +74,17 @@ export class Logger {
 
     const embedBuilder = embedBuilders[opts.count];
     if (level === "info") {
-      this.hookInfo.send(embedBuilder);
+      try {
+        await this.hookInfo.send(embedBuilder);
+      } catch (error) {
+        console.log(error);
+      }
     } else if (level === "warn") {
-      this.hookWarn.send(embedBuilder);
+      try {
+        await this.hookWarn.send(embedBuilder);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

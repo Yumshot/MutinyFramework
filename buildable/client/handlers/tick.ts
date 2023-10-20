@@ -4,7 +4,6 @@ import { HasPlayerStatusChanged, PLAYER_STATUS } from "./character";
 const minimap = RequestScaleformMovie("minimap");
 DisplayHud(false);
 
-
 setTick(async () => {
   await Delay(1500);
   if (HasPlayerStatusChanged()) {
@@ -13,7 +12,6 @@ setTick(async () => {
   }
 });
 
-
 setTick(async () => {
   await Delay(50);
   if (minimap === 0) return;
@@ -21,4 +19,3 @@ setTick(async () => {
   ScaleformMovieMethodAddParamInt(3);
   EndScaleformMovieMethod();
 });
-

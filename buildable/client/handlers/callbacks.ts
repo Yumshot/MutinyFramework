@@ -1,13 +1,14 @@
 // Importing a Delay function from a module called "utils/functions"
 import { Delay, GtaHudRadar, MakeModelRequest } from "utils/functions";
-import { BASE_MODELS, CHARACTER_CREATE_APPEARANCE_CONFIG } from "../../common/globals";
+import {
+  BASE_MODELS,
+  CHARACTER_CREATE_APPEARANCE_CONFIG,
+} from "../../common/globals";
 import { CloseNuiCompletely } from "./nui";
 import { LoadCharacter, SelectCharacter } from "./character";
 
 // Creating a variable called "exp" that references the global "exports" object
 const exp = (global as any).exports;
-
-
 
 // An asynchronous function that creates the first character for a player
 const createFirstCharacter = async (context: any, idents: any) => {
@@ -44,7 +45,7 @@ const registerCharacter = async (data: any) => {
   MakeModelRequest({ model: model as string }, 100);
   // Setting the player's model to the loaded model using the "mutiny_appearance" export
   exp["mutiny_appearance"].setPlayerModel(model);
- 
+
   // Starting the player's customization using the "mutiny_appearance" export
   exp["mutiny_appearance"].startPlayerCustomization((appearance: any) => {
     // Emitting a network event to save the character's outfit with the given appearance data
@@ -57,11 +58,6 @@ const registerCharacter = async (data: any) => {
     }
   }, CHARACTER_CREATE_APPEARANCE_CONFIG);
 };
-
-
-
-
-
 
 // Registering a NUI callback for creating user credentials
 RegisterNuiCallback("create_user_credentials", async (data: any, cb: any) => {
