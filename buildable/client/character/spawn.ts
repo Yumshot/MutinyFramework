@@ -59,6 +59,14 @@ on("onClientGameTypeStart", async () => {
  * After the player is spawned, their entity is made invisible to the network and frozen in place.
  * Finally, the character creator UI is opened.
  */
+/**
+ * Spawns the player character at a specific location based on the existing characters.
+ * If there are no existing characters, the player is spawned at the default location with the default model.
+ * Otherwise, the player is spawned at the last location of the first character in the `CHAR_VALS` array with their model.
+ * @async
+ * @function firstSpawn
+ * @returns {Promise<void>}
+ */
 async function firstSpawn() {
   // Define the `spawnPlayerOptions` object.
   let spawnPlayerOptions: { x: any; y: any; z: any; model: string };
@@ -114,8 +122,6 @@ function setNuiFocus() {
   SetNuiFocusKeepInput(false);
 }
 
-
-
 // Listening to the `MUTINY:CORE:CLIENT:OPEN_CHARACTER_SELECTOR` event. !NOTE: MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR
 onNet(
   "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",
@@ -135,7 +141,7 @@ onNet(
         SetEntityVisible(ped, false, false);
         FreezeEntityPosition(ped, true);
         SetCloudHatOpacity(0.1);
-       
+
         // make sure the area is loaded in before we try to create the camera
         CAM_FOR_CHARACTER_SELECT = CreateCameraWithParams(
           "DEFAULT_SCRIPTED_CAMERA",

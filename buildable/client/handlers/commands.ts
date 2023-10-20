@@ -239,6 +239,11 @@ onNet("forfi-debugtools:debugcam", async () => {
   }
 });
 
+/**
+ * Updates the debug camera position and rotation.
+ * Creates a new camera with the updated parameters and sets it as active with interpolation.
+ * Deactivates and destroys the previous debug camera.
+ */
 function updateDebugCam() {
   let newCam = CreateCamWithParams(
     "DEFAULT_SCRIPTED_CAMERA",

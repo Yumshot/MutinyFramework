@@ -20,6 +20,10 @@ RegisterCommand(
     );
 
     await Delay(1000);
+    /**
+     * Retrieves the target character from the characterIdentity object based on the last_character property.
+     * @returns The target character object.
+     */
     const target =
       characterIdentity.characters[characterIdentity.last_character];
 

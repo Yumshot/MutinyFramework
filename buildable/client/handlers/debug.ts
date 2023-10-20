@@ -1,3 +1,7 @@
+/**
+ * Logs the current location and rotation of the player to the console and chat.
+ * @returns void
+ */
 export const DebugLocation = () => {
   const ped = PlayerPedId();
   const coords = GetEntityCoords(ped, true);

@@ -38,6 +38,10 @@ export const LoadCharacter = async (context: any) => {
   await HandleSpawn(context);
 };
 
+/**
+ * Checks if the player's status has changed by comparing the current status with the previous status.
+ * @returns {boolean} Returns true if the player's status has changed, otherwise returns false.
+ */
 export const HasPlayerStatusChanged = (): boolean => {
   const ped = PlayerPedId();
   const newStatus: PlayerStatus = {

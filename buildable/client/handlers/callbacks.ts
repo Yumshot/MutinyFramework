@@ -25,6 +25,11 @@ const createFirstCharacter = async (context: any, idents: any) => {
  * An asynchronous function that registers a character with the specified appearance data.
  * @param data The appearance data for the character.
  */
+/**
+ * Registers a new character for the player.
+ * @param data - The appearance data for the new character.
+ * @returns A Promise that resolves when the character is registered.
+ */
 const registerCharacter = async (data: any) => {
   GtaHudRadar(false, false);
   // Setting the NUI focus to false
