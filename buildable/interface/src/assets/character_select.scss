@@ -1,26 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @keyframes slide-in {
-
   0% {
-    transform: rotateX(60deg) rotateY(-15deg) translateX(-100%)  scale(1.25, 1.05);
+    transform: rotateX(60deg) rotateY(-15deg) translateX(-100%) scale(1.05, 1.05);
     opacity: 0;
   }
 
   100% {
-    transform: rotateX(-15deg) rotateY(30deg) translateX(0%)  scale(1.25, 1.05);
+    transform: rotateX(0deg) rotateY(10deg) translateX(0%) scale(1.05, 1.05);
     opacity: 1;
   }
 }
 
-body, main, html {
+body,
+main,
+html {
   background-color: transparent !important;
   background: transparent !important;
   overflow: hidden;
 }
 
 .header_text {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 44px;
   opacity: 0.3;
   font-weight: 700;
@@ -37,7 +38,7 @@ body, main, html {
   right: 30vw;
   position: relative;
   margin: 0 auto;
-  animation: slide-in 1.5s ease-in-out;
+  animation: slide-in 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card {
@@ -53,7 +54,7 @@ body, main, html {
 
 .card:before,
 .card:after {
-  content: "";
+  content: '';
   position: absolute;
   top: -5px;
   bottom: -5px;
@@ -74,7 +75,7 @@ body, main, html {
 
 .card-body {
   color: whitesmoke;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-shadow: rgb(0, 0, 0) 1.5px 0 2.5px;
   font-weight: 400;
   padding-left: 20px;
@@ -86,7 +87,7 @@ body, main, html {
 .card-title {
   color: whitesmoke;
   text-shadow: rgb(0, 0, 0) 1.5px 0 2.5px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 44px;
   opacity: 0.3;
   font-weight: 700;

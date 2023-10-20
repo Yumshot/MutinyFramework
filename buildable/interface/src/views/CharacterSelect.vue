@@ -102,13 +102,13 @@ export default {
       return charactersRef.filter((character, index) => index === currentIndex.value);
     });
 
-    let charactersRef: any[] = props.characters;
-    // let charactersRef: any[] = [{
-    //   first_name: "A",
-    //   last_name: 'B',
-    //   birthdate: "2023",
-    //   sex: 'Male'
-    // }]
+    // let charactersRef: any[] = props.characters;
+    let charactersRef: any[] = [{
+      first_name: "A",
+      last_name: 'B',
+      birthdate: "2023",
+      sex: 'Male'
+    }]
 
 
     const selectCharacter = (character: any) => {
