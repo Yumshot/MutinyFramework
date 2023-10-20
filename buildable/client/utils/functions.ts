@@ -33,9 +33,9 @@ export const TpToCoords = async (x: number, y: number, z: number) => {
     await Delay(100);
   }
   FreezeEntityPosition(entityToFreeze, false);
-}
+};
 
-export const SpawnVehicle = async(
+export const SpawnVehicle = async (
   modelHash: string | number,
   data: { x: any; y: any; z: any; heading: any; network: any },
   markAsNotNeeded = true
@@ -58,13 +58,13 @@ export const SpawnVehicle = async(
   }
   SetModelAsNoLongerNeeded(modelHash);
   return myVehicle;
-}
+};
 
 export const RemoveVehicle = (myVehicle: number) => {
   SetEntityAsMissionEntity(myVehicle, true, true);
   DeleteEntity(myVehicle);
-}
+};
 
 export const HasSpawned = (): boolean => {
   return PLAYER_STATUS.hasSpawned;
-}
+};

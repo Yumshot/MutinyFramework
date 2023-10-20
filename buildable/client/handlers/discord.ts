@@ -1,4 +1,4 @@
-import { DISCORD } from "../../common/globals";
+import { DISCORD } from "../../../common/globals";
 
 /**
  * Sets the Discord Rich Presence for the client.
