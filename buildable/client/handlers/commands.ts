@@ -1,10 +1,82 @@
-import { Delay } from "utils/functions";
+import {
+  Delay,
+  RemoveVehicle,
+  SpawnVehicle,
+  TpToCoords,
+} from "utils/functions";
+
+import { DEFAULTS } from "../../common/globals";
+let isAutoPilotActive = false;
+setTick(async () => {
+  await Delay(7500);
+  if (isAutoPilotActive) {
+    const ped = PlayerPedId();
+    const [x, y, z] = GetEntityCoords(ped, true);
+    const blip = GetFirstBlipInfoId(8);
+    const [blipX, blipY, blipZ] = GetBlipCoords(blip);
+    const distance = Vdist(x, y, z, blipX, blipY, blipZ);
+    if (distance <= 10.0) {
+      let speedModifier = 19.0;
+      const vehicle = GetVehiclePedIsIn(ped, false);
+      ClearPedTasks(ped);
+      for (let i = 19.0; i > 0.0; i--) {
+        SetVehicleForwardSpeed(vehicle, i);
+        await Delay(200);
+        speedModifier = i;
+      }
+      if (speedModifier <= 0.0) {
+        emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT");
+      }
+    }
+  }
+});
+
+onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", () => {
+  if (!isAutoPilotActive) return;
+  const ped = PlayerPedId();
+  const vehicle = GetVehiclePedIsIn(ped, false);
+  ClearPedTasks(ped);
+
+  isAutoPilotActive = false;
+});
+
+onNet(
+  "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:START_AUTO_PILOT",
+  async (level: number) => {
+    const ped = PlayerPedId();
+    ClearPedTasks(ped);
+    const vehicle = GetVehiclePedIsIn(ped, false);
+    const blip = GetFirstBlipInfoId(8);
+    const driveModeModifier = [524863, 447];
+    const speedModifier = [
+      DEFAULTS.AUTOPILOT_SPEED_1,
+      DEFAULTS.AUTOPILOT_SPEED_2,
+    ];
+
+    if (DoesBlipExist(blip)) {
+      const [x, y, z] = GetBlipCoords(blip);
+      TaskVehicleDriveToCoordLongrange(
+        ped,
+        vehicle,
+        x,
+        y,
+        z,
+        speedModifier[level],
+        driveModeModifier[level],
+        1.0
+      );
+      isAutoPilotActive = true;
+    } else {
+      console.log("Give me a waypoint to drive to!");
+    }
+  }
+);
 
 // let debugInfoEnabled = false;
 
 onNet("forfi-debugtools:tppos", (pos: string[]) => {
   if (pos[0] && pos[1] && pos[2]) {
-    tpToCoords(parseInt(pos[0]), parseInt(pos[1]), parseInt(pos[2]));
+    TpToCoords(parseInt(pos[0]), parseInt(pos[1]), parseInt(pos[2]));
   }
 });
 
@@ -12,25 +84,9 @@ onNet("forfi-debugtools:tpto", (pid: string) => {
   if (pid) {
     const targetPed = GetPlayerPed(GetPlayerFromServerId(parseInt(pid)));
     const targetCoords = GetEntityCoords(targetPed, true);
-    tpToCoords(targetCoords[0], targetCoords[1], targetCoords[2] + 0.5);
+    TpToCoords(targetCoords[0], targetCoords[1], targetCoords[2] + 0.5);
   }
 });
-
-async function tpToCoords(x: number, y: number, z: number) {
-  const playerPed = PlayerPedId();
-  const myVehicle = GetVehiclePedIsIn(playerPed, false);
-  let entityToFreeze = playerPed;
-  if (DoesEntityExist(myVehicle) && IsEntityAVehicle(myVehicle)) {
-    SetNetworkVehicleRespotTimer(VehToNet(myVehicle), 5000);
-    entityToFreeze = myVehicle;
-  }
-  SetPedCoordsKeepVehicle(playerPed, x, y, z);
-  FreezeEntityPosition(entityToFreeze, true);
-  while (!HasCollisionLoadedAroundEntity(entityToFreeze)) {
-    await Delay(100);
-  }
-  FreezeEntityPosition(entityToFreeze, false);
-}
 
 onNet("forfi-debugtools:tpwaypoint", async () => {
   const WaypointHandle = GetFirstBlipInfoId(8);
@@ -91,35 +147,38 @@ onNet("forfi-debugtools:getpos", () => {
   // SetNuiFocus(true, true);
 });
 
-onNet("forfi-debugtools:spawnVeh", async (model: string | number) => {
-  const myVehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-  if (IsEntityAVehicle(myVehicle)) {
-    SetEntityAsMissionEntity(myVehicle, true, true);
-    DeleteEntity(myVehicle);
+onNet(
+  "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:ADMIN_CAR_SPAWN",
+  async (model: string | number) => {
+    const myVehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+    if (IsEntityAVehicle(myVehicle)) {
+      SetEntityAsMissionEntity(myVehicle, true, true);
+      DeleteEntity(myVehicle);
+    }
+    if (IsModelAVehicle(model)) {
+      const playerPed = PlayerPedId();
+      const playerPos = GetEntityCoords(PlayerPedId(), true);
+      const myVehicle = await SpawnVehicle(model, {
+        x: playerPos[0],
+        y: playerPos[1],
+        z: playerPos[2],
+        heading: GetEntityHeading(playerPed),
+        network: true,
+      });
+      SetVehicleColours(myVehicle, 12, 12);
+      SetVehicleWindowTint(myVehicle, 1);
+      SetVehicleMod(myVehicle, 11, 3, true);
+      SetVehicleMod(myVehicle, 12, 1, true);
+      SetVehicleMod(myVehicle, 13, 1, true);
+      SetVehicleMod(myVehicle, 15, 3, true);
+      SetVehicleMod(myVehicle, 16, 4, true);
+      SetVehicleMod(myVehicle, 18, 0, true);
+      SetVehicleMod(myVehicle, 22, 0, true);
+      SetVehicleMod(myVehicle, 46, 2, true);
+      SetPedIntoVehicle(playerPed, myVehicle, -1);
+    }
   }
-  if (IsModelAVehicle(model)) {
-    const playerPed = PlayerPedId();
-    const playerPos = GetEntityCoords(PlayerPedId(), true);
-    const myVehicle = await spawnVehicle(model, {
-      x: playerPos[0],
-      y: playerPos[1],
-      z: playerPos[2],
-      heading: GetEntityHeading(playerPed),
-      network: true,
-    });
-    SetVehicleColours(myVehicle, 12, 12);
-    SetVehicleWindowTint(myVehicle, 1);
-    SetVehicleMod(myVehicle, 11, 3, true);
-    SetVehicleMod(myVehicle, 12, 1, true);
-    SetVehicleMod(myVehicle, 13, 1, true);
-    SetVehicleMod(myVehicle, 15, 3, true);
-    SetVehicleMod(myVehicle, 16, 4, true);
-    SetVehicleMod(myVehicle, 18, 0, true);
-    SetVehicleMod(myVehicle, 22, 0, true);
-    SetVehicleMod(myVehicle, 46, 2, true);
-    SetPedIntoVehicle(playerPed, myVehicle, -1);
-  }
-});
+);
 
 onNet("forfi-debugtools:getid", (steamId: string, licenseId: string) => {
   const text = steamId + "\n" + licenseId;
@@ -180,8 +239,6 @@ onNet("forfi-debugtools:debugcam", async () => {
   }
 });
 
-
-
 function updateDebugCam() {
   let newCam = CreateCamWithParams(
     "DEFAULT_SCRIPTED_CAMERA",
@@ -234,7 +291,7 @@ onNet("forfi-debugtools:setcampos", async (args: string[]) => {
 onNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", async () => {
   const myVehicle = GetVehiclePedIsIn(PlayerPedId(), false);
   if (IsEntityAVehicle(myVehicle)) {
-    await removeVehicle(myVehicle);
+    RemoveVehicle(myVehicle);
   }
 });
 
@@ -251,6 +308,31 @@ setImmediate(() => {
   ]);
   emit("chat:addSuggestion", "/tpto", "Teleport to player.", [
     { name: "id", help: "Player server id." },
+  ]);
+  emit("chat:addSuggestion", "/tpm", "Teleport to waypoint.");
+  emit("chat:addSuggestion", "/dv", "Delete vehicle.");
+  emit("chat:addSuggestion", "/vmods", "Get vehicle modkit.");
+  emit("chat:addSuggestion", "/debugcam", "Toggle debug camera.");
+  emit("chat:addSuggestion", "/campos", "Get debug camera position.");
+  emit("chat:addSuggestion", "/setcampos", "Set debug camera position.", [
+    { name: "x", help: "X coord." },
+    { name: "y", help: "Y coord." },
+    { name: "z", help: "Z coord." },
+  ]);
+  emit("chat:addSuggestion", "/getid", "Get steam and license id.");
+  emit("chat:addSuggestion", "/testsound", "Test sound.", [
+    { name: "sound", help: "Sound name." },
+    { name: "set", help: "Sound set." },
+  ]);
+  emit("chat:addSuggestion", "/getpos", "Get player position.");
+  emit("chat:addSuggestion", "/id", "Get player identity.");
+  emit("chat:addSuggestion", "/loc", "Get player location.");
+  emit("chat:addSuggestion", "/ap", "Start autopilot.", [
+    { name: "level", help: "Autopilot level. [0 | 1]" },
+  ]);
+  emit("chat:addSuggestion", "/aps", "Stop autopilot.");
+  emit("chat:addSuggestion", "/car", "Spawn admin car.", [
+    { name: "model", help: "Vehicle model." },
   ]);
 });
 
@@ -273,33 +355,3 @@ setImmediate(() => {
 //     emit("showText", 0.75, 0.005, 0.3, text, 170, 170, 170, 255);
 //   }
 // });
-
-async function spawnVehicle(
-  modelHash: string | number,
-  data: { x: any; y: any; z: any; heading: any; network: any },
-  markAsNotNeeded = true
-) {
-  RequestModel(modelHash);
-  while (!HasModelLoaded(modelHash)) {
-    await Delay(100);
-  }
-  const myVehicle = CreateVehicle(
-    modelHash,
-    data.x,
-    data.y,
-    data.z,
-    data.heading,
-    data.network,
-    false
-  );
-  if (markAsNotNeeded) {
-    SetEntityAsNoLongerNeeded(myVehicle);
-  }
-  SetModelAsNoLongerNeeded(modelHash);
-  return myVehicle;
-}
-
-async function removeVehicle(myVehicle: number) {
-  SetEntityAsMissionEntity(myVehicle, true, true);
-  DeleteEntity(myVehicle);
-}

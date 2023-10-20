@@ -5,7 +5,10 @@ onNet("MUTINY:CORE:SERVER:DATABASE:EVENTS:GATHER_USER_DATA_FOR_CLIENT", async (c
     const src = source;
     const query = findSteam(src);
     const GATHERED_USER = await DATABASE_COLLECTION_USERS.findOne(query);
-    console.log(src, query, caller)
-    emitNet(`${caller}`, src, GATHERED_USER);
+    console.log(src, query, caller, "emitNet(`${caller}`, src, GATHERED_USER)");
+    emitNet(caller, src, GATHERED_USER);
 });
 
+// onNet("MUTINY:CORE:SERVER:DATABASE:EVENTS:GATHER_USER_CHARACTER_FOR_CLIENT", async (caller: string) => {
+    
+// });

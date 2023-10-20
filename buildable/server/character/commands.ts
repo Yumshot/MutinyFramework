@@ -42,7 +42,11 @@ RegisterCommand(
   "car",
   (source: any, args: any[], raw: any) => {
     if (args[0]) {
-      emitNet("forfi-debugtools:spawnVeh", source, args[0]);
+      emitNet(
+        "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:ADMIN_CAR_SPAWN",
+        source,
+        args[0]
+      );
     }
   },
   true
@@ -92,11 +96,38 @@ RegisterCommand(
   true
 );
 
-RegisterCommand("dv", (source: any, args: any, raw: any) => {
-  emitNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", source);
-}, false);
+RegisterCommand(
+  "dv",
+  (source: any, args: any, raw: any) => {
+    emitNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", source);
+  },
+  false
+);
 
+RegisterCommand(
+  "vmods",
+  (source: any, args: any, raw: any) => {
+    emitNet("MUTINY:CORE:CLIENT:COMMAND:GET_VEHICLE_MODS", source);
+  },
+  false
+);
 
-RegisterCommand("vmodkit", (source: any, args: any, raw: any) => {
-  emitNet("MUTINY:CORE:CLIENT:COMMAND:GET_VEHICLE_MODS", source);
-}, false);
+RegisterCommand(
+  "ap",
+  (source: any, args: any, raw: any) => {
+    emitNet(
+      "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:START_AUTO_PILOT",
+      source,
+      args[0]
+    );
+  },
+  false
+);
+
+RegisterCommand(
+  "aps",
+  (source: any, args: any, raw: any) => {
+    emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", source);
+  },
+  false
+);

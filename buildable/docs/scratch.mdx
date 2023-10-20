@@ -1,89 +1,87 @@
 setTick(() => {
-  if (debugCamActive === true) {
-    const sinX = Math.sin((debugCamPos.xRot * Math.PI) / 180);
-    const sinY = Math.sin((debugCamPos.yRot * Math.PI) / 180);
-    const sinZ = Math.sin((debugCamPos.zRot * Math.PI) / 180);
-    const cosX = Math.cos((debugCamPos.xRot * Math.PI) / 180);
-    const cosY = Math.cos((debugCamPos.yRot * Math.PI) / 180);
-    const cosZ = Math.cos((debugCamPos.zRot * Math.PI) / 180);
-    if (IsControlPressed(0, 32)) {
-      // W
-      debugCamPos.x += 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
-      debugCamPos.y += 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
-      debugCamPos.z += 0.5 * (cosY * sinX);
-    }
-    if (IsControlPressed(0, 33)) {
-      // S
-      debugCamPos.x -= 0.5 * (cosZ * sinX * sinY - cosX * sinZ);
-      debugCamPos.y -= 0.5 * (cosX * cosZ - sinX * sinY * sinZ);
-      debugCamPos.z -= 0.5 * (cosY * sinX);
-    }
-    if (IsControlPressed(0, 34)) {
-      // A
-      debugCamPos.x -= 0.5 * (cosY * cosZ);
-      debugCamPos.y -= 0.5 * (cosY * sinZ);
-      debugCamPos.z -= 0.5 * -sinY;
-    }
-    if (IsControlPressed(0, 35)) {
-      // D
-      debugCamPos.x += 0.5 * (cosY * cosZ);
-      debugCamPos.y += 0.5 * (cosY * sinZ);
-      debugCamPos.z += 0.5 * -sinY;
-    }
-    if (IsControlPressed(0, 10)) {
-      // PAGE UP
-      debugCamPos.x += 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
-      debugCamPos.y += 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
-      debugCamPos.z += 0.5 * (cosX * cosY);
-    }
-    if (IsControlPressed(0, 11)) {
-      // PAGE DOWN
-      debugCamPos.x -= 0.5 * (-cosX * cosZ * sinY + sinX * sinZ);
-      debugCamPos.y -= 0.5 * (-cosZ * sinX + cosX * sinY * sinZ);
-      debugCamPos.z -= 0.5 * (cosX * cosY);
-    }
-    if (IsControlPressed(0, 111)) {
-      // NUMPAD 8
-      debugCamPos.xRot += 1.0;
-      debugCamPos.xRot %= 360;
-    }
-    if (IsControlPressed(0, 110)) {
-      // NUMPAD 5
-      debugCamPos.xRot -= 1.0;
-      debugCamPos.xRot %= 360;
-    }
-    if (IsControlPressed(0, 108)) {
-      // NUMPAD 4
-      debugCamPos.zRot += 1.0;
-      debugCamPos.zRot %= 360;
-    }
-    if (IsControlPressed(0, 107)) {
-      // NUMPAD 6
-      debugCamPos.zRot -= 1.0;
-      debugCamPos.zRot %= 360;
-    }
-    if (IsControlPressed(0, 117)) {
-      // NUMPAD 7
-      debugCamPos.yRot -= 1.0;
-      debugCamPos.yRot %= 360;
-    }
-    if (IsControlPressed(0, 118)) {
-      // NUMPAD 9
-      debugCamPos.yRot += 1.0;
-      debugCamPos.yRot %= 360;
-    }
-    if (IsControlPressed(0, 96)) {
-      // NUMPAD-
-      debugCamPos.fov -= 1.0;
-    }
-    if (IsControlPressed(0, 97)) {
-      // NUMPAD+
-      debugCamPos.fov += 1.0;
-    }
-  }
+if (debugCamActive === true) {
+const sinX = Math.sin((debugCamPos.xRot _ Math.PI) / 180);
+const sinY = Math.sin((debugCamPos.yRot _ Math.PI) / 180);
+const sinZ = Math.sin((debugCamPos.zRot _ Math.PI) / 180);
+const cosX = Math.cos((debugCamPos.xRot _ Math.PI) / 180);
+const cosY = Math.cos((debugCamPos.yRot _ Math.PI) / 180);
+const cosZ = Math.cos((debugCamPos.zRot _ Math.PI) / 180);
+if (IsControlPressed(0, 32)) {
+// W
+debugCamPos.x += 0.5 _ (cosZ _ sinX _ sinY - cosX _ sinZ);
+debugCamPos.y += 0.5 _ (cosX _ cosZ - sinX _ sinY _ sinZ);
+debugCamPos.z += 0.5 _ (cosY _ sinX);
+}
+if (IsControlPressed(0, 33)) {
+// S
+debugCamPos.x -= 0.5 _ (cosZ _ sinX _ sinY - cosX _ sinZ);
+debugCamPos.y -= 0.5 _ (cosX _ cosZ - sinX _ sinY _ sinZ);
+debugCamPos.z -= 0.5 _ (cosY _ sinX);
+}
+if (IsControlPressed(0, 34)) {
+// A
+debugCamPos.x -= 0.5 _ (cosY _ cosZ);
+debugCamPos.y -= 0.5 _ (cosY _ sinZ);
+debugCamPos.z -= 0.5 _ -sinY;
+}
+if (IsControlPressed(0, 35)) {
+// D
+debugCamPos.x += 0.5 _ (cosY _ cosZ);
+debugCamPos.y += 0.5 _ (cosY _ sinZ);
+debugCamPos.z += 0.5 _ -sinY;
+}
+if (IsControlPressed(0, 10)) {
+// PAGE UP
+debugCamPos.x += 0.5 _ (-cosX _ cosZ _ sinY + sinX _ sinZ);
+debugCamPos.y += 0.5 _ (-cosZ _ sinX + cosX _ sinY _ sinZ);
+debugCamPos.z += 0.5 _ (cosX _ cosY);
+}
+if (IsControlPressed(0, 11)) {
+// PAGE DOWN
+debugCamPos.x -= 0.5 _ (-cosX _ cosZ _ sinY + sinX _ sinZ);
+debugCamPos.y -= 0.5 _ (-cosZ _ sinX + cosX _ sinY _ sinZ);
+debugCamPos.z -= 0.5 _ (cosX _ cosY);
+}
+if (IsControlPressed(0, 111)) {
+// NUMPAD 8
+debugCamPos.xRot += 1.0;
+debugCamPos.xRot %= 360;
+}
+if (IsControlPressed(0, 110)) {
+// NUMPAD 5
+debugCamPos.xRot -= 1.0;
+debugCamPos.xRot %= 360;
+}
+if (IsControlPressed(0, 108)) {
+// NUMPAD 4
+debugCamPos.zRot += 1.0;
+debugCamPos.zRot %= 360;
+}
+if (IsControlPressed(0, 107)) {
+// NUMPAD 6
+debugCamPos.zRot -= 1.0;
+debugCamPos.zRot %= 360;
+}
+if (IsControlPressed(0, 117)) {
+// NUMPAD 7
+debugCamPos.yRot -= 1.0;
+debugCamPos.yRot %= 360;
+}
+if (IsControlPressed(0, 118)) {
+// NUMPAD 9
+debugCamPos.yRot += 1.0;
+debugCamPos.yRot %= 360;
+}
+if (IsControlPressed(0, 96)) {
+// NUMPAD-
+debugCamPos.fov -= 1.0;
+}
+if (IsControlPressed(0, 97)) {
+// NUMPAD+
+debugCamPos.fov += 1.0;
+}
+}
 });
-
-
 
     const toUpgrade = [
       eVehicleModType.VMT_TURBO,
@@ -99,3 +97,368 @@ setTick(() => {
       SetVehicleColours(myVehicle, 12, 12);
       SetVehicleWindowTint(myVehicle, 1);
     }
+
+
+    local genDelivery = 0
+
+uberClockOn = false
+local inService = false
+local ringBell = "~w~~g~[E]~w~ to Notify Customer!"
+local jobMarker = false
+local pickUp = false
+local needBag = true
+local pickUpLocation = {
+[1] = {x = -110.23637390137, y = 6460.947265625, z = 31.640758514404},
+[2] = {x = 1417.0670166016, y = 6339.2294921875, z = 24.398368835449},
+[3] = {x = 2160.2443847656, y = 4789.5737304688, z = 41.963150024414},
+[4] = {x = 1365.9194335938, y = 4358.037109375, z = 44.500617980957},
+[5] = {x = -6.5007944107056, y = 409.06512451172, z = 120.28810119629},
+[6] = { x = -110.23637390137, y = 6460.947265625, z = 31.640758514404},
+[7] = { x = 1417.0670166016, y = 6339.2294921875, z = 24.398368835449},
+[8] = { x = 2160.2443847656, y = 4789.5737304688, z = 41.963150024414},
+[9] = { x = 1365.9194335938, y = 4358.037109375, z = 44.500617980957},
+[10] = { x = -6.5007944107056, y = 409.06512451172, z = 120.28810119629},
+[11] = { x = -1108.4790039063, y = -1527.4197998047, z = 6.7795305252075},
+[12] = { x = -1142.0104980469, y = -1461.5043945313, z = 4.625105381012},
+[13] = { x = -1145.6956787109, y = -1466.0257568359, z = 4.5079979896545},
+[14] = { x = -1135.5202636719, y = -1468.6529541016, z = 4.6175394058228},
+[15] = { x = -1010.4229125977, y = -1491.0706787109, z = 4.9041981697083},
+[16] = { x = -991.26556396484, y = -1518.8041992188, z = 4.9042091369629},
+[17] = { x = -1010.3751220703, y = -1532.2969970703, z = 4.904194355011},
+[18] = { x = -1049.1295166016, y = -1580.93359375, z = 4.979567527771},
+[19] = { x = -1029.9136962891, y = -1604.2303466797, z = 4.955735206604},
+[20] = { x = -1058.4339599609, y = -1657.4538574219, z = 4.6725668907166},
+[21] = { x = -1059.8604736328, y = -1658.6420898438, z = 4.673131942749},
+[22] = { x = -1098.3974609375, y = -1678.8406982422, z = 4.3595299720764},
+[23] = { x = -1153.529296875, y = -1249.2800292969, z = 7.0191168785095},
+[24] = { x = -1532.8112792969, y = -275.74008178711, z = 49.737369537354},
+[25] = { x = -1596.9000244141, y = -352.34136962891, z = 45.97647857666},
+[26] = { x = -1597.9772949219, y = -421.83605957031, z = 41.405319213867},
+[27] = { x = -1970.4464111328, y = 245.88439941406, z = 87.812103271484},
+[28] = { x = -1961.1489257813, y = 211.87646484375, z = 86.802978515625},
+[29] = { x = -1922.5256347656, y = 298.27227783203, z = 89.287117004395},
+[30] = { x = -1995.4147949219, y = 301.05755615234, z = 91.964546203613},
+[31] = { x = -2009.1490478516, y = 367.4674987793, z = 94.814270019531},
+[32] = { x = -2011.1314697266, y = 445.18188476563, z = 103.01605987549},
+[33] = { x = -2014.9849853516, y = 499.88424682617, z = 107.17182922363},
+[34] = { x = -1937.5067138672, y = 551.09478759766, z = 115.02314758301},
+[35] = { x = -1520.3803710938, y = 849.03436279297, z = 181.59452819824},
+[36] = { x = -1516.8272705078, y = 851.51812744141, z = 181.59452819824},
+[37] = { x = -1501.5354003906, y = 856.91851806641, z = 181.5945892334},
+[38] = { x = 228.6344909668, y = 765.66735839844, z = 204.97648620605},
+[39] = { x = 1009.6603393555, y = -572.58184814453, z = 60.59440612793},
+[40] = { x = 999.56195068359, y = -593.88922119141, z = 59.638542175293},
+[41] = { x = 1220.7264404297, y = -689.46740722656, z = 61.103172302246},
+[42] = { x = 1229.58984375, y = -725.33026123047, z = 60.956691741943},
+[43] = { x = 1214.5883789063, y = -1644.2902832031, z = 48.645977020264}
+}
+local storePickups = {
+[1] = {x = -1268.8443603516, y = -877.85345458984, z = 11.930304527283},
+[2] = { x = -3243.7890625, y = 1005.7997436523, z = 12.830699920654},
+[3] = { x = 2697.5231933594, y = 4324.5263671875, z = 45.851947784424},
+[4] = { x = 2741.7912597656, y = 4412.4028320313, z = 48.623245239258},
+[5] = { x = 2481.9450683594, y = 4100.3442382813, z = 38.13512802124},
+[6] = {x = 1983.2137451172, y = 3708.47265625, z = 32.109191894531}
+--[[[3] = {x = -3038.939, y = 585.954,  z = 6.908},
+  [4] = {x = -3241.927, y = 1001.462, z = 11.830},
+  [5] = {x = 547.431,   y = 2671.710, z = 41.156},
+  [6] = {x = 1961.464,  y = 3740.672, z = 31.343},
+  [7] = {x = 2678.916,  y = 3280.671, z = 54.241},
+  [8] = {x = 1729.216,  y = 6414.131, z = 34.037},
+  [9] = {x = 1135.808,  y = -982.281,  z = 45.415},
+  [10] = {x = -1222.915, y = -906.983,  z = 11.326},
+  [11] =  {x = -1487.553, y = -379.107,  z = 39.163},
+  [12] =  {x = -2968.243, y = 390.910,   z = 14.043},
+  [13] =  {x = 1166.024,  y = 2708.930,  z = 37.157},
+  [14] =  {x = 1392.562,  y = 3604.684,  z = 33.980},
+  [15] = {x = -48.519,   y = -1757.514, z = 28.421},
+  [16] =  {x = 1163.373,  y = -323.801,  z = 68.205},
+  [17] =  {x = -707.501,  y = -914.260,  z = 18.215},
+  [18] =  {x = -1820.523, y = 792.518,   z = 137.118},
+  [19] = {x = 1698.388,  y = 4924.404,  z = 41.063},
+  [20] = {x = 127.830,   y = -1284.796, z = 28.280}, --StripClub
+  [21] = {x = -1393.409, y = -606.624,  z = 29.319}, --Bahamamas
+  [22] = {x = -559.906,  y = 287.093,   z = 81.176}, --Tequila la
+  [23] = {x = 1986.18,   y = 3054.31,   z = 46.32},
+  [24] = {x = -1586.922,   y = -3012.860, z = -77.004}, --Upstairs
+  [25] = {x = -1578.204,   y = -3014.460, z = -80.005}]]--
+
+}
+local PedHashes = {
+[1] = {"g_m_m_armboss_01"},
+[2] = {"a_m_m_farmer_01"},
+[3] = {"u_m_y_babyd"},
+[4] = {"s_f_y_bartender_01"},
+[5] = {"a_m_y_business_03"}
+
+}
+
+Citizen.CreateThread(function()
+while true do
+Citizen.Wait(0)
+if uberClockOn and not inService then
+for i = 1, 10 do
+availableDelivery = CreateRandom(5000, 10000) --- change this back to a real value after testing
+end
+Citizen.Wait(availableDelivery)
+
+    -- print(inService) -- uberClockOn True inService False
+    PlaySoundFrontend(-1, "ROBBERY_MONEY_TOTAL", "HUD_FRONTEND_CUSTOM_SOUNDSET", 1)
+    --print(availableDelivery)
+    inService = true
+    --  print(inService)
+    enRouteOrderPickup = getRandomPickupLocation(storePickups)     -- pickup
+    enRoutePickup = getRandomDeliveryLocation(pickUpLocation) --
+    -- enRoutePed = getRandomPed(PedHashes)
+    -- print(enRoutePed) -- TABLE
+    -- print(json.encode(enRoutePed)) --UNHASHED
+
+
+    -- values = CreateRandomDelivery(#pickUpLocation)
+    -- newEnRoutePed = json.encode(enRoutePed)
+    -- -- RequestModel(GetHashKey(newEnRoutePed))
+    --print(newEnRoutePed)
+    -- while enRoutePickup and enRouteOrderPickup == nil and not HasModelLoaded(GetHashKey(newEnRoutePed)) do
+    --Citizen.Wait(100)
+    -- end
+
+    print(json.encode(enRoutePickup)) -- TABLE
+    print(json.encode(enRouteOrderPickup)) --UNHASHED
+
+-- ADD NEED BAG SHIT HERE , MIGHT NEED A TRIGGER TO RETRIEVE SKIN COMPONENTS
+if uberClockOn and inService and not pickUp then
+startPickupOrder()
+pickUp = true
+while pickUp do
+Citizen.Wait(1)
+local ped = GetPlayerPed(-1)
+local playerCoords = GetEntityCoords(ped)
+local playerHeading = GetEntityHeading(ped)
+if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, enRouteOrderPickup.x, enRouteOrderPickup.y, enRouteOrderPickup.z, true ) < 1.2 and inService then
+DrawText3DTag(enRouteOrderPickup.x, enRouteOrderPickup.y, enRouteOrderPickup.z, ringBell)
+if IsControlJustPressed(1, 38) and pickUp and inService then
+RemoveBlip(pickupBlip)
+TriggerServerEvent("SAGA_JobCore:UberEatsAlert") -- Change to a diff alert
+TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 0, true)
+Citizen.Wait(7500)
+ClearPedTasks(ped)
+Citizen.Wait(7500)
+
+            if uberClockOn and inService and not jobMarker and pickUp then
+              startDelivery()
+              jobMarker = true
+              pickUp = false
+              while jobMarker do
+                Citizen.Wait(1)
+                local ped = GetPlayerPed(-1)
+                local playerCoords = GetEntityCoords(ped)
+                local playerHeading = GetEntityHeading(ped)
+
+
+                if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, enRoutePickup.x, enRoutePickup.y, enRoutePickup.z, true ) < 1.2 and jobMarker and inService then
+                  DrawText3DTag(enRoutePickup.x, enRoutePickup.y, enRoutePickup.z, ringBell)
+                  if IsControlJustPressed(1, 38) and jobMarker and inService then
+
+                    print("Sick Dude") -- Remember to do server event for cash.
+                    RemoveBlip(jobBlip)
+
+                    TriggerServerEvent("SAGA_JobCore:UberEatsAlert")
+                    TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_STAND_MOBILE_UPRIGHT", 0, true)
+                    Citizen.Wait(15000)
+                    --customerPed = CreatePed(4, GetHashKey(newEnRoutePed), enRoutePickup.x, enRoutePickup.y, enRoutePickup.z, playerHeading - 180, false, true)
+                    ClearPedTasks(ped)
+                    Citizen.Wait(15000)
+
+                    jobMarker = false
+                    inService = false
+                    pickUp = false
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
+end
+end
+end)
+
+function startDelivery()
+jobBlip = AddBlipForCoord(enRoutePickup.x, enRoutePickup.y, enRoutePickup.z)
+SetBlipSprite(jobBlip, 1)
+SetBlipColour(jobBlip, 12)
+SetNewWaypoint(enRoutePickup.x, enRoutePickup.y)
+-- createMarker()
+end
+
+function startPickupOrder()
+pickupBlip = AddBlipForCoord(enRouteOrderPickup.x, enRouteOrderPickup.y, enRouteOrderPickup.z)
+SetBlipSprite(pickupBlip, 1)
+SetBlipColour(pickupBlip, 12)
+SetNewWaypoint(enRouteOrderPickup.x, enRouteOrderPickup.y)
+-- createMarker()
+end
+
+function CreateRandom(x,y)
+genDelivery = genDelivery + 1
+if x ~= nil and y ~= nil then
+return math.floor(x +(math.random(math.randomseed(GetNetworkTimeAccurate()+genDelivery))*999999 %y))
+else
+return math.floor((math.random(math.randomseed(GetNetworkTimeAccurate()+genDelivery))*100))
+end
+end
+
+function getRandomDeliveryLocation(customerDelivery)
+return customerDelivery[math.random(1, #customerDelivery)]
+end
+
+function getRandomPickupLocation(customerPickup)
+return customerPickup[math.random(1, #customerPickup)]
+end
+
+--[[function getRandomPed(pedHashing)
+return pedHashing[math.random(1, #pedHashing)]
+end]]--
+
+function DrawText3DTag(x,y,z, text)
+local onScreen,\_x,\_y=World3dToScreen2d(x,y,z)
+local px,py,pz=table.unpack(GetGameplayCamCoords())
+SetTextOutline()
+SetTextEntry("STRING")
+SetTextCentre(1)
+AddTextComponentString(text)
+World3dToScreen2d(x,y,z, 0)
+DrawText(\_x,\_y)
+
+end
+
+RegisterCommand('goober', function(source, args, raw)
+local ped = GetPlayerPed( -1 )
+if not uberClockOn then
+--exports['mythic_notify']:DoHudText('inform', 'Uber Delivery: Active [Wait for Delivery]')
+uberClockOn = true
+inService = false
+-- print(starteduber)
+elseif uberClockOn then
+-- exports['mythic_notify']:DoHudText('error', 'Uber Delivery: Deactivated')
+uberClockOn = false
+inService = true
+-- print(starteduber)
+--removeblips()
+end
+end)
+
+RegisterCommand('gooberoff', function(source, args, raw)
+uberClockOn = false
+inService = false
+jobMarker = false
+RemoveBlip(jobBlip)
+end)
+
+Citizen.CreateThread(function()
+while true do
+Citizen.Wait(1)
+if IsControlPressed(0, 20) then
+-- local jobTitle = "POLICE"
+-- local jobLabel = "police"
+-- TriggerServerEvent("SAGA_JobCore:StartUp")
+--TriggerServerEvent("SAGA_JobCore:StartWork", jobTitle)
+--TriggerServerEvent("SAGA_JobCore:FinishWork")
+local player = GetPlayerPed(-1)
+SetPedArmour(player, 100)
+-- weapons = { "WEAPON_AK47", "WEAPON_UZI", "WEAPON_NIGHTSTICK", "WEAPON_PUMPSHOTGUN", "WEAPON_FLAREGUN", "WEAPON_ASSAULTSMG" }
+GiveWeaponToPed(player, "WEAPON_ASSAULTSMG", 255, 0, 1)
+--TriggerServerEvent("easydeploy:testUUID")
+local veh = GetVehiclePedIsUsing(player)
+SetVehicleBodyHealth(veh, 240.0)
+SetVehicleEngineHealth(veh, 1000)
+TriggerServerEvent('easydeploy:SagaTestInfo')
+--SetVehicleEngineTemperature(vehicle, temperature)
+
+      end
+
+end
+end)
+local v1 = true
+local urlTest = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Fgithub-153&psig=AOvVaw3K7-tnUp-vv8BJihOZecoV&ust=1583906168790000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMDuhbacj-gCFQAAAAAdAAAAABAI"
+
+Citizen.CreateThread(function()
+while v1 do Citizen.Wait(1)
+local playerPed = GetPlayerPed(-1)
+local playerCoords = GetEntityCoords(GetPlayerPed(-1), true)
+local heading = GetEntityHeading(GetPlayerPed(-1), true)
+local src = source
+--AddTextEntry('FE_THDR_GTAO', '~b~[SAGA ROLEPLAY]')
+if IsControlJustPressed(0, 20) then
+--print(playerPed , " " , "--GetPlayerPed--" , " " , " : Called Via Client")
+--print(playerCoords , " " ,"--GetEntityCoords--" , " " ," : Called Via Client")
+--print(heading, " ", "--GetEntityHeading--", " ", " : Called Via Client")
+-- CreateObject(object, playerCoords.x, playerCoords.y, playerCoords.z-1)
+-- local veh = GetVehiclePedIsUsing(playerPed)
+
+         --  vehicle = CreateVehicle("gtr", playerCoords.x+2,playerCoords.y+2, playerCoords.z+0.3, heading, true, true)
+          -- NetworkFadeInEntity(vehicle, true)
+            --print(playerCoords)
+           --GiveWeaponToPed(playerPed, "WEAPON_ASSAULTSMG", 255, 0, 1)
+        --TriggerServerEvent("easydeploy:SagaTestInfo")
+           --print(heading)
+
+        end
+    end
+
+end)
+
+RegisterNetEvent("SAGA:GetDataForSpawned")
+AddEventHandler("SAGA:GetDataForSpawned", function(test)
+local src = source
+test = exports["saga_id"]:SpawnedInAndLoaded()
+print(test)
+print(src)
+end)
+
+--[[Usable Stuffs]]
+--GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("GADGET_PARACHUTE"), true)
+
+RegisterCommand("v", function(src, args)
+local vehicleModel = args[1] or "adder"
+
+    if type(vehicleModel) == "string" then
+        vehicleModel = GetHashKey(vehicleModel)
+    end
+
+    while not HasModelLoaded(vehicleModel) do
+        RequestModel(vehicleModel)
+
+        Citizen.Wait(5)
+    end
+
+    local vehicle = CreateVehicle(vehicleModel, GetEntityCoords(PlayerPedId()), GetEntityHeading(PlayerPedId()), true)
+
+    NetworkFadeInEntity(vehicle, true)
+
+    TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+
+end)
+
+RegisterCommand("dv", function()
+local vehicle = GetVehiclePedIsUsing(PlayerPedId())
+
+    if DoesEntityExist(vehicle) then
+        TaskLeaveVehicle(PlayerPedId(), vehicle, 0)
+
+        while IsPedInVehicle(PlayerPedId(), vehicle, true) do
+            Citizen.Wait(0)
+        end
+
+        Citizen.Wait(500)
+
+        NetworkFadeOutEntity(vehicle, true, true)
+
+        Citizen.Wait(100)
+
+        DeleteVehicle(vehicle)
+    end
+
+end)

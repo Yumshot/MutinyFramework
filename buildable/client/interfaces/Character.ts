@@ -13,8 +13,8 @@ export interface CharacterValues {
   ban_info: any[];
 }
 
-
 export interface PlayerStatus {
+  hasSpawned: boolean;
   isInVehicle: boolean;
   isDead: boolean;
   isShooting: boolean;
