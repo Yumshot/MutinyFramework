@@ -4,4 +4,8 @@ export interface Job {
   active: boolean;
   pay: number;
   tax_rate: number;
+  exp: number;
+  rank: number;
+  rank_exp: number;
+  possible_ranks: string[];
 }
