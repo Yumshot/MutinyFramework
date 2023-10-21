@@ -67,7 +67,7 @@ on("onClientGameTypeStart", async () => {
  * @function firstSpawn
  * @returns {Promise<void>}
  */
-async function firstSpawn() {
+async function firstSpawn(): Promise<void> {
   // Define the `spawnPlayerOptions` object.
   let spawnPlayerOptions: { x: any; y: any; z: any; model: string };
 
@@ -126,8 +126,10 @@ function setNuiFocus() {
 onNet(
   "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",
   async (characters: any) => {
-    ShutdownLoadingScreen();
-    ShutdownLoadingScreenNui();
+    if (GetIsLoadingScreenActive()) {
+      ShutdownLoadingScreen();
+      ShutdownLoadingScreenNui();
+    }
     exp.spawnmanager.spawnPlayer(
       {
         x: SPAWN_CAM_LOC.x,
@@ -158,14 +160,13 @@ onNet(
         await Delay(1000);
         SetCamActive(CAM_FOR_CHARACTER_SELECT, true);
         RenderScriptCams(true, true, 1, true, false);
+        setNuiFocus();
         await Delay(2500);
         SendNUIMessage({
           event: "OPEN_CHARACTER_SELECT",
           characters: characters,
         });
-
         await Delay(100);
-        setNuiFocus();
       }
     );
   }

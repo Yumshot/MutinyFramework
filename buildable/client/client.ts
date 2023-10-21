@@ -5,3 +5,5 @@ import "./handlers/teleport";
 import "./handlers/tick";
 import "./character/identity";
 import "./handlers/commands";
+import "./handlers/blips";
+import "./handlers/zones";

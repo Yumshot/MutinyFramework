@@ -19,6 +19,14 @@
     "mutiny_test": {
       "enabled": true,
       "restartOnChange": true
+    },
+    "mutiny_notifications": {
+      "enabled": true,
+      "restartOnChange": true
+    },
+    "mutiny_notify": {
+      "enabled": true,
+      "restartOnChange": true
     }
   },
   "serverUpdateChannel": "latest",

@@ -1,15 +1,14 @@
+import { DATABASE_COLLECTION_USERS } from "database/init";
+import { Delay, findSteam } from "utils/functions";
+
 RegisterCommand(
   "tppos",
   (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:tppos", source, args);
-  },
-  true
-);
-
-RegisterCommand(
-  "tpto",
-  (source: any, args: any[], raw: any) => {
-    emitNet("forfi-debugtools:tpto", source, args[0]);
+    emitNet(
+      "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:TELEPORT_TO_POS",
+      source,
+      args
+    );
   },
   true
 );
@@ -17,25 +16,9 @@ RegisterCommand(
 RegisterCommand(
   "tpm",
   (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:tpwaypoint", source);
+    emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:TELEPORT_TO_WP", source);
   },
   true
-);
-
-RegisterCommand(
-  "testsound",
-  (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:testsound", source, args);
-  },
-  false
-);
-
-RegisterCommand(
-  "getpos",
-  (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:getpos", source);
-  },
-  false
 );
 
 RegisterCommand(
@@ -67,33 +50,9 @@ RegisterCommand(
         licenseId = tempid;
       }
     }
-    emitNet("forfi-debugtools:getid", source, steamId, licenseId);
+    emitNet("MUTINY:CORE:CLIENT:COMMAND:GET_ID", source, steamId, licenseId);
   },
   false
-);
-
-RegisterCommand(
-  "debugcam",
-  (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:debugcam", source);
-  },
-  true
-);
-
-RegisterCommand(
-  "campos",
-  (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:campos", source);
-  },
-  true
-);
-
-RegisterCommand(
-  "setcampos",
-  (source: any, args: any, raw: any) => {
-    emitNet("forfi-debugtools:setcampos", source, args);
-  },
-  true
 );
 
 RegisterCommand(
@@ -128,6 +87,32 @@ RegisterCommand(
   "aps",
   (source: any, args: any, raw: any) => {
     emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", source);
+  },
+  false
+);
+
+RegisterCommand(
+  "n-test-success",
+  (source: any, args: any, raw: any) => {
+    console.log("test success");
+    emitNet("MUTINY:CORE:CLIENT:COMMAND:NOTIFICATION", source);
+  },
+  false
+);
+
+RegisterCommand(
+  "test-reset",
+  async (source: any, args: any, raw: any) => {
+    const player = source;
+    const steam = findSteam(player);
+    const user = await DATABASE_COLLECTION_USERS.findOne(steam);
+    emitNet("MUTINY:CORE:SERVER:CHARACTER:SPAWN:SET_DATA", user);
+    await Delay(500);
+    emitNet(
+      "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",
+      source,
+      user.characters
+    );
   },
   false
 );

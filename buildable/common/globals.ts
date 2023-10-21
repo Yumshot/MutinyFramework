@@ -275,6 +275,12 @@ export const LOCATIONS = {
   DEFAULT_SPAWN: { x: 7614.787, y: 1064.8, z: 1678.407 },
   DEFAULT_CAYO: { x: 4446.048, y: -4506.95, z: 3.574 },
   TESTING_POINT: { x: -729.5062866210938, y: -1315.9725341796876, z: 2.0 },
+  TESTING_POINT_2: {
+    x: 1459.1693115234375,
+    y: -1930.8311767578125,
+    z: 71.80451965332031,
+    heading: 80.43378448486328,
+  },
 };
 
 /**
@@ -336,7 +342,7 @@ export const TARGET_MODELS = {
 export const BASE_MODELS = ["mp_m_freemode_01", "mp_f_freemode_01"];
 
 export const CHARACTER_CREATE_APPEARANCE_CONFIG = {
-  ped: false,
+  ped: true,
   headBlend: true,
   faceFeatures: true,
   headOverlays: true,

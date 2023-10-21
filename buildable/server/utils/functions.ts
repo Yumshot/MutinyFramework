@@ -15,7 +15,6 @@ export const findSteam = (source: string | number) => {
   return query;
 };
 
-
 export function getRandomInRange(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }

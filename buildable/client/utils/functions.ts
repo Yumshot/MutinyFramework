@@ -68,3 +68,17 @@ export const RemoveVehicle = (myVehicle: number) => {
 export const HasSpawned = (): boolean => {
   return PLAYER_STATUS.hasSpawned;
 };
+
+export const CalculateDistance = (
+  x1: number,
+  y1: number,
+  z1: number,
+  x2: number,
+  y2: number,
+  z2: number
+): number => {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dz = z2 - z1;
+  return Math.hypot(dx, dy, dz);
+};

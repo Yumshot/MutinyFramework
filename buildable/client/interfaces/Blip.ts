@@ -1,4 +1,5 @@
-export interface Blip {
+export interface IBlip {
+  id: number;
   name: string;
   x: number;
   y: number;
@@ -7,4 +8,4 @@ export interface Blip {
   colour: number;
   blip: number;
   hidden: boolean;
-};
+}
