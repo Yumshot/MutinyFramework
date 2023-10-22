@@ -1,11 +1,18 @@
 import { faker } from "@faker-js/faker";
 import { Scenarios } from "enums/Scenarios";
-import { MakeModelRequest } from "utils/functions";
+import { Model, Vector3, World } from "fivem-js";
+import { SetupJobPeds } from "utils/functions";
 
 const MALE_WORKER = {
   first_name: faker.person.firstName("male"),
   last_name: faker.person.lastName("male"),
 };
+
+const FEMALE_WORKER = {
+  first_name: faker.person.firstName("female"),
+  last_name: faker.person.lastName("female"),
+};
+
 export const JOB_LOCATIONS = {
   dock_worker: {
     model: "s_m_m_dockwork_01",
@@ -38,80 +45,41 @@ export let JOB_NPCS: IJobNpc[] = [];
 export const CreatePedsAtJobLocations = async () => {
   // create a loop that loops over JOB_LOCATIONS, and creates a ped at each location with the handle of the ped being the key of the object
   for (const [key, value] of Object.entries(JOB_LOCATIONS)) {
-    await MakeModelRequest({ model: value.model }, 500);
-    const ped = CreatePed(
-      4,
-      value.model,
-      value.x,
-      value.y,
-      value.z - 1,
-      value.heading,
-      false,
-      true
+    const ped = await World.createPed(
+      new Model(value.model),
+      new Vector3(value.x, value.y, value.z - 1),
+      value.heading
     );
-    if (!DoesEntityExist(ped)) {
-      console.log("ped does not exist");
-      continue;
+
+    if (!ped) {
+      return console.log(`Failed to create ped for job ${key}`);
     }
-    SetEntityAsMissionEntity(ped, true, true);
-    SetBlockingOfNonTemporaryEvents(ped, true);
-    SetPedFleeAttributes(ped, 0, false);
-    SetPedCombatAttributes(ped, 17, true);
-    SetPedCombatAttributes(ped, 5, true);
-    SetPedCombatAttributes(ped, 46, true);
-    SetPedCombatAttributes(ped, 26, true);
-    SetPedCombatAttributes(ped, 0, true);
-    SetPedCombatAttributes(ped, 2, true);
 
-    SetPedRelationshipGroupHash(ped, GetHashKey("CIVMALE"));
-    SetRelationshipBetweenGroups(
-      0,
-      GetHashKey("CIVMALE"),
-      GetHashKey("PLAYER")
-    );
-    SetRelationshipBetweenGroups(
-      0,
-      GetHashKey("PLAYER"),
-      GetHashKey("CIVMALE")
-    );
+    console.log(ped);
+    const pedHandle = ped.Handle;
+    SetupJobPeds(pedHandle);
 
-    FreezeEntityPosition(ped, true);
-
-    SetPedDiesWhenInjured(ped, false);
-
-    SetPedConfigFlag(ped, 118, true);
-
-    SetPedConfigFlag(ped, 184, true);
-
-    SetPedConfigFlag(ped, 429, true);
-
-    SetPedConfigFlag(ped, 281, true);
-
-    SetEntityInvincible(ped, true);
-
-    if (!IsPedActiveInScenario(ped)) {
-      TaskStartScenarioInPlace(ped, Scenarios[11], 0, false);
+    if (!IsPedActiveInScenario(pedHandle)) {
+      TaskStartScenarioInPlace(pedHandle, Scenarios[11], 0, false);
     }
     JOB_NPCS.push({
-      ped,
+      ped: pedHandle,
       title: value.title,
       bio: value.bio,
       job: key,
       canMove: value.canMove,
       availableWork: value.availableWork,
       jobLimit: value.jobLimit,
-      coords: { x: value.x, y: value.y, z: value.z, heading: value.heading },
+      coords: {
+        x: value.x,
+        y: value.y,
+        z: value.z,
+        heading: value.heading,
+      },
       currentJobs: [],
     });
   }
 };
-
-interface IJobUser {
-  ped: number;
-  steam: string;
-  rank: number;
-  currentJob: string;
-}
 
 CreatePedsAtJobLocations()
   .then(() => {
