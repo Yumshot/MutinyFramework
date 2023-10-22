@@ -1,5 +1,6 @@
 import { DATABASE_COLLECTION_USERS } from "database/init";
 import { Delay, findSteam } from "utils/functions";
+import fs from "fs";
 
 RegisterCommand(
   "tppos",
@@ -121,6 +122,39 @@ RegisterCommand(
   "cped",
   (source: any, args: any, raw: any) => {
     emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:CLEAR_ALL_PEDS", source);
+  },
+  false
+);
+
+RegisterCommand(
+  "loc",
+  (source: any, args: any, raw: any) => {
+    const player = source;
+    const coords = GetEntityCoords(GetPlayerPed(player));
+    const rotation = GetEntityRotation(GetPlayerPed(player));
+    const insert = {
+      name: args[1].toUpperCase(),
+      x: coords[0],
+      y: coords[1],
+      z: coords[2],
+      heading: GetEntityHeading(GetPlayerPed(player)),
+      pack: coords,
+      rx: rotation[0],
+      ry: rotation[1],
+      rz: rotation[2],
+    };
+
+    // create a file called locations.ts in the root of the project if none exists, there is an array called const LOCATIONS = []; add the insert object to the array and save the file.
+    fs.appendFile(
+      "./locations.ts",
+      `\nexport const LOCATION_${args[0].toUpperCase()} = ${JSON.stringify(
+        insert
+      )};`,
+      function (err) {
+        if (err) throw err;
+        console.log("Saved!");
+      }
+    );
   },
   false
 );
