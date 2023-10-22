@@ -1,4 +1,5 @@
 import {
+  CalculateDistance,
   Delay,
   RemoveVehicle,
   SpawnVehicle,
@@ -9,37 +10,66 @@ import { DEFAULTS, LOCALES } from "../../common/globals";
 import { JOB_NPCS } from "./peds";
 
 let isAutoPilotActive = false;
-setTick(async () => {
-  await Delay(7500);
-  if (isAutoPilotActive) {
-    const ped = PlayerPedId();
-    const [x, y, z] = GetEntityCoords(ped, true);
-    const blip = GetFirstBlipInfoId(8);
-    const [blipX, blipY, blipZ] = GetBlipCoords(blip);
-    const distance = Vdist(x, y, z, blipX, blipY, blipZ);
-    if (distance <= 10.0) {
-      let speedModifier = 19.0;
-      const vehicle = GetVehiclePedIsIn(ped, false);
-      ClearPedTasks(ped);
-      for (let i = 19.0; i > 0.0; i--) {
-        SetVehicleForwardSpeed(vehicle, i);
-        await Delay(200);
-        speedModifier = i;
-      }
-      if (speedModifier <= 0.0) {
-        emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT");
-      }
-    }
-  }
-  if (!hasFiredStartEvent) {
-    hasSentNotification = false;
-  }
-});
-
 let isRaycasting = false;
 let hasSentNotification = false;
 let lastTargetHit: any;
 let hasFiredStartEvent = false;
+let CAM_TOGGLE = "F10";
+let CAM_TOGGLED = false;
+
+RegisterKeyMapping(
+  "+cinematic",
+  "Toggle Cinematic View",
+  "KEYBOARD",
+  CAM_TOGGLE
+);
+RegisterCommand(
+  "+cinematic",
+  () => {
+    if (IsPauseMenuActive()) {
+      return;
+    }
+    CAM_TOGGLED = !CAM_TOGGLED;
+    SendNUIMessage({
+      event: "BLK_BAR",
+      state: CAM_TOGGLED,
+    });
+  },
+  false
+);
+let timer = 1000;
+setTick(async () => {
+  if (IsPauseMenuActive()) {
+    CAM_TOGGLED = false;
+    SendNUIMessage({
+      event: "BLK_BAR",
+      state: CAM_TOGGLED,
+    });
+    return;
+  }
+  if (isAutoPilotActive) {
+    timer = 1000;
+    const ped = PlayerPedId();
+    const vehicle = GetVehiclePedIsIn(ped, false);
+    const blip = GetFirstBlipInfoId(8);
+    const [x, y, z] = GetBlipCoords(blip);
+    const entity = GetEntityCoords(vehicle, true);
+    const distance = CalculateDistance(
+      x,
+      y,
+      z,
+      entity[0],
+      entity[1],
+      entity[2]
+    );
+    if (distance <= 50.0) {
+      timer = 0;
+      emit("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", true);
+    }
+  }
+  await Delay(timer);
+});
+
 setInterval(() => {
   if (
     hasSentNotification &&
@@ -63,7 +93,6 @@ setInterval(() => {
           lastTargetHit.npc.bio.last,
         text: "Alright, let me see what ive got for ya.",
         position: "top-right",
-        color: "success",
         sticky: true,
         width: "auto",
         progress: "auto",
@@ -99,28 +128,6 @@ setInterval(() => {
   const head = GetPedBoneCoords(entityHit, 31086, 0, 0, 0);
   DrawLine(x, y, z, head[0], head[1], head[2], 0, 0, 255, 255);
   const closestPed = entityHit;
-  // get information about the closest ped { model, relationship, type, current coordinates, heading, etc }
-  // const obj = {
-  //   model: GetEntityModel(closestPed),
-  //   relationship: GetRelationshipBetweenGroups(
-  //     GetPedRelationshipGroupHash(closestPed),
-  //     GetPedRelationshipGroupHash(ped)
-  //   ),
-  //   type: GetPedType(closestPed),
-  //   coords: GetEntityCoords(closestPed, true),
-  //   heading: GetEntityHeading(closestPed),
-  //   health: GetEntityHealth(closestPed),
-  //   armor: GetPedArmour(closestPed),
-  //   isInVehicle: IsPedInAnyVehicle(closestPed, false),
-  //   vehicle: GetVehiclePedIsIn(closestPed, false),
-  //   isDead: IsPedDeadOrDying(closestPed, true),
-  //   isRagdoll: IsPedRagdoll(closestPed),
-  //   isWalking: IsPedWalking(closestPed),
-  //   isRunning: IsPedRunning(closestPed),
-  //   isSprinting: IsPedSprinting(closestPed),
-  //   isStopped: IsPedStopped(closestPed),
-  // };
-  // console.log(obj);
 
   JOB_NPCS.forEach((npc) => {
     if (npc.ped === closestPed) {
@@ -184,14 +191,42 @@ onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:CLEAR_ALL_PEDS", () => {
 });
 
 // Stop autopilot if it is active
-onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", () => {
-  if (!isAutoPilotActive) return;
-  const ped = PlayerPedId();
-  const vehicle = GetVehiclePedIsIn(ped, false);
-  ClearPedTasks(ped);
-
-  isAutoPilotActive = false;
-});
+onNet(
+  "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT",
+  (intercept: boolean) => {
+    if (intercept) {
+      const ped = PlayerPedId();
+      const notification: INotification = {
+        title: `Autism Autopilot`,
+        text: "Arrived at Destination.",
+        position: "top-right",
+        sticky: true,
+        width: "auto",
+        progress: "auto",
+      };
+      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
+      ClearPedTasks(ped);
+      isAutoPilotActive = false;
+      timer = 2500;
+    } else {
+      const ped = PlayerPedId();
+      const notification: INotification = {
+        title: `Autism Autopilot`,
+        text: "Autopilot Cancelled.",
+        position: "top-right",
+        color: "danger",
+        sticky: true,
+        duration: 1000,
+        width: "auto",
+        progress: "auto",
+      };
+      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
+      ClearPedTasks(ped);
+      isAutoPilotActive = false;
+      timer = 2500;
+    }
+  }
+);
 
 // Start autopilot to drive to a waypoint
 onNet(
@@ -206,9 +241,29 @@ onNet(
       DEFAULTS.AUTOPILOT_SPEED_1,
       DEFAULTS.AUTOPILOT_SPEED_2,
     ];
+    if (level > 1) level = 1;
+    if (level < 0) level = 0;
 
     if (DoesBlipExist(blip)) {
+      const notification: INotification = {
+        title: `Autism Autopilot`,
+        text: "Autopilot has been started, please do not leave the vehicle.",
+        position: "top-right",
+        sticky: true,
+        width: "auto",
+        progress: "auto",
+      };
+      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
       const [x, y, z] = GetBlipCoords(blip);
+      SetDriverAbility(ped, 1.0);
+      SetDriverAggressiveness(ped, 0.0);
+      TaskVehicleDriveWander(
+        ped,
+        vehicle,
+        speedModifier[level],
+        driveModeModifier[level]
+      );
+      SetDriveTaskDrivingStyle(ped, driveModeModifier[level]);
       TaskVehicleDriveToCoordLongrange(
         ped,
         vehicle,
@@ -217,11 +272,19 @@ onNet(
         z,
         speedModifier[level],
         driveModeModifier[level],
-        1.0
+        5.0
       );
       isAutoPilotActive = true;
     } else {
-      console.log("Give me a waypoint to drive to!");
+      const notification: INotification = {
+        title: `Autism Autopilot`,
+        text: "Give me a waypoint to drive to!",
+        position: "top-right",
+        color: "danger",
+        sticky: true,
+        width: "auto",
+      };
+      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
     }
   }
 );
