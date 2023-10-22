@@ -1,8 +1,10 @@
 import { DATABASE_COLLECTION_USERS } from "database/init";
-import { Priority } from "interfaces/Priority";
+import { User } from "interfaces/Character";
 import { v4 as uuidv4 } from "uuid";
-export const PRIORITY_CHECK = async (src: string | number, options: Priority) => {
-  let user = await DATABASE_COLLECTION_USERS.find({ steam: options.steam }).next();
+export const PRIORITY_CHECK = async (src: string | number, options: User) => {
+  let user = await DATABASE_COLLECTION_USERS.find({
+    steam: options.steam,
+  }).next();
   const document = {
     name: options.name,
     hex: uuidv4(),
@@ -22,7 +24,10 @@ export const PRIORITY_CHECK = async (src: string | number, options: Priority) =>
     try {
       await DATABASE_COLLECTION_USERS.insertOne(document);
     } catch (error) {
-      return DropPlayer(src as string, "An error occurred. Please report this issue to the server developers.");
+      return DropPlayer(
+        src as string,
+        "An error occurred. Please report this issue to the server developers."
+      );
     }
     user = await DATABASE_COLLECTION_USERS.findOne(options);
     return user;
@@ -30,5 +35,3 @@ export const PRIORITY_CHECK = async (src: string | number, options: Priority) =>
     return user;
   }
 };
-
-
