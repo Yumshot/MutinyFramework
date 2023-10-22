@@ -3,13 +3,15 @@
  * @param data - An array containing the new character object and the player's priority data.
  */
 import { DATABASE_COLLECTION_USERS } from "database/init";
+import { BankAccount } from "interfaces/Bank";
 import {
   DataParameterCreateUserCredentials,
   NewCharacter,
 } from "interfaces/Character";
 import { Job } from "interfaces/Job";
-import { Priority } from "interfaces/Priority";
+import { DEFAULT_JOBS } from "sv_globals";
 import { Logger } from "utils/logger";
+import { v4 as uuidv4 } from "uuid";
 
 // Define the function to create a new character
 onNet(
@@ -32,18 +34,14 @@ onNet(
       z: 3.574,
       heading: 160.0,
     };
-    const defaultJob: Job = {
-      title: "UNEMPLOYED",
-      active: true,
-      pay: 0,
-      tax_rate: 0,
-    };
+    const defaultJobs: Job[] = DEFAULT_JOBS;
     const defaultFunds = {
       cash: { amount: 0 },
       bank: [
         {
           id: 1,
           name: "Checking",
+          acc_number: "0000000000",
           balance: 0,
           transactions: [] as object[],
           loans: [] as { [key: string]: any }[],
@@ -51,11 +49,12 @@ onNet(
         {
           id: 2,
           name: "Savings",
+          acc_number: "0000000000",
           balance: 0,
           transactions: [],
           loans: [],
         },
-      ],
+      ] as BankAccount[],
     };
     const defaultIndex = 0;
 
@@ -64,7 +63,7 @@ onNet(
       index: data[0].index + 1 || defaultIndex,
       ...data[0],
       last_location: data[0].last_location || defaultLocation,
-      job: data[0].job && data[0].job.length > 0 ? data[0].job : [defaultJob],
+      job: data[0].job && data[0].job.length > 0 ? data[0].job : defaultJobs,
       funds: data[0].funds || defaultFunds,
     };
 
