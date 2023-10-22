@@ -26,14 +26,12 @@ onNet("MUTINY:CORE:SERVER:CHARACTER:JOBS:ELIGIBLE_CHECK", async (data: any) => {
     $set: { characters: GATHERED_USER.characters },
   };
   try {
-    const result2 = await DATABASE_COLLECTION_USERS.updateOne(query, update);
-    setTimeout(() => {
-      emitNet(
-        "MUTINY:CORE:CLIENT:CHARACTER:JOBS:ELIGIBLE_CHECK:RESPONSE",
-        source,
-        result
-      );
-    }, 1000);
+    await DATABASE_COLLECTION_USERS.updateOne(query, update);
+    emitNet(
+      "MUTINY:CORE:CLIENT:CHARACTER:JOBS:ELIGIBLE_CHECK:RESPONSE",
+      source,
+      { data, result }
+    );
   } catch (error) {
     console.error(error);
   }
