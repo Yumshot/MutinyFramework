@@ -1,4 +1,3 @@
-import { DebugLocation } from "handlers/debug";
 import { Delay } from "utils/functions";
 
 let characterIdentity: any = null;
@@ -36,5 +35,3 @@ RegisterCommand(
   },
   false
 );
-
-RegisterCommand("loc", DebugLocation, false);
