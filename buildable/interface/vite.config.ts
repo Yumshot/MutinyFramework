@@ -8,7 +8,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   base: '',
   build: {
-    outDir: '../../../../mutiny-server/resources/mutiny_core/'
+    emptyOutDir: true,
+    outDir: '../../../mutiny-server/resources/mutiny_core/interface'
   },
   plugins: [vue(), vueJsx()],
   resolve: {

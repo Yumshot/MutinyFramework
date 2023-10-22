@@ -145,3 +145,27 @@ on("MUTINY:NOTIFY:CREATE_NOTIFY", (data: INotification) => {
     data: notify,
   });
 });
+
+onNet("MUTINY:NOTIFY:CREATE_NOTIFY_FROM_SERVER", (data: INotification) => {
+  console.log("SOME DATA ", data);
+  const notify = new Notification(
+    data.title,
+    data.text,
+    data.position,
+    data.color,
+    data.border,
+    data.icon,
+    data.duration,
+    data.flat,
+    data.sticky,
+    data.square,
+    data.width,
+    data.progress,
+    data.notPadding
+  );
+  console.log(notify);
+  SendNUIMessage({
+    type: "notification",
+    data: notify,
+  });
+});

@@ -30,7 +30,7 @@ for (const context of ["client", "server"]) {
     .build({
       bundle: true,
       entryPoints: [`${context}/${context}.ts`],
-      outfile: `../../../mutiny-server/resources/mutiny_notify/${context}.js`,
+      outfile: `../../mutiny-server/resources/mutiny_notify/${context}.js`,
       watch: production
         ? false
         : {
