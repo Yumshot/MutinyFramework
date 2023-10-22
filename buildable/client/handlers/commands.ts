@@ -4,9 +4,10 @@ import {
   SpawnVehicle,
   TpToCoords,
 } from "utils/functions";
-import { INotification } from "../interfaces/Notification";
+import { INotification } from "../../common/interfaces/Notification";
+import { DEFAULTS, LOCALES } from "../../common/globals";
+import { JOB_NPCS } from "./peds";
 
-import { DEFAULTS } from "../../common/globals";
 let isAutoPilotActive = false;
 setTick(async () => {
   await Delay(7500);
@@ -30,8 +31,154 @@ setTick(async () => {
       }
     }
   }
+  if (!hasFiredStartEvent) {
+    hasSentNotification = false;
+  }
 });
 
+let isRaycasting = false;
+let hasSentNotification = false;
+let lastTargetHit: any;
+let hasFiredStartEvent = false;
+setInterval(() => {
+  if (
+    hasSentNotification &&
+    lastTargetHit.npc.availableWork &&
+    lastTargetHit.npc.currentJobs.length != lastTargetHit.npc.jobLimit &&
+    !isRaycasting &&
+    !hasFiredStartEvent
+  ) {
+    if (IsControlJustPressed(0, 38)) {
+      emitNet(
+        "MUTINY:CORE:SERVER:CHARACTER:JOBS:ELIGIBLE_CHECK",
+        lastTargetHit
+      );
+      hasFiredStartEvent = true;
+      const notification: INotification = {
+        title:
+          `[${lastTargetHit.npc.title}]` +
+          " " +
+          lastTargetHit.npc.bio.first +
+          " " +
+          lastTargetHit.npc.bio.last,
+        text: "Alright, let me see what ive got for ya.",
+        position: "top-right",
+        color: "success",
+        sticky: true,
+        width: "auto",
+        progress: "auto",
+        icon: LOCALES.NOTIFICATIONS.DOCK_WORKER_ICON,
+      };
+      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
+    }
+  }
+  if (!isRaycasting) return;
+  const ped = PlayerPedId();
+  const [x, y, z] = GetEntityCoords(ped, true);
+  const rayCast = StartShapeTestCapsule(
+    x,
+    y,
+    z + 0.5,
+    x,
+    y,
+    z,
+    1.25,
+    10,
+    ped,
+    7
+  );
+  const [, hit, , , entityHit] = GetShapeTestResult(rayCast);
+  if (!hit || !entityHit) return;
+  // create a visual line between the player and the closest ped this has to be run on a setTick
+  // Find Entity Head
+  const head = GetPedBoneCoords(entityHit, 31086, 0, 0, 0);
+  DrawLine(x, y, z, head[0], head[1], head[2], 0, 0, 255, 255);
+  const closestPed = entityHit;
+  // get information about the closest ped { model, relationship, type, current coordinates, heading, etc }
+  // const obj = {
+  //   model: GetEntityModel(closestPed),
+  //   relationship: GetRelationshipBetweenGroups(
+  //     GetPedRelationshipGroupHash(closestPed),
+  //     GetPedRelationshipGroupHash(ped)
+  //   ),
+  //   type: GetPedType(closestPed),
+  //   coords: GetEntityCoords(closestPed, true),
+  //   heading: GetEntityHeading(closestPed),
+  //   health: GetEntityHealth(closestPed),
+  //   armor: GetPedArmour(closestPed),
+  //   isInVehicle: IsPedInAnyVehicle(closestPed, false),
+  //   vehicle: GetVehiclePedIsIn(closestPed, false),
+  //   isDead: IsPedDeadOrDying(closestPed, true),
+  //   isRagdoll: IsPedRagdoll(closestPed),
+  //   isWalking: IsPedWalking(closestPed),
+  //   isRunning: IsPedRunning(closestPed),
+  //   isSprinting: IsPedSprinting(closestPed),
+  //   isStopped: IsPedStopped(closestPed),
+  // };
+  // console.log(obj);
+
+  JOB_NPCS.forEach((npc) => {
+    if (npc.ped === closestPed) {
+      if (!hasSentNotification) {
+        hasSentNotification = true;
+        const notification: INotification = {
+          title: npc.title,
+          text: "You looking for some work?",
+          position: "top-center",
+          sticky: true,
+          width: "auto",
+          progress: "auto",
+          icon: LOCALES.NOTIFICATIONS.DOCK_WORKER_ICON,
+        };
+        emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
+        lastTargetHit = {
+          ped: closestPed,
+          npc: npc,
+        };
+      }
+    } else {
+      console.log("not a job npc");
+    }
+  });
+}, 0);
+
+RegisterKeyMapping(
+  "+MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
+  "TARGET",
+  "keyboard",
+  "LMENU"
+);
+
+// Set isRaycasting to false
+RegisterCommand(
+  "-MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
+  () => {
+    isRaycasting = false;
+  },
+  false
+);
+
+// Set isRaycasting to true
+RegisterCommand(
+  "+MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
+  () => {
+    isRaycasting = true;
+  },
+  false
+);
+
+// Clear all peds except the player's ped
+onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:CLEAR_ALL_PEDS", () => {
+  const peds = GetGamePool("CPed");
+  for (let i = 0; i < peds.length; i++) {
+    const ped = peds[i];
+    if (ped !== PlayerPedId()) {
+      DeleteEntity(ped);
+    }
+  }
+});
+
+// Stop autopilot if it is active
 onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", () => {
   if (!isAutoPilotActive) return;
   const ped = PlayerPedId();
@@ -41,6 +188,7 @@ onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", () => {
   isAutoPilotActive = false;
 });
 
+// Start autopilot to drive to a waypoint
 onNet(
   "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:START_AUTO_PILOT",
   async (level: number) => {
@@ -48,7 +196,7 @@ onNet(
     ClearPedTasks(ped);
     const vehicle = GetVehiclePedIsIn(ped, false);
     const blip = GetFirstBlipInfoId(8);
-    const driveModeModifier = [524863, 447];
+    const driveModeModifier = DEFAULTS.AUTOPILOT_DRIVE_MODIFIERS;
     const speedModifier = [
       DEFAULTS.AUTOPILOT_SPEED_1,
       DEFAULTS.AUTOPILOT_SPEED_2,
@@ -73,6 +221,7 @@ onNet(
   }
 );
 
+// Teleport to a set of coordinates
 onNet(
   "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:TELEPORT_TO_POS",
   (pos: string[]) => {
@@ -82,11 +231,11 @@ onNet(
   }
 );
 
+// Teleport to a waypoint
 onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:TELEPORT_TO_WP", async () => {
   const WaypointHandle = GetFirstBlipInfoId(8);
   if (DoesBlipExist(WaypointHandle)) {
     const waypointCoords = GetBlipInfoIdCoord(WaypointHandle);
-    console.log("HERE");
     emit("MUTINY:CORE:CLIENT:HANDLERS:TELEPORT", {
       x: waypointCoords[0],
       y: waypointCoords[1],
@@ -96,6 +245,7 @@ onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:TELEPORT_TO_WP", async () => {
   }
 });
 
+// Spawn an admin car
 onNet(
   "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:ADMIN_CAR_SPAWN",
   async (model: string | number) => {
@@ -129,6 +279,7 @@ onNet(
   }
 );
 
+// Get the player's Steam and license IDs
 onNet(
   "MUTINY:CORE:CLIENT:COMMAND:GET_ID",
   (steamId: string, licenseId: string) => {
@@ -137,6 +288,7 @@ onNet(
   }
 );
 
+// Remove the player's current vehicle
 onNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", async () => {
   const myVehicle = GetVehiclePedIsIn(PlayerPedId(), false);
   if (IsEntityAVehicle(myVehicle)) {
@@ -144,6 +296,7 @@ onNet("MUTINY:CORE:CLIENT:COMMAND:REMOVE_VEHICLE", async () => {
   }
 });
 
+// Set up chat suggestions for various commands
 setImmediate(() => {
   emit("chat:addSuggestion", "/tppos", "Teleport to coords.", [
     { name: "x", help: "X coord." },
@@ -180,12 +333,13 @@ setImmediate(() => {
   ]);
 });
 
+// Create a notification
 onNet("MUTINY:CORE:CLIENT:COMMAND:NOTIFICATION", () => {
   const notification: INotification = {
     title: "SOME TEST SHIT",
     text: "SOME TEXT TEST SHIT",
     color: "primary",
-    position: "center-right",
+    position: "bottom-center",
     sticky: true,
   };
   emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);

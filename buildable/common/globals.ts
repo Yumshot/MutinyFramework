@@ -269,6 +269,10 @@ export const LOCALES = {
      */
     LAST_WEATHER: "LAST WEATHER WAS : ",
   },
+  NOTIFICATIONS: {
+    HR_ICON: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M27 10h-6a3.003 3.003 0 0 0-3 3v6a2.002 2.002 0 0 0 2 2v7a2.002 2.002 0 0 0 2 2h4a2.002 2.002 0 0 0 2-2v-7a2.002 2.002 0 0 0 2-2v-6a3.003 3.003 0 0 0-3-3zm1 9h-2v9h-4v-9h-2v-6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" fill="currentColor"></path><path d="M20 5a4 4 0 1 1 4 4a4.004 4.004 0 0 1-4-4zm2 0a2 2 0 1 0 2-2a2.002 2.002 0 0 0-2 2z" fill="currentColor"></path><path d="M14 16v-3a3.003 3.003 0 0 0-3-3H5a3.003 3.003 0 0 0-3 3v3H0v2h16v-2zM4 13a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3H4z" fill="currentColor"></path><path d="M4 5a4 4 0 1 1 4 4a4.004 4.004 0 0 1-4-4zm2 0a2 2 0 1 0 2-2a2.002 2.002 0 0 0-2 2z" fill="currentColor"></path></svg>`,
+    DOCK_WORKER_ICON: ` <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1"></path><path d="M4 18l-1-5h18l-2 4"></path><path d="M5 13V7h8l4 6"></path><path d="M7 7V3H6"></path></g></svg>`,
+  },
 };
 
 export const LOCATIONS = {
@@ -312,6 +316,7 @@ export const DEFAULTS = {
 
   AUTOPILOT_SPEED_1: 20.0,
   AUTOPILOT_SPEED_2: 50.0,
+  AUTOPILOT_DRIVE_MODIFIERS: [524863, 447],
 };
 
 /**

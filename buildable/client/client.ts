@@ -7,3 +7,4 @@ import "./character/identity";
 import "./handlers/commands";
 import "./handlers/blips";
 import "./handlers/zones";
+import "./handlers/peds";

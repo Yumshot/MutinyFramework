@@ -116,3 +116,19 @@ RegisterCommand(
   },
   false
 );
+
+RegisterCommand(
+  "cped",
+  (source: any, args: any, raw: any) => {
+    emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:CLEAR_ALL_PEDS", source);
+  },
+  false
+);
+
+// RegisterCommand(
+//   "fped",
+//   (source: any, args: any, raw: any) => {
+//     emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED", source);
+//   },
+//   false
+// );
