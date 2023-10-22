@@ -65,7 +65,6 @@ RegisterCommand(
         title: "Human Resources",
         text: "Alright, you are now Unemployed.",
         position: "top-right",
-        color: "success",
         sticky: true,
         width: "auto",
         progress: "auto",

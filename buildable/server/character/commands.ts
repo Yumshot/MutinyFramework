@@ -87,7 +87,11 @@ RegisterCommand(
 RegisterCommand(
   "aps",
   (source: any, args: any, raw: any) => {
-    emitNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT", source);
+    emitNet(
+      "MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:STOP_AUTOPILOT",
+      source,
+      false
+    );
   },
   false
 );
