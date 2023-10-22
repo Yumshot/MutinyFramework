@@ -1,4 +1,5 @@
 import { PLAYER_STATUS } from "handlers/character";
+import "./notifications";
 
 export const Delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 export const MakeModelRequest = async (
