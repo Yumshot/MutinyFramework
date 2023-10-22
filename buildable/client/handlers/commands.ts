@@ -90,6 +90,11 @@ setInterval(() => {
   const [, hit, , , entityHit] = GetShapeTestResult(rayCast);
   if (!hit || !entityHit) return;
   // create a visual line between the player and the closest ped this has to be run on a setTick
+  // if (IsEntityAVehicle(entityHit)) {
+  //   console.log("hit a vehicle");
+  //   SetEntityAsMissionEntity(entityHit, true, true);
+  //   DeleteEntity(entityHit);
+  // }
   // Find Entity Head
   const head = GetPedBoneCoords(entityHit, 31086, 0, 0, 0);
   DrawLine(x, y, z, head[0], head[1], head[2], 0, 0, 255, 255);
