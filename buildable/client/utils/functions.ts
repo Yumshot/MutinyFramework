@@ -83,3 +83,41 @@ export const CalculateDistance = (
   const dz = z2 - z1;
   return Math.hypot(dx, dy, dz);
 };
+
+export function getRandomInRange(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomPosition(coordinates: any[]) {
+  let minX = Math.min(...coordinates.map((coord: { x: any }) => coord.x));
+  let maxX = Math.max(...coordinates.map((coord: { x: any }) => coord.x));
+  let minY = Math.min(...coordinates.map((coord: { y: any }) => coord.y));
+  let maxY = Math.max(...coordinates.map((coord: { y: any }) => coord.y));
+
+  return {
+    x: getRandomInRange(minX, maxX),
+    y: getRandomInRange(minY, maxY),
+  };
+}
+
+export const SetupJobPeds = (pedHandle: number) => {
+  SetEntityAsMissionEntity(pedHandle, true, true);
+  SetBlockingOfNonTemporaryEvents(pedHandle, true);
+  SetPedFleeAttributes(pedHandle, 0, false);
+  SetPedCombatAttributes(pedHandle, 17, true);
+  SetPedCombatAttributes(pedHandle, 5, true);
+  SetPedCombatAttributes(pedHandle, 46, true);
+  SetPedCombatAttributes(pedHandle, 26, true);
+  SetPedCombatAttributes(pedHandle, 0, true);
+  SetPedCombatAttributes(pedHandle, 2, true);
+  SetPedRelationshipGroupHash(pedHandle, GetHashKey("CIVMALE"));
+  SetRelationshipBetweenGroups(0, GetHashKey("CIVMALE"), GetHashKey("PLAYER"));
+  SetRelationshipBetweenGroups(0, GetHashKey("PLAYER"), GetHashKey("CIVMALE"));
+  FreezeEntityPosition(pedHandle, true);
+  SetPedDiesWhenInjured(pedHandle, false);
+  SetPedConfigFlag(pedHandle, pedHandle, true);
+  SetPedConfigFlag(pedHandle, 184, true);
+  SetPedConfigFlag(pedHandle, 429, true);
+  SetPedConfigFlag(pedHandle, 281, true);
+  SetEntityInvincible(pedHandle, true);
+};
