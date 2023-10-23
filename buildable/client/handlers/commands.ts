@@ -39,6 +39,7 @@ RegisterCommand(
 );
 let timer = 1000;
 setTick(async () => {
+  timer = 1000;
   if (IsPauseMenuActive()) {
     CAM_TOGGLED = false;
     SendNUIMessage({
@@ -149,7 +150,7 @@ setInterval(() => {
         };
       }
     } else {
-      console.log("not a job npc");
+      return;
     }
   });
 }, 0);
