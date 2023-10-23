@@ -4,20 +4,12 @@
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es2021",
-    "lib": [
-      "es2021"
-    ],
-    "types": [
-      "@citizenfx/client",
-      "@types/node"
-    ],
+    "lib": ["es2021"],
+    "types": ["@citizenfx/client", "fivem-js", "@types/node"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "noEmit": true,
+    "noEmit": true
   },
-  "include": [
-    "./",
-    "../common"
-  ]
+  "include": ["./", "../common"]
 }
