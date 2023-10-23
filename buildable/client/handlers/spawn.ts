@@ -16,7 +16,7 @@ export const HandleSpawn = async (context?: any) => {
           model: context.model.model,
         },
         async () => {
-          DoScreenFadeOut(10000);
+          DoScreenFadeOut(5000);
           exp["mutiny_appearance"].setPlayerAppearance(context.model);
           CloseNuiCompletely();
           await Delay(10000);
