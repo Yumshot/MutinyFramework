@@ -1,5 +1,5 @@
 <template>
-    <n-affix :top="900" style="padding-left: 18vw;" :trigger-top="60">
+    <n-affix style="padding-left: 18vw; top: 80vh; position: fixed;">
         <n-space vertical class="container__vehicle-hud">
             <n-button quaternary color="#002025" style="background: rgba(202, 202, 202, 0.179);">
                 <template #icon>
@@ -130,4 +130,5 @@ body {
     transform: rotateX(-15deg) rotateY(30deg) scale(1, 1);
     animation: slide-in 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 
-}</style>
+}
+</style>
