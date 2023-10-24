@@ -2,12 +2,14 @@ import {
   BARBERSHOP_BLIPS,
   CLOTHING_STORE_BLIPS,
   GAS_BLIPS,
+  MLO_BLIPS,
 } from "../../common/blips";
 
 const DEFAULT_BLIPS = [
   ...BARBERSHOP_BLIPS,
   ...CLOTHING_STORE_BLIPS,
   ...GAS_BLIPS,
+  ...MLO_BLIPS,
 ];
 
 const CreateDefaultBlips = () => {

@@ -513,6 +513,65 @@ export const GAS_BLIPS = [
     handle: null as number | null,
   },
 ];
+
+export const MLO_BLIPS = [
+  {
+    name: "ICE CREAM SHOP",
+    x: 280.05,
+    y: 146.17,
+    z: 104.28,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+  {
+    name: "DOCK WORK",
+    x: -413.6175842285156,
+    y: -2283.73193359375,
+    z: 7.99853515625,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+  {
+    name: "SOUTH POINT BAR & GRILL",
+    x: -2192.4130859375,
+    y: -396.9362487792969,
+    z: 13.3062744140625,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+  {
+    name: "PILLBOX MEDICAL CENTER",
+    x: 299.24835205078125,
+    y: -584.8351440429688,
+    z: 43.248291015625,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+  {
+    name: "CARHARTT BIG BOX",
+    x: 5134.02197265625,
+    y: -5170.87890625,
+    z: 2.10107421875,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+];
+
 //   {
 //     name: "SPAWN LOCATION",
 //     x: 686.245,
@@ -522,6 +581,6 @@ export const GAS_BLIPS = [
 //     colour: 15,
 //     blip: 304,
 //     hidden: false,
-handle: null as number | null;
+// handle: null as number | null;
 //   }
 export const DEFAULT_SPAWN_BLIPS = [{}];
