@@ -71,6 +71,41 @@ export const WEBHOOK_URL =
 /**
  * The locales object contains all the localized strings used in the Mutiny RP server.
  */
+/**
+ * This file exports an object containing various locales used in Mutiny Framework.
+ * @module globals
+ */
+
+/**
+ * An object containing various locales used in Mutiny Framework.
+ * @typedef {Object} Locales
+ * @property {Object} DATABASE - An object containing locales related to the Mutiny database.
+ * @property {string} DATABASE.CONNECT - The message displayed when the Mutiny database is connected.
+ * @property {Object} SERVER - An object containing locales related to the Mutiny RP server.
+ * @property {Object} SERVER.__MUTINY__ - An object containing information about the Mutiny RP server.
+ * @property {string} SERVER.__MUTINY__.VERSION - The version of the Mutiny RP server.
+ * @property {string} SERVER.__MUTINY__.BUILD - The build number of the Mutiny RP server.
+ * @property {string} SERVER.__MUTINY__.BUILD_DATE - The date and time when the Mutiny RP server was built.
+ * @property {number} SERVER.__MUTINY__.BUILD_TIMESTAMP - The timestamp when the Mutiny RP server was built.
+ * @property {string} SERVER.__MUTINY__.BUILD_AUTHOR - The author of the Mutiny RP server.
+ * @property {string} SERVER.NAME - The name of the Mutiny RP server.
+ * @property {Object} SERVER.QUEUE - An object containing locales related to the Mutiny RP server queue.
+ * @property {string} SERVER.QUEUE.JOIN_QUOTES - The quotes used in the adaptive card for joining the queue.
+ * @property {string} SERVER.QUEUE.CARD_TITLE - The title of the adaptive card for the flight itinerary.
+ * @property {string} SERVER.QUEUE.GUEST_TITLE - The title of the section for guests on board in the adaptive card.
+ * @property {string} SERVER.QUEUE.NO_SOURCE - The message displayed when the player source is invalid.
+ * @property {string} SERVER.QUEUE.NO_STEAM - The message displayed when Steam is not running to join the server.
+ * @property {string} SERVER.QUEUE.NO_DISCORD - The message displayed when Discord is not running to join the server.
+ * @property {string} SERVER.QUEUE.KICK_MESSAGE - The message displayed when the player is kicked from the server.
+ * @property {string} SERVER.QUEUE.BANNED_MESSAGE - The message displayed when the player is banned from the server.
+ * @property {string} SERVER.QUEUE.QUEUE_MESSAGE - The message displayed when the player is in the queue.
+ * @property {string} SERVER.QUEUE.QUEUE_POSITION - The message displayed when the player's queue position is checked.
+ * @property {function} SERVER.QUEUE.QUEUE_TIME - The message displayed when the player's queue time is checked.
+ * @property {string} SERVER.QUEUE.DATABASE_CHECK - The message displayed when the player's identifiers are compared to the database.
+ * @property {string} SERVER.QUEUE.DATABASE_NO_USER - The message displayed when the user is not found in the database and a new user is created.
+ * @property {string} SERVER.QUEUE.DATABASE_INSERT_ERROR - The message displayed when an error occurs while inserting a user into the database.
+ * @property {string} SERVER.QUEUE.DATABASE_USER_FOUND - The message displayed when the user is found in the database and their priority is being checked.
+ */
 export const LOCALES = {
   DATABASE: {
     /**
@@ -272,6 +307,8 @@ export const LOCALES = {
   NOTIFICATIONS: {
     HR_ICON: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M27 10h-6a3.003 3.003 0 0 0-3 3v6a2.002 2.002 0 0 0 2 2v7a2.002 2.002 0 0 0 2 2h4a2.002 2.002 0 0 0 2-2v-7a2.002 2.002 0 0 0 2-2v-6a3.003 3.003 0 0 0-3-3zm1 9h-2v9h-4v-9h-2v-6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" fill="currentColor"></path><path d="M20 5a4 4 0 1 1 4 4a4.004 4.004 0 0 1-4-4zm2 0a2 2 0 1 0 2-2a2.002 2.002 0 0 0-2 2z" fill="currentColor"></path><path d="M14 16v-3a3.003 3.003 0 0 0-3-3H5a3.003 3.003 0 0 0-3 3v3H0v2h16v-2zM4 13a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3H4z" fill="currentColor"></path><path d="M4 5a4 4 0 1 1 4 4a4.004 4.004 0 0 1-4-4zm2 0a2 2 0 1 0 2-2a2.002 2.002 0 0 0-2 2z" fill="currentColor"></path></svg>`,
     DOCK_WORKER_ICON: ` <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1"></path><path d="M4 18l-1-5h18l-2 4"></path><path d="M5 13V7h8l4 6"></path><path d="M7 7V3H6"></path></g></svg>`,
+    BARTENDER_ICON: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M25 11H15a1 1 0 0 0-1 1v4a6.005 6.005 0 0 0 5 5.91V28h-3v2h8v-2h-3v-6.09A6.005 6.005 0 0 0 26 16v-4a1 1 0 0 0-1-1zm-1 5a4 4 0 0 1-8 0v-3h8z" fill="currentColor"></path><path d="M15 1h-5a1 1 0 0 0-1 1v7.37A6.09 6.09 0 0 0 6 15v14a1 1 0 0 0 1 1h5v-2H8V15c0-3.188 2.231-4.02 2.316-4.051L11 10.72V3h3v5h2V2a1 1 0 0 0-1-1z" fill="currentColor"></path></svg>`,
+    DRUG_DEALER_ICON: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M24 2H8a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM10 14h3v10h-3zm12 14H10v-2h5V12h-5v-2h12zM8 8V4h16v4z" fill="currentColor"></path></svg>`,
   },
 };
 

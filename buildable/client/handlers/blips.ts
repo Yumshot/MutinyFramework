@@ -12,6 +12,10 @@ const DEFAULT_BLIPS = [
   ...MLO_BLIPS,
 ];
 
+/**
+ * Creates default blips for the client.
+ * @returns void
+ */
 const CreateDefaultBlips = () => {
   for (const blip of DEFAULT_BLIPS) {
     blip.handle = AddBlipForCoord(blip.x, blip.y, blip.z);

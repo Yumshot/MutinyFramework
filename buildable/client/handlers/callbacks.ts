@@ -1,4 +1,3 @@
-// Importing a Delay function from a module called "utils/functions"
 import { Delay, GtaHudRadar, MakeModelRequest } from "utils/functions";
 import {
   BASE_MODELS,
@@ -8,9 +7,13 @@ import { CloseNuiCompletely } from "./nui";
 import { LoadCharacter, SelectCharacter } from "./character";
 
 // Creating a variable called "exp" that references the global "exports" object
-const exp = (global as any).exports;
+const { exports: exp } = global as any;
 
-// An asynchronous function that creates the first character for a player
+/**
+ * An asynchronous function that creates the first character for a player.
+ * @param context - The context for the player.
+ * @param idents - The identifiers for the player.
+ */
 const createFirstCharacter = async (context: any, idents: any) => {
   // Emitting a network event to create the first character with the given context and identifiers
   emitNet("MUTINY:CORE:SERVER:CHARACTER:CREATE:CREATE_FIRST_CHARACTER", [
@@ -23,10 +26,6 @@ const createFirstCharacter = async (context: any, idents: any) => {
 
 /**
  * An asynchronous function that registers a character with the specified appearance data.
- * @param data The appearance data for the character.
- */
-/**
- * Registers a new character for the player.
  * @param data - The appearance data for the new character.
  * @returns A Promise that resolves when the character is registered.
  */
@@ -47,7 +46,7 @@ const registerCharacter = async (data: any) => {
   // Waiting for 500 milliseconds
   await Delay(500);
   // Requesting the model to be loaded
-  MakeModelRequest({ model: model as string }, 100);
+  await MakeModelRequest({ model: model as string }, 100);
   // Setting the player's model to the loaded model using the "mutiny_appearance" export
   exp["mutiny_appearance"].setPlayerModel(model);
 
@@ -64,7 +63,11 @@ const registerCharacter = async (data: any) => {
   }, CHARACTER_CREATE_APPEARANCE_CONFIG);
 };
 
-// Registering a NUI callback for creating user credentials
+/**
+ * A NUI callback function for creating user credentials.
+ * @param data - The data for the user credentials.
+ * @param cb - The callback function.
+ */
 RegisterNuiCallback("create_user_credentials", async (data: any, cb: any) => {
   // Destructuring the context and identifiers properties from the data object
   const { data: context, identifiers: idents } = data;
@@ -91,7 +94,11 @@ onNet(
   }
 );
 
-// Registering a NUI callback for selecting a character
+/**
+ * A NUI callback function for selecting a character.
+ * @param data - The data for the selected character.
+ * @param cb - The callback function.
+ */
 RegisterNuiCallback("selected_character", async (data: any, cb: any) => {
   // Destructuring the context property from the data object
   const { data: context } = data;
