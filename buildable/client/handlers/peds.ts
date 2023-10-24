@@ -55,7 +55,6 @@ export const CreatePedsAtJobLocations = async () => {
       return console.log(`Failed to create ped for job ${key}`);
     }
 
-    console.log(ped);
     const pedHandle = ped.Handle;
     SetupJobPeds(pedHandle);
 
@@ -81,10 +80,8 @@ export const CreatePedsAtJobLocations = async () => {
   }
 };
 
-CreatePedsAtJobLocations()
-  .then(() => {
-    console.log("done");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+try {
+  CreatePedsAtJobLocations();
+} catch (error) {
+  console.log(error);
+}
