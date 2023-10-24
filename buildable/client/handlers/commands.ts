@@ -6,7 +6,11 @@ import {
   TpToCoords,
 } from "utils/functions";
 import { INotification } from "../../common/interfaces/Notification";
-import { DEFAULTS, LOCALES } from "../../common/globals";
+import {
+  CHARACTER_CREATE_APPEARANCE_CONFIG,
+  DEFAULTS,
+  LOCALES,
+} from "../../common/globals";
 import { JOB_NPCS } from "./peds";
 
 let isAutoPilotActive = false;
@@ -16,6 +20,24 @@ let lastTargetHit: any;
 let hasFiredStartEvent = false;
 let CAM_TOGGLE = "F10";
 let CAM_TOGGLED = false;
+const exp = (global as any).exports;
+
+RegisterCommand(
+  "skin",
+  () => {
+    exp["mutiny_appearance"].startPlayerCustomization((appearance: any) => {
+      // Emitting a network event to save the character's outfit with the given appearance data
+      if (appearance) {
+        emitNet(
+          "MUTINY:CORE:SERVER:CHARACTER:SAVE:SAVE_CHARACTER_OUTFIT",
+          0,
+          appearance
+        );
+      }
+    }, CHARACTER_CREATE_APPEARANCE_CONFIG);
+  },
+  false
+);
 
 RegisterKeyMapping(
   "+cinematic",
