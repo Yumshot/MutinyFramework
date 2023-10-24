@@ -353,7 +353,7 @@ export const CHARACTER_CREATE_APPEARANCE_CONFIG = {
   headOverlays: true,
   components: true,
   props: true,
-  allowExit: false,
+  allowExit: true,
   tattoos: false,
 };
 
