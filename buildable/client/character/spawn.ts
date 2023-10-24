@@ -23,7 +23,8 @@ import { BASE_MODELS, LOCATIONS, SPAWN_CAM_LOC } from "../../common/globals";
 
 // Initializing the `CHAR_VALS` variable as `null`.
 let CHAR_VALS: CharacterValues | null = null;
-const exp = global.exports;
+const { exports } = global;
+const exp = exports;
 
 export let CAM_FOR_CHARACTER_SELECT: any;
 
@@ -40,8 +41,6 @@ on("onClientGameTypeStart", async () => {
     await Delay(500);
     return;
   }
-
-  console.log("MUTINY:CORE:CLIENT:SPAWN:SET_DATA (CHAR_VALS)", CHAR_VALS);
 
   // If it's the player's first join, call the `firstSpawn()` function.
   if (CHAR_VALS.first_join) {
@@ -81,10 +80,12 @@ async function firstSpawn(): Promise<void> {
     };
   } else {
     // Otherwise, spawn the player at the last location of the first character in the `CHAR_VALS` array with their model.
+    const { z, x, y } =
+      CHAR_VALS.characters[CHAR_VALS.last_character].last_location;
     spawnPlayerOptions = {
-      x: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.x,
-      y: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.y,
-      z: CHAR_VALS.characters[CHAR_VALS.last_character].last_location.z,
+      x: x,
+      y: y,
+      z: z,
       model: CHAR_VALS.characters[CHAR_VALS.last_character].model.model,
     };
   }
