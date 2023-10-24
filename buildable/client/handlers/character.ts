@@ -1,8 +1,6 @@
-import { PlayerStatus } from "interfaces/Character";
-import { Delay, HasSpawned, MakeModelRequest } from "utils/functions";
-import { CloseNuiCompletely } from "./nui";
-import { CAM_FOR_CHARACTER_SELECT } from "character/spawn";
-import { HandleSpawn } from "./spawn";
+import {PlayerStatus} from "interfaces/Character";
+import {HasSpawned, MakeModelRequest} from "utils/functions";
+import {HandleSpawn} from "./spawn";
 
 export let PLAYER_STATUS: PlayerStatus = {
   hasSpawned: false,
@@ -67,13 +65,11 @@ export const HasPlayerStatusChanged = (): boolean => {
     isInVehicle: IsPedInAnyVehicle(ped, true),
     hasSpawned: HasSpawned(),
   };
-  const statusChanged = Object.entries(newStatus).some(([key, value]) => {
+  return Object.entries(newStatus).some(([key, value]) => {
     if (value !== PLAYER_STATUS[key as keyof PlayerStatus]) {
       PLAYER_STATUS[key as keyof PlayerStatus] = value;
       return true;
     }
     return false;
   });
-
-  return statusChanged;
 };
