@@ -11,7 +11,7 @@ import {
   DEFAULTS,
   LOCALES,
 } from "../../common/globals";
-import { JOB_NPCS } from "./peds";
+import { NPCS } from "./peds";
 
 let isAutoPilotActive = false;
 let isRaycasting = false;
@@ -20,7 +20,7 @@ let lastTargetHit: any;
 let hasFiredStartEvent = false;
 let CAM_TOGGLE = "F10";
 let CAM_TOGGLED = false;
-const exp = (global as any).exports;
+const { exports: exp } = global as any;
 
 RegisterCommand(
   "skin",
@@ -114,7 +114,7 @@ setInterval(() => {
           lastTargetHit.npc.bio.first +
           " " +
           lastTargetHit.npc.bio.last,
-        text: "Alright, let me see what ive got for ya.",
+        text: "Alright, Let me see what ive got for ya.",
         position: "top-right",
         sticky: true,
         width: "auto",
@@ -126,34 +126,39 @@ setInterval(() => {
   }
   if (!isRaycasting) return;
   const ped = PlayerPedId();
-  const [x, y, z] = GetEntityCoords(ped, true);
-  const rayCast = StartShapeTestCapsule(
-    x,
-    y,
-    z + 0.5,
-    x,
-    y,
-    z,
-    1.25,
-    10,
-    ped,
-    7
-  );
+  const [x, y, z] = GetPedBoneCoords(ped, 31086, 0, 0, 0);
+
+  const rayCast = StartShapeTestCapsule(x, y, z, x, y, z, 1.75, 8, ped, 7);
   const [, hit, , , entityHit] = GetShapeTestResult(rayCast);
   if (!hit || !entityHit) return;
-  // create a visual line between the player and the closest ped this has to be run on a setTick
-  // if (IsEntityAVehicle(entityHit)) {
-  //   console.log("hit a vehicle");
-  //   SetEntityAsMissionEntity(entityHit, true, true);
-  //   DeleteEntity(entityHit);
-  // }
-  // Find Entity Head
+
   const head = GetPedBoneCoords(entityHit, 31086, 0, 0, 0);
   DrawLine(x, y, z, head[0], head[1], head[2], 0, 0, 255, 255);
   const closestPed = entityHit;
 
-  JOB_NPCS.forEach((npc) => {
+  NPCS.forEach((npc) => {
+    if (npc.jobLimit === null) return;
     if (npc.ped === closestPed) {
+      if (!npc.availableWork) {
+        if (!hasSentNotification) {
+          hasSentNotification = true;
+          const notification: INotification = {
+            title: npc.title,
+            text: "I aint got no work for you...",
+            position: "top-center",
+            sticky: true,
+            width: "auto",
+            progress: "auto",
+            icon: npc.icon,
+          };
+          emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
+          lastTargetHit = {
+            ped: closestPed,
+            npc: npc,
+          };
+        }
+      }
+
       if (!hasSentNotification) {
         hasSentNotification = true;
         const notification: INotification = {
@@ -163,7 +168,7 @@ setInterval(() => {
           sticky: true,
           width: "auto",
           progress: "auto",
-          icon: LOCALES.NOTIFICATIONS.DOCK_WORKER_ICON,
+          icon: npc.icon,
         };
         emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
         lastTargetHit = {
