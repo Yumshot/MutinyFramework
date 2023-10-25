@@ -51,13 +51,17 @@ on(
 
     // Check if the player is connected to Steam and Discord
     if (!steamIdentifier) {
-      setKickReason("You are not connected to Steam. Please connect to Steam and try again.");
+      setKickReason(
+        "You are not connected to Steam. Please connect to Steam and try again."
+      );
       deferrals.done();
       return;
     }
 
     if (!discordIdentifier) {
-      setKickReason("You are not connected to Discord. Please connect to Discord and try again.");
+      setKickReason(
+        "You are not connected to Discord. Please connect to Discord and try again."
+      );
       deferrals.done();
       return;
     }
@@ -71,7 +75,9 @@ on(
     };
     const dbEntry = await PRIORITY_CHECK(src, options);
     if (!dbEntry) {
-      setKickReason("An error occurred. Please report this issue to the server developers.");
+      setKickReason(
+        "An error occurred. Please report this issue to the server developers."
+      );
       deferrals.done();
       return;
     }
@@ -79,6 +85,7 @@ on(
     deferrals.update("Checking Queue Information...");
     await Delay(5000);
     simulateQueue(deferrals, name);
+    SetPlayerRoutingBucket(src, 1);
   }
 );
 

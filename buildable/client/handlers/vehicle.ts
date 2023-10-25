@@ -1,4 +1,4 @@
-import { eVehicleModType } from "enums/VehicleCustomization";
+import { eVehicleModType } from "../../common/enums/VehicleCustomization";
 
 export const Speed = (vehicle: number) =>
   Math.floor(GetEntitySpeed(vehicle) * 2.236936);

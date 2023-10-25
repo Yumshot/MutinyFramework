@@ -9,10 +9,6 @@ onNet("MUTINY:CORE:CLIENT:CHARACTER:IDENTITY", async (reference: any) => {
 RegisterCommand(
   "id",
   async (source: any, args: string | any[], raw: any) => {
-    console.log(
-      "MUTINY>CORE>CLIENT>CHARACTER>IDENTITY>COMMAND (source) ",
-      source
-    );
     emitNet(
       "MUTINY:CORE:SERVER:DATABASE:EVENTS:GATHER_USER_DATA_FOR_CLIENT",
       "MUTINY:CORE:CLIENT:CHARACTER:IDENTITY"

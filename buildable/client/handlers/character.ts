@@ -1,6 +1,6 @@
-import {PlayerStatus} from "interfaces/Character";
-import {HasSpawned, MakeModelRequest} from "utils/functions";
-import {HandleSpawn} from "./spawn";
+import { PlayerStatus } from "interfaces/Character";
+import { HasSpawned, MakeModelRequest } from "utils/functions";
+import { HandleSpawn } from "./spawn";
 
 export let PLAYER_STATUS: PlayerStatus = {
   hasSpawned: false,
@@ -73,3 +73,29 @@ export const HasPlayerStatusChanged = (): boolean => {
     return false;
   });
 };
+
+onNet("MUTINY:CORE:CLIENT:HANDLERS:CHARACTERS:RESET_STATUS", () => {
+  PLAYER_STATUS = {
+    hasSpawned: false,
+    isDead: false,
+    isShooting: false,
+    isAiming: false,
+    isSprinting: false,
+    isJumping: false,
+    isClimbing: false,
+    isFalling: false,
+    isParachuting: false,
+    isRagdoll: false,
+    isGettingJacked: false,
+    isGettingStunned: false,
+    isDiving: false,
+    isReloading: false,
+    isSwimming: false,
+    isDucking: false,
+    isJackingVehicle: false,
+    isAimingFromCover: false,
+    isVaulting: false,
+    isWalking: false,
+    isInVehicle: false,
+  };
+});

@@ -51,13 +51,7 @@ on("onClientGameTypeStart", async () => {
   }
 });
 
-/**
- * Spawns the player character in the game world.
- * If there are no existing characters, the player is spawned at the default location with the default model.
- * Otherwise, the player is spawned at the last location of the first character in the `CHAR_VALS` array with their model.
- * After the player is spawned, their entity is made invisible to the network and frozen in place.
- * Finally, the character creator UI is opened.
- */
+
 /**
  * Spawns the player character at a specific location based on the existing characters.
  * If there are no existing characters, the player is spawned at the default location with the default model.

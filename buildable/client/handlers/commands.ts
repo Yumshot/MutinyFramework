@@ -9,15 +9,10 @@ import { INotification } from "../../common/interfaces/Notification";
 import {
   CHARACTER_CREATE_APPEARANCE_CONFIG,
   DEFAULTS,
-  LOCALES,
 } from "../../common/globals";
-import { NPCS } from "./peds";
 
 let isAutoPilotActive = false;
-let isRaycasting = false;
-let hasSentNotification = false;
-let lastTargetHit: any;
-let hasFiredStartEvent = false;
+
 let CAM_TOGGLE = "F10";
 let CAM_TOGGLED = false;
 const { exports: exp } = global as any;
@@ -35,6 +30,14 @@ RegisterCommand(
         );
       }
     }, CHARACTER_CREATE_APPEARANCE_CONFIG);
+  },
+  false
+);
+
+RegisterCommand(
+  "gettime",
+  () => {
+    console.log(exp["cfx-anes-worldsync"].getTime());
   },
   false
 );
@@ -92,120 +95,6 @@ setTick(async () => {
   }
   await Delay(timer);
 });
-
-setInterval(() => {
-  if (
-    hasSentNotification &&
-    lastTargetHit.npc.availableWork &&
-    lastTargetHit.npc.currentJobs.length != lastTargetHit.npc.jobLimit &&
-    !isRaycasting &&
-    !hasFiredStartEvent
-  ) {
-    if (IsControlJustPressed(0, 38)) {
-      emitNet(
-        "MUTINY:CORE:SERVER:CHARACTER:JOBS:ELIGIBLE_CHECK",
-        lastTargetHit
-      );
-      hasFiredStartEvent = true;
-      const notification: INotification = {
-        title:
-          `[${lastTargetHit.npc.title}]` +
-          " " +
-          lastTargetHit.npc.bio.first +
-          " " +
-          lastTargetHit.npc.bio.last,
-        text: "Alright, Let me see what ive got for ya.",
-        position: "top-right",
-        sticky: true,
-        width: "auto",
-        progress: "auto",
-        icon: LOCALES.NOTIFICATIONS.DOCK_WORKER_ICON,
-      };
-      emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
-    }
-  }
-  if (!isRaycasting) return;
-  const ped = PlayerPedId();
-  const [x, y, z] = GetPedBoneCoords(ped, 31086, 0, 0, 0);
-
-  const rayCast = StartShapeTestCapsule(x, y, z, x, y, z, 1.75, 8, ped, 7);
-  const [, hit, , , entityHit] = GetShapeTestResult(rayCast);
-  if (!hit || !entityHit) return;
-
-  const head = GetPedBoneCoords(entityHit, 31086, 0, 0, 0);
-  DrawLine(x, y, z, head[0], head[1], head[2], 0, 0, 255, 255);
-  const closestPed = entityHit;
-
-  NPCS.forEach((npc) => {
-    if (npc.jobLimit === null) return;
-    if (npc.ped === closestPed) {
-      if (!npc.availableWork) {
-        if (!hasSentNotification) {
-          hasSentNotification = true;
-          const notification: INotification = {
-            title: npc.title,
-            text: "I aint got no work for you...",
-            position: "top-center",
-            sticky: true,
-            width: "auto",
-            progress: "auto",
-            icon: npc.icon,
-          };
-          emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
-          lastTargetHit = {
-            ped: closestPed,
-            npc: npc,
-          };
-        }
-      }
-
-      if (!hasSentNotification) {
-        hasSentNotification = true;
-        const notification: INotification = {
-          title: npc.title,
-          text: "You looking for some work?",
-          position: "top-center",
-          sticky: true,
-          width: "auto",
-          progress: "auto",
-          icon: npc.icon,
-        };
-        emit("MUTINY:NOTIFY:CREATE_NOTIFY", notification);
-        lastTargetHit = {
-          ped: closestPed,
-          npc: npc,
-        };
-      }
-    } else {
-      return;
-    }
-  });
-}, 0);
-
-RegisterKeyMapping(
-  "+MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
-  "TARGET",
-  "keyboard",
-  "LMENU"
-);
-
-// Set isRaycasting to false
-RegisterCommand(
-  "-MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
-  () => {
-    isRaycasting = false;
-  },
-  false
-);
-
-// Set isRaycasting to true
-RegisterCommand(
-  "+MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:GET_CLOSEST_PED",
-  () => {
-    isRaycasting = true;
-  },
-  false
-);
 
 // Clear all peds except the player's ped
 onNet("MUTINY:CORE:CLIENT:HANDLERS:COMMANDS:CLEAR_ALL_PEDS", () => {

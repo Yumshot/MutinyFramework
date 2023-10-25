@@ -111,7 +111,9 @@ RegisterCommand(
     const player = source;
     const steam = findSteam(player);
     const user = await DATABASE_COLLECTION_USERS.findOne(steam);
+    SetPlayerRoutingBucket(player, 1);
     emitNet("MUTINY:CORE:SERVER:CHARACTER:SPAWN:SET_DATA", user);
+    emitNet("MUTINY:CORE:CLIENT:HANDLERS:CHARACTERS:RESET_STATUS", source);
     await Delay(500);
     emitNet(
       "MUTINY:CORE:CLIENT:SPAWN:OPEN_CHARACTER_SELECTOR",

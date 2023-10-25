@@ -1,4 +1,5 @@
 import "./utils/logger";
+import "./onRestart";
 import "./database/init";
 import "./join/connect";
 import "./join/functions/characters";

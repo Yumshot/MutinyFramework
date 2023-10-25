@@ -101,6 +101,7 @@ export function getRandomPosition(coordinates: any[]) {
 }
 
 export const SetupJobPeds = (pedHandle: number) => {
+  console.log("SETTING UP PEDS");
   SetEntityAsMissionEntity(pedHandle, true, true);
   SetBlockingOfNonTemporaryEvents(pedHandle, true);
   SetPedFleeAttributes(pedHandle, 0, false);

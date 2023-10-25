@@ -21,13 +21,13 @@ export const HandleSpawn = async (context?: any) => {
           CloseNuiCompletely();
           await Delay(10000);
           const ped = PlayerPedId();
-          SetEntityVisible(ped, true, false);
           SetEntityHeading(ped, context.last_location.heading);
           RenderScriptCams(false, false, 0, true, true);
           SetCamActive(CAM_FOR_CHARACTER_SELECT, false);
           DestroyCam(CAM_FOR_CHARACTER_SELECT, true);
           DoScreenFadeIn(10000);
           await Delay(10000);
+          SetEntityVisible(ped, true, false);
           FreezeEntityPosition(ped, false);
         }
       );
@@ -35,6 +35,7 @@ export const HandleSpawn = async (context?: any) => {
     exp.spawnmanager.setAutoSpawn(true);
     exp.spawnmanager.forceRespawn();
     PLAYER_STATUS.hasSpawned = true;
+    emitNet("MUTINY:CORE:SERVER:HANDLERS:SET_PED_OPTS");
   } else {
     //!TODO : HANDLE SPAWN AFTER DEATH
     console.log("MUTINY>CORE>CLIENT>CHARACTER>SPAWN>SPAWNED");
