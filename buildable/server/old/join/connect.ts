@@ -1,4 +1,4 @@
-import { Delay } from "utils/functions";
+import { Delay } from "modules/utils/functions";
 import { ADAPTIVE_CARD } from "./constants/adaptive";
 import { PRIORITY_CHECK } from "./functions/priority";
 import { funnyCommit } from "./functions/quotes";

@@ -1,5 +1,5 @@
-import { DATABASE_COLLECTION_USERS } from "database/init";
-import { User } from "interfaces/Character";
+import { DATABASE_COLLECTION_USERS } from "old/database/init";
+import { User } from "old/Character";
 import { v4 as uuidv4 } from "uuid";
 export const PRIORITY_CHECK = async (src: string | number, options: User) => {
   let user = await DATABASE_COLLECTION_USERS.find({

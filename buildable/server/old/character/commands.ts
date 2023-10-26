@@ -1,5 +1,5 @@
-import { DATABASE_COLLECTION_USERS } from "database/init";
-import { Delay, findSteam } from "utils/functions";
+import { DATABASE_COLLECTION_USERS } from "old/database/init";
+import { Delay, findSteam } from "modules/utils/functions";
 import fs from "fs";
 
 RegisterCommand(

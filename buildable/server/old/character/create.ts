@@ -2,15 +2,15 @@
  * Creates a new character for a player and updates the database with the new character.
  * @param data - An array containing the new character object and the player's priority data.
  */
-import { DATABASE_COLLECTION_USERS } from "database/init";
-import { BankAccount } from "interfaces/Bank";
+import { DATABASE_COLLECTION_USERS } from "old/database/init";
+import { BankAccount } from "old/Bank";
 import {
   DataParameterCreateUserCredentials,
   NewCharacter,
-} from "interfaces/Character";
-import { Job } from "interfaces/Job";
+} from "old/Character";
+import { Job } from "old/Job";
 import { DEFAULT_JOBS } from "sv_globals";
-import { Logger } from "utils/logger";
+import { Logger } from "modules/utils/logger";
 import { v4 as uuidv4 } from "uuid";
 
 // Define the function to create a new character

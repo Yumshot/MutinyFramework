@@ -1,5 +1,5 @@
-import { DATABASE_COLLECTION_USERS } from "database/init";
-import { findSteam } from "utils/functions";
+import { DATABASE_COLLECTION_USERS } from "old/database/init";
+import { findSteam } from "modules/utils/functions";
 
 onNet(
   "MUTINY:CORE:SERVER:DATABASE:EVENTS:GATHER_USER_DATA_FOR_CLIENT",

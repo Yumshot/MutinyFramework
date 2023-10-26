@@ -1,4 +1,4 @@
-import { GATHER_USER_DATA_FOR_SERVER } from "database/functions";
+import { GATHER_USER_DATA_FOR_SERVER } from "old/database/functions";
 
 onNet(
   "MUTINY:CORE:SERVER:CHARACTER:SPAWN:SET_DATA",

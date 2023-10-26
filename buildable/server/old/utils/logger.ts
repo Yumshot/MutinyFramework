@@ -1,7 +1,7 @@
 import pino from "pino";
 import pretty from "pino-pretty";
 import { Webhook, MessageBuilder } from "discord-webhook-node";
-import { DiscordLogOptions } from "interfaces/DiscordLogOptions";
+import { DiscordLogOptions } from "old/DiscordLogOptions";
 
 export const LOCALES = {
   SERVER: { NAME: "⌠Mutiny Rp⌡" },

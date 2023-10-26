@@ -1,5 +1,5 @@
-import { GATHER_USER_DATA_FOR_SERVER } from "database/functions";
-import { DATABASE_COLLECTION_USERS } from "database/init";
+import { GATHER_USER_DATA_FOR_SERVER } from "old/database/functions";
+import { DATABASE_COLLECTION_USERS } from "old/database/init";
 import { INotification } from "../../../common/interfaces/Notification";
 import { LOCALES } from "../../../common/globals";
 
