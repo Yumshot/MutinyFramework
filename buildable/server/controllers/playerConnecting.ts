@@ -2,63 +2,8 @@ import { __databaseInstance } from "server";
 import { Delay } from "../modules/utils/delay";
 import { FindSteam } from "../modules/utils/querys";
 import { IDeferrals } from "../modules/interfaces/IDeferrals";
-import BuildUser from "routes/BuildUser";
+import BuildFreshUser from "routes/BuildFreshUser";
 import { ErrorKeys } from "config/errors";
-
-/**
- * Delays the execution of a function for a specified amount of time.
- * @param ms - The amount of time to delay in milliseconds.
- * @returns A Promise that resolves after the specified delay.
- */
-const __d = async (ms: number = 5000) => await Delay(ms);
-
-/**
- * Event handler for when a player is connecting to the server.
- * @param name - The name of the player connecting.
- * @param setKickReason - A function to set the reason for kicking the player.
- * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
- */
-
-/**
- * Handles the player connecting event.
- * @param name - The name of the player connecting.
- * @param setKickReason - A function to set the reason for kicking the player.
- * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
- */
-async function handlePlayerConnecting(
-  name: string,
-  setKickReason: (reason: string) => void,
-  deferrals: IDeferrals
-) {
-  const __source = global.source;
-  const __query = FindSteam(__source);
-  deferrals.defer();
-  deferrals.update(`\n Welcome to ⌠Mutiny Rp⌡ ${name}!`);
-
-  await d();
-
-  const __steamCheck = await SteamValidate(__query);
-  if (!__steamCheck) {
-    return deferrals.done(
-      `\n ⌠Mutiny Rp⌡ - You must have steam open to join the server!`
-    );
-  }
-
-  deferrals.update(`\n ⌠Mutiny Rp⌡ - Steam is open!`);
-
-  await d();
-
-  const __banCheck = await CheckBan(__query);
-  if (__banCheck) {
-    return deferrals.done(`\n ⌠Mutiny Rp⌡ - You are banned from the server!`);
-  } else if (__banCheck === null) {
-    await createUser(__query, name, __source, deferrals);
-  } else {
-    deferrals.update(`\n ⌠Mutiny Rp⌡ - No ban found!`);
-    await d();
-    //findOneandUpdate
-  }
-}
 
 /**
  * Delays the execution of a function for a specified amount of time.
@@ -76,9 +21,9 @@ async function d(ms: number = 5000) {
  */
 async function CheckBan(__steam: string): Promise<boolean | null> {
   try {
-    const __userTarget = await (
-      await __databaseInstance.GetUsersCollection()
-    ).findOne({ steam_target: __steam });
+    const __userTarget = await __databaseInstance.GetUserData({
+      steam_target: __steam,
+    });
 
     if (__userTarget) {
       return !!__userTarget.banned;
@@ -112,7 +57,7 @@ async function SteamValidate(__steam: string): Promise<boolean> {
  * @param __source - The source of the user to create.
  * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
  */
-async function createUser(
+async function CreateUser(
   __query: string,
   name: string,
   __source: any,
@@ -121,7 +66,7 @@ async function createUser(
   deferrals.update(
     `\n ⌠Mutiny Rp⌡ - It seems you are a first time user! \n Creating your credentials!!`
   );
-  const __user = await new BuildUser(__query, name, __source).__execute();
+  const __user = await new BuildFreshUser(__query, name, __source).__execute();
 
   if (__user) {
     await __databaseInstance.SetNewUserData(__user);
@@ -131,6 +76,68 @@ async function createUser(
     return deferrals.done(
       `\n ⌠Mutiny Rp⌡ - Error creating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[0]}`
     );
+  }
+}
+
+/**
+ * Event handler for when a player is connecting to the server.
+ * @param name - The name of the player connecting.
+ * @param setKickReason - A function to set the reason for kicking the player.
+ * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
+ */
+async function handlePlayerConnecting(
+  name: string,
+  setKickReason: (reason: string) => void,
+  deferrals: IDeferrals
+) {
+  const __source = global.source;
+  const __query = FindSteam(__source);
+  deferrals.defer();
+  deferrals.update(`\n Welcome to ⌠Mutiny Rp⌡ ${name}!`);
+
+  await d();
+
+  const __steamCheck = await SteamValidate(__query);
+  if (!__steamCheck) {
+    return deferrals.done(
+      `\n ⌠Mutiny Rp⌡ - You must have steam open to join the server!`
+    );
+  }
+
+  deferrals.update(`\n ⌠Mutiny Rp⌡ - Steam is open!`);
+
+  await d();
+
+  const __banCheck = await CheckBan(__query);
+  if (__banCheck) {
+    return deferrals.done(`\n ⌠Mutiny Rp⌡ - You are banned from the server!`);
+  } else if (__banCheck === null) {
+    await CreateUser(__query, name, __source, deferrals);
+  } else {
+    deferrals.update(`\n ⌠Mutiny Rp⌡ - No ban found!`);
+    await d();
+    const __user = await __databaseInstance.GetUserData({
+      steam_target: __query,
+    });
+    try {
+      await __databaseInstance.UpdateUserData(__query, {
+        last_connection: new Date(),
+      });
+      deferrals.update(`\n ⌠Mutiny Rp⌡ - Credentials updated!`);
+      await d();
+      //TODO - PRIORITY QUEUE (LOW PRIORITY)
+      deferrals.update(
+        `\n ⌠Mutiny Rp⌡ - Welcome In, ${name}! \n Enjoy your stay!`
+      );
+      await d();
+
+      return deferrals.done();
+    } catch (error) {
+      console.log(error);
+      return deferrals.done(
+        `\n ⌠Mutiny Rp⌡ - Error updating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[1]}`
+      );
+    }
   }
 }
 
