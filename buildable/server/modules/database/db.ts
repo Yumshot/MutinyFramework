@@ -1,7 +1,11 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
+<<<<<<< HEAD
 import { __database } from "../../config/globals";
 import { IUser } from "modules/interfaces/IUser";
 import { ICharacter } from "modules/interfaces/ICharacter";
+=======
+import { __databaseLocales } from "../../config/globals";
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
 
 /**
  * Represents a database connection and provides access to collections.
@@ -22,7 +26,11 @@ export default class Database {
    * Creates a new instance of the Database class.
    */
   constructor() {
+<<<<<<< HEAD
     this.__database = new MongoClient(__database.connection, {
+=======
+    this.__database = new MongoClient(__databaseLocales.connection, {
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
       serverApi: {
         version: ServerApiVersion.v1,
         deprecationErrors: true,
@@ -101,7 +109,11 @@ export default class Database {
    * @param data The data to be inserted.
    * @returns A Promise that resolves when the data has been inserted.
    */
+<<<<<<< HEAD
   public async SetNewUserData(data: IUser): Promise<void> {
+=======
+  public async SetNewUserData(data: any): Promise<void> {
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
     try {
       await this.__databaseCollectionUsers.insertOne(data);
     } catch (e) {
@@ -109,6 +121,7 @@ export default class Database {
     }
   }
 
+<<<<<<< HEAD
   /**
    * Updates user data in the database.
    * @param data - The data to update.
@@ -119,12 +132,20 @@ export default class Database {
       await this.__databaseCollectionUsers.updateOne(
         { steam_target: target },
         { $set: query }
+=======
+  public async UpdateUserData(data: any): Promise<void> {
+    try {
+      await this.__databaseCollectionUsers.updateOne(
+        { steam_target: data.steam_target },
+        { $set: data }
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
       );
     } catch (e) {
       console.log(e);
     }
   }
 
+<<<<<<< HEAD
   /**
    * Gets user data from the database.
    * @param query - The query to use to find the user.
@@ -160,6 +181,13 @@ export default class Database {
       await this.__databaseCollectionCharacters.insertOne(data);
     } catch (e) {
       console.log(e);
+=======
+  private CheckDate(date: Date): Date {
+    if (date) {
+      return date;
+    } else {
+      return new Date();
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
     }
   }
 }

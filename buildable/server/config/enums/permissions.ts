@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 /**
  * Enum representing the different levels of permissions available to users.
  */
+=======
+>>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
 export enum Permissions {
   "USER",
   "PRIORITY",
