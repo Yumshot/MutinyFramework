@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ErrorKeys } from "config/errors";
 import { __locations } from "config/globals";
 import { FindSteam } from "modules/utils/querys";
@@ -70,3 +71,10 @@ async function HandoffCharacterData(player: any, last: number, src: string) {
   emitNet("startSpawn", src, player, last);
   SetPlayerRoutingBucket(src, 1);
 }
+=======
+import { Delay } from "modules/utils/delay";
+
+on("playerJoining", async (source: string, oldID?: string) => {
+  console.log("PLAYER JOINING - first");
+});
+>>>>>>> dffda90 (feat(server): add entityCreated, entityCreating, mumbleConnected, playerDropped, playerJoining)
