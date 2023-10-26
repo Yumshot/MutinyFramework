@@ -5,7 +5,11 @@ import { IUser } from "modules/interfaces/IUser";
 import { ICharacter } from "modules/interfaces/ICharacter";
 =======
 import { __databaseLocales } from "../../config/globals";
+<<<<<<< HEAD
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
+=======
+import { ICreateUser } from "modules/interfaces/ICreateUser";
+>>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
 
 /**
  * Represents a database connection and provides access to collections.
@@ -122,12 +126,16 @@ export default class Database {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
   /**
    * Updates user data in the database.
    * @param data - The data to update.
    * @returns A Promise that resolves when the update is complete.
    */
   public async UpdateUserData(target: string, query: any): Promise<void> {
+<<<<<<< HEAD
     try {
       await this.__databaseCollectionUsers.updateOne(
         { steam_target: target },
@@ -139,6 +147,12 @@ export default class Database {
         { steam_target: data.steam_target },
         { $set: data }
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
+=======
+    try {
+      await this.__databaseCollectionUsers.updateOne(
+        { steam_target: target },
+        { $set: query }
+>>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
       );
     } catch (e) {
       console.log(e);
@@ -146,6 +160,9 @@ export default class Database {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
   /**
    * Gets user data from the database.
    * @param query - The query to use to find the user.
@@ -158,6 +175,7 @@ export default class Database {
     } catch (e) {
       console.log(e);
       return null;
+<<<<<<< HEAD
     }
   }
 
@@ -188,6 +206,8 @@ export default class Database {
     } else {
       return new Date();
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
+=======
+>>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
     }
   }
 }
