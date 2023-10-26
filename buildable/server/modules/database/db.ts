@@ -1,5 +1,6 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
 import { __databaseLocales } from "../../config/globals";
+import { ICreateUser } from "modules/interfaces/ICreateUser";
 
 /**
  * Represents a database connection and provides access to collections.
@@ -107,22 +108,34 @@ export default class Database {
     }
   }
 
-  public async UpdateUserData(data: any): Promise<void> {
+  /**
+   * Updates user data in the database.
+   * @param data - The data to update.
+   * @returns A Promise that resolves when the update is complete.
+   */
+  public async UpdateUserData(target: string, query: any): Promise<void> {
     try {
       await this.__databaseCollectionUsers.updateOne(
-        { steam_target: data.steam_target },
-        { $set: data }
+        { steam_target: target },
+        { $set: query }
       );
     } catch (e) {
       console.log(e);
     }
   }
 
-  private CheckDate(date: Date): Date {
-    if (date) {
-      return date;
-    } else {
-      return new Date();
+  /**
+   * Gets user data from the database.
+   * @param query - The query to use to find the user.
+   * @returns A Promise that resolves to the user data.
+   */
+  public async GetUserData(query: any): Promise<any> {
+    try {
+      const __user = await this.__databaseCollectionUsers.findOne(query);
+      return __user;
+    } catch (e) {
+      console.log(e);
+      return null;
     }
   }
 }

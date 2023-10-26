@@ -1,7 +1,7 @@
 let loadingScreen = false;
 
 setImmediate(() => {
-  on("playerSpawned", () => {
+  on("mumbleConnected", () => {
     if (loadingScreen) return;
     ShutdownLoadingScreenNui();
     loadingScreen = !loadingScreen;
