@@ -48,13 +48,20 @@ on("gameEventTriggered", (name: any, args: any[]) => {
     if (__playerCharacters.length === 0) {
       // TODO: Create a new character.
 <<<<<<< HEAD
+<<<<<<< HEAD
       const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
       global.exports.spawnmanager.setAutoSpawnCallback(() => {
         global.exports.spawnmanager.spawnPlayer(
+=======
+      const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
+      exp.spawnmanager.setAutoSpawnCallback(() => {
+        exp.spawnmanager.spawnPlayer(
+>>>>>>> 908bf2c (chore(ui): add ui / might not use this.)
           {
             x: DEFAULT_SPAWN.x,
             y: DEFAULT_SPAWN.y,
             z: DEFAULT_SPAWN.z,
+<<<<<<< HEAD
             model: "Ghost",
           },
           () => {
@@ -68,6 +75,15 @@ on("gameEventTriggered", (name: any, args: any[]) => {
       // TODO: Send Character Select Screen. --> into Spawn Character.
     }
 =======
+=======
+            model: "a_m_m_skater_01",
+          },
+          () => {}
+        );
+      });
+      exp.spawnmanager.setAutoSpawn(true);
+      exp.spawnmanager.forceRespawn();
+>>>>>>> 908bf2c (chore(ui): add ui / might not use this.)
     } else {
       // TODO: Send Character Select Screen. --> into Spawn Character.
     }
