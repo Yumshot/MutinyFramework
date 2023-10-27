@@ -126,10 +126,14 @@ export default class Database {
    * @returns A Promise that resolves when the data has been inserted.
    */
 <<<<<<< HEAD
+<<<<<<< HEAD
   public async SetNewUserData(data: IUser): Promise<void> {
 =======
   public async SetNewUserData(data: any): Promise<void> {
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
+=======
+  public async SetNewUserData(data: IUser): Promise<void> {
+>>>>>>> 493756f (chore(db): Typing)
     try {
       await this.__databaseCollectionUsers.insertOne(data);
     } catch (e) {
