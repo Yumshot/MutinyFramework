@@ -1,5 +1,5 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import { __databaseLocales } from "../../config/globals";
+import { __database } from "../../config/globals";
 import { IUser } from "modules/interfaces/IUser";
 import { ICharacter } from "modules/interfaces/ICharacter";
 
@@ -22,7 +22,7 @@ export default class Database {
    * Creates a new instance of the Database class.
    */
   constructor() {
-    this.__database = new MongoClient(__databaseLocales.connection, {
+    this.__database = new MongoClient(__database.connection, {
       serverApi: {
         version: ServerApiVersion.v1,
         deprecationErrors: true,

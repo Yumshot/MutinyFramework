@@ -1,4 +1,4 @@
-export const __databaseLocales = {
+export const __database = {
   connection: "mongodb://127.0.0.1:27017/mutiny_roleplay",
 };
 
