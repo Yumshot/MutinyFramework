@@ -101,7 +101,7 @@ export default class Database {
    * @param data The data to be inserted.
    * @returns A Promise that resolves when the data has been inserted.
    */
-  public async SetNewUserData(data: any): Promise<void> {
+  public async SetNewUserData(data: IUser): Promise<void> {
     try {
       await this.__databaseCollectionUsers.insertOne(data);
     } catch (e) {
