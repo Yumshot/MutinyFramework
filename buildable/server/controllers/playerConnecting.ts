@@ -4,6 +4,7 @@ import { FindSteam } from "../modules/utils/querys";
 import { IDeferrals } from "../modules/interfaces/IDeferrals";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import BuildFreshUser from "classes/BuildFreshUser";
 =======
 import BuildUser from "routes/BuildUser";
@@ -11,6 +12,9 @@ import BuildUser from "routes/BuildUser";
 =======
 import BuildFreshUser from "routes/BuildFreshUser";
 >>>>>>> dffda90 (feat(server): add entityCreated, entityCreating, mumbleConnected, playerDropped, playerJoining)
+=======
+import BuildFreshUser from "classes/BuildFreshUser";
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 import { ErrorKeys } from "config/errors";
 
 /**
@@ -20,9 +24,83 @@ import { ErrorKeys } from "config/errors";
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 async function d(ms: number = 1000) {
 =======
 const __d = async (ms: number = 5000) => await Delay(ms);
+=======
+async function d(ms: number = 1000) {
+  await Delay(ms);
+}
+
+/**
+ * Checks if a user is banned based on their Steam ID.
+ * @param __query - An object containing the Steam ID of the user to check.
+ * @returns A boolean indicating if the user is banned, or null if the user is not found.
+ */
+async function CheckBan(__steam: string): Promise<boolean | null> {
+  try {
+    const __userTarget = await __databaseInstance.GetUserData({
+      steam_target: __steam,
+    });
+
+    if (__userTarget) {
+      return !!__userTarget.banned;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+/**
+ * Validates a Steam query.
+ * @param __query - The Steam query to validate.
+ * @returns A boolean indicating whether the query is valid or not.
+ */
+async function SteamValidate(__steam: string): Promise<boolean> {
+  if (__steam === null) {
+    await d(1500);
+    return false;
+  } else {
+    await d(1500);
+    return true;
+  }
+}
+
+/**
+ * Creates a new user.
+ * @param __query - An object containing the Steam ID of the user to create.
+ * @param name - The name of the user to create.
+ * @param __source - The source of the user to create.
+ * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
+ */
+async function CreateUser(
+  __query: string,
+  name: string,
+  __source: any,
+  deferrals: IDeferrals
+) {
+  deferrals.update(
+    `\n ⌠Mutiny Rp⌡ - It seems you are a first time user! \n Creating your credentials!!`
+  );
+  const __user = await new BuildFreshUser(__query, name, __source).__execute();
+
+  if (__user) {
+    await __databaseInstance.SetNewUserData(__user);
+    deferrals.update(`\n ⌠Mutiny Rp⌡ - Credentials created!`);
+    await d();
+    deferrals.done();
+  } else {
+    deferrals.update(`\n ⌠Mutiny Rp⌡ - Error creating your credentials!`);
+    await d();
+    return deferrals.done(
+      `\n ⌠Mutiny Rp⌡ - Error creating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[0]}`
+    );
+  }
+}
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 
 /**
  * Event handler for when a player is connecting to the server.

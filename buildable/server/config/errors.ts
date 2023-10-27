@@ -4,11 +4,14 @@ export const ErrorKeys = {
 <<<<<<< HEAD
   1: TextToASCII("UPDATEUSER(): FAILED"),
   2: TextToASCII("SETNEWCHARACTERDATA(): FAILED"),
+<<<<<<< HEAD
 =======
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
 =======
   1: TextToASCII("UPDATEUSER(): FAILED"),
 >>>>>>> aacf07d (feat(errors): add error messages)
+=======
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 };
 
 /**

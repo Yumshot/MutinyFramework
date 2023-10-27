@@ -12,6 +12,7 @@ export const __locations = {
   DEFAULT_SPAWN: { x: 7614.787, y: 1064.8, z: 1678.407 },
   DEFAULT_CAYO: { x: 4446.048, y: -4506.95, z: 3.574 },
 };
+<<<<<<< HEAD
 =======
 export const __databaseLocales = {
 <<<<<<< HEAD
@@ -27,3 +28,5 @@ export const __routingBuckets = {
   login: 69,
 };
 >>>>>>> 3e66796 (config(globals): server sided globals)
+=======
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)

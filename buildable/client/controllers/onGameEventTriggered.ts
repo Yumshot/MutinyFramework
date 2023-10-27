@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * An array of player characters.
  * @type {Array}
@@ -21,21 +22,32 @@ let __targetCharacter: any = {};
  * @param {Array} characters - An array of player characters.
  * @param {number} last - The index of the last player character.
  */
+=======
+const exp = global.exports;
+let __playerCharacters: any = [];
+let last: number = 0;
+let __targetCharacter: any = {};
+
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 onNet("startSpawn", (characters: any, last: number) => {
   __playerCharacters = characters;
   last = last;
   __targetCharacter = __playerCharacters[last];
 });
 
+<<<<<<< HEAD
 /**
  * Event listener for the "gameEventTriggered" event.
  * @param {any} name - The name of the triggered game event.
  * @param {Array} args - An array of arguments passed to the event.
  */
+=======
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 on("gameEventTriggered", (name: any, args: any[]) => {
   if (name === "CEventNetworkStartMatch") {
     if (__playerCharacters.length === 0) {
       // TODO: Create a new character.
+<<<<<<< HEAD
       const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
       global.exports.spawnmanager.setAutoSpawnCallback(() => {
         global.exports.spawnmanager.spawnPlayer(
@@ -55,5 +67,28 @@ on("gameEventTriggered", (name: any, args: any[]) => {
     } else {
       // TODO: Send Character Select Screen. --> into Spawn Character.
     }
+=======
+    } else {
+      // TODO: Send Character Select Screen. --> into Spawn Character.
+    }
+
+    //   exp.spawnmanager.setAutoSpawnCallback(() => {
+    //     exp.spawnmanager.spawnPlayer(
+    //       {
+    //         x: 686.245,
+    //         y: 577.95,
+    //         z: 130.461,
+    //         model: "a_m_m_skater_01",
+    //       },
+    //       () => {
+    //         emit("chat:addMessage", {
+    //           args: ["Hi, there!"],
+    //         });
+    //       }
+    //     );
+    //   });
+    //   exp.spawnmanager.setAutoSpawn(true);
+    //   exp.spawnmanager.forceRespawn();
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
   }
 });

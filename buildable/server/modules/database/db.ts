@@ -6,10 +6,15 @@ import { ICharacter } from "modules/interfaces/ICharacter";
 =======
 import { __databaseLocales } from "../../config/globals";
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
 =======
 import { ICreateUser } from "modules/interfaces/ICreateUser";
 >>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
+=======
+import { IUser } from "modules/interfaces/IUser";
+import { ICharacter } from "modules/interfaces/ICharacter";
+>>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 
 /**
  * Represents a database connection and provides access to collections.
@@ -208,6 +213,29 @@ export default class Database {
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
 =======
 >>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
+    }
+  }
+
+  /**
+   * Retrieves character data for a user from the database.
+   * @param query - The query to find the user's character data.
+   * @returns A Promise that resolves to the user's character data, or null if an error occurs.
+   */
+  public async GetUsersCharacterData(query: any): Promise<any> {
+    try {
+      const __user = await this.__databaseCollectionCharacters.findOne(query);
+      return __user;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  public async SetNewCharacterData(data: ICharacter): Promise<void> {
+    try {
+      await this.__databaseCollectionCharacters.insertOne(data);
+    } catch (e) {
+      console.log(e);
     }
   }
 }
