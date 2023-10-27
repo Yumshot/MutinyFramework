@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5e31beb (refactor(config): update database const to drop locales from it, import fix.)
 export const __database = {
   connection: "mongodb://127.0.0.1:27017/mutiny_roleplay",
 };

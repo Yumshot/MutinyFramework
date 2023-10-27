@@ -1,5 +1,8 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5e31beb (refactor(config): update database const to drop locales from it, import fix.)
 import { __database } from "../../config/globals";
 import { IUser } from "modules/interfaces/IUser";
 import { ICharacter } from "modules/interfaces/ICharacter";
@@ -36,10 +39,14 @@ export default class Database {
    */
   constructor() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.__database = new MongoClient(__database.connection, {
 =======
     this.__database = new MongoClient(__databaseLocales.connection, {
 >>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
+=======
+    this.__database = new MongoClient(__database.connection, {
+>>>>>>> 5e31beb (refactor(config): update database const to drop locales from it, import fix.)
       serverApi: {
         version: ServerApiVersion.v1,
         deprecationErrors: true,
