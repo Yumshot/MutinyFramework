@@ -78,7 +78,9 @@ on("gameEventTriggered", (name: any, args: any[]) => {
 =======
             model: "a_m_m_skater_01",
           },
-          () => {}
+          () => {
+            console.log(__playerCharacters, last, __targetCharacter);
+          }
         );
       });
       exp.spawnmanager.setAutoSpawn(true);
