@@ -16,8 +16,8 @@ async function d(ms: number = 1000) {
 
 /**
  * Checks if a user is banned based on their Steam ID.
- * @param __query - An object containing the Steam ID of the user to check.
  * @returns A boolean indicating if the user is banned, or null if the user is not found.
+ * @param __steam
  */
 async function CheckBan(__steam: string): Promise<boolean | null> {
   try {
@@ -37,8 +37,8 @@ async function CheckBan(__steam: string): Promise<boolean | null> {
 
 /**
  * Validates a Steam query.
- * @param __query - The Steam query to validate.
  * @returns A boolean indicating whether the query is valid or not.
+ * @param __steam
  */
 async function SteamValidate(__steam: string): Promise<boolean> {
   if (__steam === null) {
@@ -58,13 +58,13 @@ async function SteamValidate(__steam: string): Promise<boolean> {
  * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
  */
 async function CreateUser(
-  __query: string,
-  name: string,
-  __source: any,
-  deferrals: IDeferrals
+    __query: string,
+    name: string,
+    __source: any,
+    deferrals: IDeferrals
 ) {
   deferrals.update(
-    `\n ⌠Mutiny Rp⌡ - It seems you are a first time user! \n Creating your credentials!!`
+      `\n ⌠Mutiny Rp⌡ - It seems you are a first time user! \n Creating your credentials!!`
   );
   const __user = await new BuildFreshUser(__query, name, __source).__execute();
 
@@ -77,7 +77,7 @@ async function CreateUser(
     deferrals.update(`\n ⌠Mutiny Rp⌡ - Error creating your credentials!`);
     await d();
     return deferrals.done(
-      `\n ⌠Mutiny Rp⌡ - Error creating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[0]}`
+        `\n ⌠Mutiny Rp⌡ - Error creating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[0]}`
     );
   }
 }
@@ -85,13 +85,13 @@ async function CreateUser(
 /**
  * Event handler for when a player is connecting to the server.
  * @param name - The name of the player connecting.
- * @param setKickReason - A function to set the reason for kicking the player.
+ * @param _setKickReason
  * @param deferrals - An object containing functions to defer the player's connection and update the connection status.
  */
 async function handlePlayerConnecting(
-  name: string,
-  setKickReason: (reason: string) => void,
-  deferrals: IDeferrals
+    name: string,
+    _setKickReason: (reason: string) => void,
+    deferrals: IDeferrals
 ) {
   const __source = global.source;
   const __query = FindSteam(__source);
@@ -103,7 +103,7 @@ async function handlePlayerConnecting(
   const __steamCheck = await SteamValidate(__query);
   if (!__steamCheck) {
     return deferrals.done(
-      `\n ⌠Mutiny Rp⌡ - You must have steam open to join the server!`
+        `\n ⌠Mutiny Rp⌡ - You must have steam open to join the server!`
     );
   }
 
@@ -119,9 +119,9 @@ async function handlePlayerConnecting(
   } else {
     deferrals.update(`\n ⌠Mutiny Rp⌡ - No ban found!`);
     await d();
-    const __user = await __databaseInstance.GetUserData({
-      steam_target: __query,
-    });
+    // const __user = await __databaseInstance.GetUserData({
+    //   steam_target: __query,
+    // });
     try {
       await __databaseInstance.UpdateUserData(__query, {
         last_connection: new Date(),
@@ -130,7 +130,7 @@ async function handlePlayerConnecting(
       await d();
       //TODO - PRIORITY QUEUE (LOW PRIORITY)
       deferrals.update(
-        `\n ⌠Mutiny Rp⌡ - Welcome In, ${name}! \n Enjoy your stay!`
+          `\n ⌠Mutiny Rp⌡ - Welcome In, ${name}! \n Enjoy your stay!`
       );
       await d();
 
@@ -138,7 +138,7 @@ async function handlePlayerConnecting(
     } catch (error) {
       console.log(error);
       return deferrals.done(
-        `\n ⌠Mutiny Rp⌡ - Error updating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[1]}`
+          `\n ⌠Mutiny Rp⌡ - Error updating your credentials! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[1]}`
       );
     }
   }
