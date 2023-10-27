@@ -2,7 +2,7 @@ import { __databaseInstance } from "server";
 import { Delay } from "../modules/utils/delay";
 import { FindSteam } from "../modules/utils/querys";
 import { IDeferrals } from "../modules/interfaces/IDeferrals";
-import BuildFreshUser from "routes/BuildFreshUser";
+import BuildFreshUser from "classes/BuildFreshUser";
 import { ErrorKeys } from "config/errors";
 
 /**
@@ -10,7 +10,7 @@ import { ErrorKeys } from "config/errors";
  * @param ms - The amount of time to delay in milliseconds.
  * @returns A Promise that resolves after the specified delay.
  */
-async function d(ms: number = 5000) {
+async function d(ms: number = 1000) {
   await Delay(ms);
 }
 
@@ -70,6 +70,9 @@ async function CreateUser(
 
   if (__user) {
     await __databaseInstance.SetNewUserData(__user);
+    deferrals.update(`\n ⌠Mutiny Rp⌡ - Credentials created!`);
+    await d();
+    deferrals.done();
   } else {
     deferrals.update(`\n ⌠Mutiny Rp⌡ - Error creating your credentials!`);
     await d();

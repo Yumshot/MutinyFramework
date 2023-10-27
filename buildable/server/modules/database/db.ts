@@ -1,6 +1,7 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
 import { __databaseLocales } from "../../config/globals";
-import { ICreateUser } from "modules/interfaces/ICreateUser";
+import { IUser } from "modules/interfaces/IUser";
+import { ICharacter } from "modules/interfaces/ICharacter";
 
 /**
  * Represents a database connection and provides access to collections.
@@ -136,6 +137,29 @@ export default class Database {
     } catch (e) {
       console.log(e);
       return null;
+    }
+  }
+
+  /**
+   * Retrieves character data for a user from the database.
+   * @param query - The query to find the user's character data.
+   * @returns A Promise that resolves to the user's character data, or null if an error occurs.
+   */
+  public async GetUsersCharacterData(query: any): Promise<any> {
+    try {
+      const __user = await this.__databaseCollectionCharacters.findOne(query);
+      return __user;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  public async SetNewCharacterData(data: ICharacter): Promise<void> {
+    try {
+      await this.__databaseCollectionCharacters.insertOne(data);
+    } catch (e) {
+      console.log(e);
     }
   }
 }

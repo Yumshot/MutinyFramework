@@ -6,3 +6,8 @@ export const __routingBuckets = {
   world: 1,
   login: 69,
 };
+
+export const __locations = {
+  DEFAULT_SPAWN: { x: 7614.787, y: 1064.8, z: 1678.407 },
+  DEFAULT_CAYO: { x: 4446.048, y: -4506.95, z: 3.574 },
+};

@@ -1,6 +1,7 @@
 export const ErrorKeys = {
   0: TextToASCII("CREATEUSER(__EXECUTE()): FAILED"),
   1: TextToASCII("UPDATEUSER(): FAILED"),
+  2: TextToASCII("SETNEWCHARACTERDATA(): FAILED"),
 };
 
 /**

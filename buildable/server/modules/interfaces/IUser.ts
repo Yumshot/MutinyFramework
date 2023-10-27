@@ -3,7 +3,8 @@ import { Permissions } from "config/enums/permissions";
 /**
  * Interface for creating a user.
  */
-export interface ICreateUser {
+export interface IUser {
+  id: number;
   steam_target: string;
   identifiers: string[];
   name: string;

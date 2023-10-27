@@ -1,5 +1,6 @@
 import { Permissions } from "config/enums/permissions";
-import { ICreateUser } from "modules/interfaces/ICreateUser";
+import { IUser } from "modules/interfaces/IUser";
+import { __databaseInstance } from "server";
 import { v4 as uuidv4 } from "uuid";
 
 /**
@@ -26,8 +27,11 @@ export default class BuildFreshUser {
    * Execute the user builder.
    * @returns A promise that resolves to an object representing the created user.
    */
-  public async __execute(): Promise<ICreateUser> {
-    const __builder: ICreateUser = {
+  public async __execute(): Promise<IUser> {
+    const __usersCollection = await __databaseInstance.GetUsersCollection();
+    const __count = await __usersCollection.countDocuments();
+    const __builder: IUser = {
+      id: __count + 1,
       steam_target: this.__steam,
       identifiers: getPlayerIdentifiers(this.__source),
       name: this.__name || GetPlayerName(this.__source.toString()),
