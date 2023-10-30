@@ -1,18 +1,22 @@
 import { __scenarios } from "config/enums/scenarios";
-import { Delay } from "modules/utils/delay";
-
 let tick = 0;
+
+/**
+ * Listens for the "checkScenarios" event and handles scenarios for the player character.
+ */
 onNet("checkScenarios", async () => {
   const scenarios = __scenarios;
-  console.log("DOES THIS WORK?");
   setInterval(() => {
     tick++;
     emit("handleScenario", scenarios[tick]);
   }, 10000);
 });
 
+/**
+ * Listens for the "handleScenario" event and handles the given scenario for the player character.
+ * @param scenario - The scenario to handle for the player character.
+ */
 on("handleScenario", (scenario: string) => {
-  console.log("DOES THIS WORK? " + scenario);
   const playerPed = PlayerPedId();
   if (scenario === "Standing") {
     ClearPedTasksImmediately(playerPed);
@@ -21,6 +25,9 @@ on("handleScenario", (scenario: string) => {
   }
 });
 
+/**
+ * Listens for the "clearScenario" event and clears the current scenario for the player character.
+ */
 onNet("clearScenario", () => {
   ClearPedTasksImmediately(PlayerPedId());
 });

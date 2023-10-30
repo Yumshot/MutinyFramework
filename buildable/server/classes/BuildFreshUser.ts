@@ -4,19 +4,19 @@ import { __databaseInstance } from "server";
 import { v4 as uuidv4 } from "uuid";
 
 /**
- * Class representing a user builder.
+ * Create a user builder.
+ * @param __steam - The steam ID of the user.
+ * @param __name - The name of the user.
+ * @param __source - The source of the user.
+ * @class BuildFreshUser
+ * @classdesc The class that handles building a fresh user.
+ * @example  const __builder = new BuildFreshUser("steam:110000112345678", "John Doe", 1)
  */
 export default class BuildFreshUser {
   __steam: string;
   __name: string;
   __source: number | string;
 
-  /**
-   * Create a user builder.
-   * @param __steam - The steam ID of the user.
-   * @param __name - The name of the user.
-   * @param __source - The source of the user.
-   */
   constructor(__steam: string, __name: string, __source: number | string) {
     this.__steam = __steam;
     this.__name = __name;

@@ -1,21 +1,44 @@
-const exp = global.exports;
+/**
+ * An array of player characters.
+ * @type {Array}
+ */
 let __playerCharacters: any = [];
+
+/**
+ * The index of the last player character.
+ * @type {number}
+ */
 let last: number = 0;
+
+/**
+ * The target character.
+ * @type {Object}
+ */
 let __targetCharacter: any = {};
 
+/**
+ * Event listener for the "startSpawn" network event.
+ * @param {Array} characters - An array of player characters.
+ * @param {number} last - The index of the last player character.
+ */
 onNet("startSpawn", (characters: any, last: number) => {
   __playerCharacters = characters;
   last = last;
   __targetCharacter = __playerCharacters[last];
 });
 
+/**
+ * Event listener for the "gameEventTriggered" event.
+ * @param {any} name - The name of the triggered game event.
+ * @param {Array} args - An array of arguments passed to the event.
+ */
 on("gameEventTriggered", (name: any, args: any[]) => {
   if (name === "CEventNetworkStartMatch") {
     if (__playerCharacters.length === 0) {
       // TODO: Create a new character.
       const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
-      exp.spawnmanager.setAutoSpawnCallback(() => {
-        exp.spawnmanager.spawnPlayer(
+      global.exports.spawnmanager.setAutoSpawnCallback(() => {
+        global.exports.spawnmanager.spawnPlayer(
           {
             x: DEFAULT_SPAWN.x,
             y: DEFAULT_SPAWN.y,
@@ -27,28 +50,10 @@ on("gameEventTriggered", (name: any, args: any[]) => {
           }
         );
       });
-      exp.spawnmanager.setAutoSpawn(true);
-      exp.spawnmanager.forceRespawn();
+      global.exports.spawnmanager.setAutoSpawn(true);
+      global.exports.spawnmanager.forceRespawn();
     } else {
       // TODO: Send Character Select Screen. --> into Spawn Character.
     }
-
-    //   exp.spawnmanager.setAutoSpawnCallback(() => {
-    //     exp.spawnmanager.spawnPlayer(
-    //       {
-    //         x: 686.245,
-    //         y: 577.95,
-    //         z: 130.461,
-    //         model: "a_m_m_skater_01",
-    //       },
-    //       () => {
-    //         emit("chat:addMessage", {
-    //           args: ["Hi, there!"],
-    //         });
-    //       }
-    //     );
-    //   });
-    //   exp.spawnmanager.setAutoSpawn(true);
-    //   exp.spawnmanager.forceRespawn();
   }
 });
