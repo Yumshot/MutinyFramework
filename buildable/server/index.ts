@@ -1,4 +1,5 @@
-import './controllers/index';
+import "./controllers/index";
+import "./modules/commands/index";
 
 // import "./join/connect";
 // import "./join/functions/characters";

@@ -11,14 +11,12 @@
   "devDependencies": {
     "@citizenfx/client": "latest",
     "@citizenfx/server": "latest",
-    "@faker-js/faker": "^8.2.0",
     "@types/node": "^16.3.1",
     "@types/uuid": "^9.0.5",
     "esbuild": "^0.14.10"
   },
   "dependencies": {
     "discord-webhook-node": "^1.1.8",
-    "fivem-js": "^1.5.2",
     "mongodb": "^6.1.0",
     "mongoose": "^7.6.2",
     "pino": "^8.16.0",
