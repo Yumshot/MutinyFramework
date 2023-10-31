@@ -1,23 +1,8 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e31beb (refactor(config): update database const to drop locales from it, import fix.)
 import { __database } from "../../config/globals";
 import { IUser } from "modules/interfaces/IUser";
 import { ICharacter } from "modules/interfaces/ICharacter";
-=======
 import { __databaseLocales } from "../../config/globals";
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
-=======
-import { ICreateUser } from "modules/interfaces/ICreateUser";
->>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
-=======
-import { IUser } from "modules/interfaces/IUser";
-import { ICharacter } from "modules/interfaces/ICharacter";
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 
 /**
  * Represents a database connection and provides access to collections.
@@ -38,15 +23,7 @@ export default class Database {
    * Creates a new instance of the Database class.
    */
   constructor() {
-<<<<<<< HEAD
-<<<<<<< HEAD
     this.__database = new MongoClient(__database.connection, {
-=======
-    this.__database = new MongoClient(__databaseLocales.connection, {
->>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
-=======
-    this.__database = new MongoClient(__database.connection, {
->>>>>>> 5e31beb (refactor(config): update database const to drop locales from it, import fix.)
       serverApi: {
         version: ServerApiVersion.v1,
         deprecationErrors: true,
@@ -125,15 +102,7 @@ export default class Database {
    * @param data The data to be inserted.
    * @returns A Promise that resolves when the data has been inserted.
    */
-<<<<<<< HEAD
-<<<<<<< HEAD
   public async SetNewUserData(data: IUser): Promise<void> {
-=======
-  public async SetNewUserData(data: any): Promise<void> {
->>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
-=======
-  public async SetNewUserData(data: IUser): Promise<void> {
->>>>>>> 493756f (chore(db): Typing)
     try {
       await this.__databaseCollectionUsers.insertOne(data);
     } catch (e) {
@@ -141,44 +110,22 @@ export default class Database {
     }
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
   /**
    * Updates user data in the database.
    * @param data - The data to update.
    * @returns A Promise that resolves when the update is complete.
    */
   public async UpdateUserData(target: string, query: any): Promise<void> {
-<<<<<<< HEAD
     try {
       await this.__databaseCollectionUsers.updateOne(
         { steam_target: target },
         { $set: query }
-=======
-  public async UpdateUserData(data: any): Promise<void> {
-    try {
-      await this.__databaseCollectionUsers.updateOne(
-        { steam_target: data.steam_target },
-        { $set: data }
->>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
-=======
-    try {
-      await this.__databaseCollectionUsers.updateOne(
-        { steam_target: target },
-        { $set: query }
->>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
       );
     } catch (e) {
       console.log(e);
     }
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
   /**
    * Gets user data from the database.
    * @param query - The query to use to find the user.
@@ -191,39 +138,6 @@ export default class Database {
     } catch (e) {
       console.log(e);
       return null;
-<<<<<<< HEAD
-    }
-  }
-
-  /**
-   * Retrieves character data for a user from the database.
-   * @param query - The query to find the user's character data.
-   * @returns A Promise that resolves to the user's character data, or null if an error occurs.
-   */
-  public async GetUsersCharacterData(query: any): Promise<any> {
-    try {
-      const __user = await this.__databaseCollectionCharacters.findOne(query);
-      return __user;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
-
-  public async SetNewCharacterData(data: ICharacter): Promise<void> {
-    try {
-      await this.__databaseCollectionCharacters.insertOne(data);
-    } catch (e) {
-      console.log(e);
-=======
-  private CheckDate(date: Date): Date {
-    if (date) {
-      return date;
-    } else {
-      return new Date();
->>>>>>> 9b889d0 (Massive update to the server, this is a complete rewrite of the server.)
-=======
->>>>>>> 07e9200 (chore(db, build, builduser): update db.ts / add new user / add new route / update client / update build script)
     }
   }
 

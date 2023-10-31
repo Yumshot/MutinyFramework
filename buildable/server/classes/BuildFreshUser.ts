@@ -4,10 +4,6 @@ import { __databaseInstance } from "server";
 import { v4 as uuidv4 } from "uuid";
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 264a20d (Add Docs to all current files, to continue having a verbose documentation of this branch, this will most likely be merged shortly after i get a few systems squared away as they were previously.)
  * Create a user builder.
  * @param __steam - The steam ID of the user.
  * @param __name - The name of the user.
@@ -15,30 +11,19 @@ import { v4 as uuidv4 } from "uuid";
  * @class BuildFreshUser
  * @classdesc The class that handles building a fresh user.
  * @example  const __builder = new BuildFreshUser("steam:110000112345678", "John Doe", 1)
-<<<<<<< HEAD
-=======
- * Class representing a user builder.
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
-=======
->>>>>>> 264a20d (Add Docs to all current files, to continue having a verbose documentation of this branch, this will most likely be merged shortly after i get a few systems squared away as they were previously.)
  */
 export default class BuildFreshUser {
   __steam: string;
   __name: string;
   __source: number | string;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   /**
    * Create a user builder.
    * @param __steam - The steam ID of the user.
    * @param __name - The name of the user.
    * @param __source - The source of the user.
    */
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
-=======
->>>>>>> 264a20d (Add Docs to all current files, to continue having a verbose documentation of this branch, this will most likely be merged shortly after i get a few systems squared away as they were previously.)
+
   constructor(__steam: string, __name: string, __source: number | string) {
     this.__steam = __steam;
     this.__name = __name;

@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@citizenfx/client@^1.0.3281-1":
-  version "1.0.3281-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-1.0.3281-1.tgz#e26d85cb3686f8e0c85fdb86dca159e027358418"
-  integrity sha512-hZ82+Z1CfFFWYqTohDc9K2Cn00NAGQ4Hv34JH9kQpMsA2talHVUXjZOZ78/Dtk0DcGVA2beSYfA8fMm6ZrKmHg==
-
 "@citizenfx/client@latest":
   version "2.0.6798-1"
   resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.6798-1.tgz#5f0b9f3db2525f1c3e2c8c9eb30d12b966390556"
@@ -21,11 +16,6 @@
   version "0.14.54"
   resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.14.54.tgz#de2a4be678bd4d0d1ffbb86e6de779cde5999028"
   integrity sha512-bZBrLAIX1kpWelV0XemxBZllyRmM6vgFQQG2GdNb+r3Fkp0FOh1NJSvekXDs7jq70k4euu1cryLMfU+mTXlEpw==
-
-"@faker-js/faker@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-8.2.0.tgz#d4656d2cb485fe6ec4e7b340da9f16fac2c36c4a"
-  integrity sha512-VacmzZqVxdWdf9y64lDOMZNDMM/FQdtM9IsaOPKOm2suYwEatb8VkdHqOzXcDnZbk7YDE2BmsJmy/2Hmkn563g==
 
 "@mongodb-js/saslprep@^1.1.0":
   version "1.1.0"
@@ -311,13 +301,6 @@ fast-safe-stringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
-
-fivem-js@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/fivem-js/-/fivem-js-1.5.2.tgz#fe19bb7a194afa57c94575447476b8e62a949b8e"
-  integrity sha512-PONuAo9djL3UnEcVHxxLLHClQnpnLbiJXu2fNNGvi5Li/7IKfwn5PMHERrjr1Sq+oWeoao100LlsnlnA1mGCew==
-  dependencies:
-    "@citizenfx/client" "^1.0.3281-1"
 
 form-data@^3.0.0:
   version "3.0.1"

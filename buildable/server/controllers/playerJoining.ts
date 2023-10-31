@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 import { ErrorKeys } from "config/errors";
 import { __locations } from "config/globals";
 import { FindSteam } from "modules/utils/querys";
 import BuildFreshCharacter from "classes/BuildFreshCharacter";
 import { __databaseInstance } from "server";
-<<<<<<< HEAD
 
 /**
  * Retrieves character data for a given Steam target from the database on Join.
@@ -45,7 +40,6 @@ async function CreateNewCharacter(
   player: string,
   steam_target: string
 ): Promise<void> {
-<<<<<<< HEAD
   let __user = await __databaseInstance.GetUserData({
     steam_target: steam_target,
   });
@@ -76,10 +70,6 @@ async function HandoffCharacterData(player: any, last: number, src: string) {
   emitNet("startSpawn", src, player, last);
   SetPlayerRoutingBucket(src, 1);
 }
-=======
-import { Delay } from "modules/utils/delay";
-=======
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
 
 /**
  * Retrieves character data for a given Steam target from the database on Join.
@@ -106,47 +96,3 @@ on("playerJoining", async (source: string, oldID?: string) => {
     );
   }
 });
-<<<<<<< HEAD
->>>>>>> dffda90 (feat(server): add entityCreated, entityCreating, mumbleConnected, playerDropped, playerJoining)
-=======
-
-/**
- * Creates a new character for the given player and steam target.
- * @param {string} player - The player's identifier.
- * @param {string} steam_target - The steam target identifier.
- * @returns {Promise<void>} - A Promise that resolves when the character is created.
- */
-async function CreateNewCharacter(player: string, steam_target: string) {
-=======
->>>>>>> 92c4a06 (feat: Add job peds configuration file)
-  let __user = await __databaseInstance.GetUserData({
-    steam_target: steam_target,
-  });
-  const __builder = await new BuildFreshCharacter(
-    __user.id,
-    steam_target
-  ).__execute();
-
-  if (__builder) {
-    await __databaseInstance.SetNewCharacterData(__builder);
-    await HandoffCharacterData(__builder.characters, 0, player);
-  } else {
-    DropPlayer(
-      player,
-      `\n ⌠Mutiny Rp⌡ - Error creating your character! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[2]}`
-    );
-  }
-}
-
-/**
- * Hand off data for Character UI and start the spawn process for the player.
- * @param player - The player joining the server.
- * @param last - The last character ID of the player.
- * @param src - The source of the player joining.
- */
-async function HandoffCharacterData(player: any, last: number, src: string) {
-  // TODO: Hand off data for Character UI.
-  emitNet("startSpawn", src, player, last);
-  SetPlayerRoutingBucket(src, 1);
-}
->>>>>>> b5e75a5 (refactor(client): move old files to old folder)
