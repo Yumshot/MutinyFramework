@@ -45,6 +45,7 @@ async function CreateNewCharacter(
   player: string,
   steam_target: string
 ): Promise<void> {
+<<<<<<< HEAD
   let __user = await __databaseInstance.GetUserData({
     steam_target: steam_target,
   });
@@ -116,6 +117,8 @@ on("playerJoining", async (source: string, oldID?: string) => {
  * @returns {Promise<void>} - A Promise that resolves when the character is created.
  */
 async function CreateNewCharacter(player: string, steam_target: string) {
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   let __user = await __databaseInstance.GetUserData({
     steam_target: steam_target,
   });
@@ -144,5 +147,6 @@ async function CreateNewCharacter(player: string, steam_target: string) {
 async function HandoffCharacterData(player: any, last: number, src: string) {
   // TODO: Hand off data for Character UI.
   emitNet("startSpawn", src, player, last);
+  SetPlayerRoutingBucket(src, 1);
 }
 >>>>>>> b5e75a5 (refactor(client): move old files to old folder)

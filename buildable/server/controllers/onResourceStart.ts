@@ -1,9 +1,14 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { InitialSync } from "modules/utils/sync";
 
 =======
 >>>>>>> 264a20d (Add Docs to all current files, to continue having a verbose documentation of this branch, this will most likely be merged shortly after i get a few systems squared away as they were previously.)
+=======
+import { InitialSync } from "modules/utils/sync";
+
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
 /**
  * Event handler for when a resource starts.
  * @param resource - The name of the resource that started.
@@ -18,10 +23,15 @@ on("onResourceStart", (resource: string) => {
   if (resource !== GetCurrentResourceName()) return;
   console.log(`\n ⌠Mutiny Rp⌡ - Setting up routing buckets!`);
 <<<<<<< HEAD
+<<<<<<< HEAD
   InitialSync();
   console.log(`\n ⌠Mutiny Rp⌡ - Routing buckets set!`);
 =======
   SetRoutingBucketEntityLockdownMode(1, "strict");
   SetRoutingBucketPopulationEnabled(1, false);
 >>>>>>> b5e75a5 (refactor(client): move old files to old folder)
+=======
+  InitialSync();
+  console.log(`\n ⌠Mutiny Rp⌡ - Routing buckets set!`);
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
 });

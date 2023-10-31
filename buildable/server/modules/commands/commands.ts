@@ -1,18 +1,28 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { CreateWorldVehicle } from "./events/requestVehicle";
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+import { CreateWorldVehicle } from "./events/requestVehicle";
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
 import { getUserHex } from "./functions/getUserHex";
 
 /**
  * Object containing various commands for the command system.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * Defines a collection of commands for the Mutiny Framework server.
  */
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+/**
+ * Defines a collection of commands for the Mutiny Framework server.
+ */
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
 export const __commandSystem = {
   /**
    * Teleports the player to the marker on the map.
@@ -32,10 +42,14 @@ export const __commandSystem = {
    */
   car: {
 <<<<<<< HEAD
+<<<<<<< HEAD
     event: (source: any) => CreateWorldVehicle(source[0], source[1]),
 =======
     event: (source: any) => emitNet("spawnVehicle", source[0], source[1]),
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+    event: (source: any) => CreateWorldVehicle(source[0], source[1]),
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
     async: true,
     restricted: true,
     description: "Spawns a vehicle",
@@ -43,6 +57,9 @@ export const __commandSystem = {
   },
   /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
    * Removes vehicle for the player.
    * @param source - The player to spawn the vehicle for.
    */
@@ -54,8 +71,11 @@ export const __commandSystem = {
     usage: "/dv",
   },
   /**
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
    * Gets the hex of a player.
    * @param source - The player to get the hex of.
    */
@@ -73,12 +93,18 @@ export const __commandSystem = {
     usage: "/hex [player] or /hex for self",
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   /**
    * Spawns a random scenario for the player.
    * @param source - The player to spawn the scenario for.
    */
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   scenario: {
     event: (source: any) => emitNet("checkScenarios", source[0]),
     async: true,
@@ -87,12 +113,18 @@ export const __commandSystem = {
     usage: "/scenario",
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   /**
    * Clears the scenario for the player.
    * @param source - The player to clear the scenario for.
    */
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   clearScenario: {
     event: (source: any) => emitNet("clearScenario", source[0]),
     async: true,
@@ -101,12 +133,18 @@ export const __commandSystem = {
     usage: "/clearScenario",
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   /**
    * Gets the routing bucket of a player.
    * @param source - The player to get the routing bucket of.
    */
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   getRoutingBucket: {
     event: (source: any) => {
       console.log(GetPlayerRoutingBucket(source[0]));
@@ -117,13 +155,19 @@ export const __commandSystem = {
     usage: "/getRoutingBucket [player]",
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   /**
    * Sets the routing bucket of a player.
    * @param source - The player to set the routing bucket for.
    * @param bucket - The routing bucket to set.
    */
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   setRoutingBucket: {
     event: (source: any) => {
       SetPlayerRoutingBucket(source[0].toString(), source[1]);
@@ -134,6 +178,9 @@ export const __commandSystem = {
     usage: "/setRoutingBucket [player] [bucket]",
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
   respawn: {
     event: (source: any) => {
       emitNet("respawnPlayer", source[0]);
@@ -143,6 +190,9 @@ export const __commandSystem = {
     description: "Respawns the player",
     usage: "/respawn",
   },
+<<<<<<< HEAD
 =======
 >>>>>>> a59d569 (feat: Add commandHandler module)
+=======
+>>>>>>> 92c4a06 (feat: Add job peds configuration file)
 };
