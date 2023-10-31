@@ -36,7 +36,10 @@ on("playerJoining", async (source: string, oldID?: string) => {
  * @param {string} steam_target - The steam target identifier.
  * @returns {Promise<void>} - A Promise that resolves when the character is created.
  */
-async function CreateNewCharacter(player: string, steam_target: string) {
+async function CreateNewCharacter(
+  player: string,
+  steam_target: string
+): Promise<void> {
   let __user = await __databaseInstance.GetUserData({
     steam_target: steam_target,
   });
@@ -65,4 +68,5 @@ async function CreateNewCharacter(player: string, steam_target: string) {
 async function HandoffCharacterData(player: any, last: number, src: string) {
   // TODO: Hand off data for Character UI.
   emitNet("startSpawn", src, player, last);
+  SetPlayerRoutingBucket(src, 1);
 }
