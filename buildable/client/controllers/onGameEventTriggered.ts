@@ -43,7 +43,7 @@ on("gameEventTriggered", (name: any, args: any[]) => {
             x: DEFAULT_SPAWN.x,
             y: DEFAULT_SPAWN.y,
             z: DEFAULT_SPAWN.z,
-            model: "a_m_m_skater_01",
+            model: "Ghost",
           },
           () => {
             console.log(__playerCharacters, last, __targetCharacter);
