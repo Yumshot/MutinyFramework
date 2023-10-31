@@ -97,6 +97,9 @@ on("gameEventTriggered", (name: any, args: any[]) => {
             y: DEFAULT_SPAWN.y,
             z: DEFAULT_SPAWN.z,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> be3a272 (chore(something for me))
             model: "Ghost",
           },
           () => {
