@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import Register from './views/Register.vue'
 
-let registerState = ref(false)
+let registerState = ref(true)
 
 onMounted(() => {
   window.addEventListener('message', (e) => {

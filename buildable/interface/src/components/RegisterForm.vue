@@ -9,99 +9,171 @@
   >
     <n-drawer-content>
       <n-form ref="formRef" inline :label-width="80" :model="formValue" :rules="rules" size="small">
-        <n-space vertical size="small" style="padding: 30px">
-          <n-divider title-placement="right"> Name </n-divider>
-          <n-form-item
-            label="First"
-            path="user.first_name"
-            size="small"
-            label-align="left"
-            label-placement="left"
-            label-width="auto"
-          >
-            <n-input
-              size="small"
-              v-model:value="formValue.user.first_name"
-              placeholder="John/Jane"
-              style="width: 100vw"
-              class="container_base_no_rotate"
-            >
-            </n-input>
-          </n-form-item>
-          <n-form-item
-            label="Last"
-            path="user.last_name"
-            size="small"
-            label-align="left"
-            label-placement="left"
-            label-width="auto"
-          >
-            <n-input
-              size="small"
-              v-model:value="formValue.user.last_name"
-              placeholder="Doe"
-              style="width: 100vw"
-              class="container_base_no_rotate"
-            >
-            </n-input>
-          </n-form-item>
-          <n-divider title-placement="left"> Bio </n-divider>
-          <n-form-item
-            label="Age"
-            path="user.age"
-            size="small"
-            label-align="left"
-            label-placement="left"
-            label-width="auto"
-          >
-            <n-date-picker
-              v-model:value="formValue.user.age"
-              type="date"
-              style="width: 100vw"
-              class="container_base_no_rotate"
-            />
-          </n-form-item>
-          Gender
-          <n-form-item size="small" label-align="left" label-placement="left" label-width="auto">
-            <n-select
-              v-model:value="formValue.user.sex"
-              :options="options"
-              size="small"
-              clearable
-              style="width: 100vw"
-              class="container_base_no_rotate"
-              label="Gender"
-              placement="top"
-            />
-          </n-form-item>
-          <n-form-item size="small" label-align="left" label-placement="left" label-width="auto">
-            <n-input
-              v-model:value="value"
-              type="textarea"
-              placeholder="Character Backstory"
-              size="small"
-              style="width: 100vw"
-              class="container_base_no_rotate"
-            />
-          </n-form-item>
-          <n-form-item label="Username" path="user.internet_handle" size="small" label-width="auto">
-            <n-input
-              size="small"
-              v-model:value="formValue.user.internet_handle"
-              placeholder=" (for social media in game)"
-              style="width: 100vw"
-              class="container_base_no_rotate"
-            >
-            </n-input>
-          </n-form-item>
+        <n-space vertical size="small" style="padding: 10px">
+          <n-divider title-placement="right" class="subpixel-antialiased"> MutinyRP </n-divider>
+
+          <n-card embedded :bordered="false">
+            <n-tabs default-value="IDENTIFICATION" size="small" justify-content="space-evenly">
+              <n-tab-pane name="IDENTIFICATION" tab="IDENTIFICATION">
+                <div class="text-xs m-2 subpixel-antialiased">FIRST</div>
+                <n-form-item
+                  class="pl-2"
+                  path="user.first_name"
+                  size="small"
+                  label-align="left"
+                  label-placement="left"
+                  label-width="auto"
+                >
+                  <n-input
+                    size="small"
+                    v-model:value="formValue.user.first_name"
+                    placeholder="John/Jane"
+                    style="width: 100vw"
+                    class="container_base_no_rotate"
+                  >
+                  </n-input>
+                </n-form-item>
+                <div class="text-xs m-2 subpixel-antialiased">LAST</div>
+
+                <n-form-item
+                  class="pl-2"
+                  path="user.last_name"
+                  size="small"
+                  label-align="left"
+                  label-placement="left"
+                  label-width="auto"
+                >
+                  <n-input
+                    size="small"
+                    v-model:value="formValue.user.last_name"
+                    placeholder="Doe"
+                    style="width: 100vw"
+                    class="container_base_no_rotate"
+                  >
+                  </n-input>
+                </n-form-item>
+              </n-tab-pane>
+              <n-tab-pane name="BIOGRAPHY" tab="BIOGRAPHY">
+                <div class="text-xs m-2 subpixel-antialiased">AGE</div>
+                <n-form-item
+                  class="pl-2"
+                  path="user.age"
+                  size="small"
+                  label-align="left"
+                  label-placement="left"
+                  label-width="auto"
+                >
+                  <n-date-picker
+                    v-model:value="formValue.user.age"
+                    type="date"
+                    style="width: 100vw; border-radius: 100px"
+                    class="container_base_no_rotate"
+                  />
+                </n-form-item>
+                <div class="text-xs m-2 subpixel-antialiased">GENDER</div>
+                <n-form-item
+                  class="pl-2"
+                  size="small"
+                  label-align="left"
+                  label-placement="left"
+                  label-width="auto"
+                >
+                  <n-select
+                    v-model:value="formValue.user.sex"
+                    :options="options"
+                    size="small"
+                    clearable
+                    style="width: 100vw"
+                    class="container_base_no_rotate"
+                    label="Gender"
+                    placement="top"
+                  />
+                </n-form-item>
+                <div class="text-xs m-2 subpixel-antialiased">CHARACTER BACKSTORY</div>
+                <n-form-item
+                  class="pl-2"
+                  size="small"
+                  label-align="left"
+                  label-placement="left"
+                  label-width="auto"
+                >
+                  <n-input
+                    v-model:value="value"
+                    type="textarea"
+                    size="small"
+                    style="width: 100vw"
+                    class="container_base_no_rotate"
+                  />
+                </n-form-item>
+                <n-form-item
+                  class="pl-2"
+                  label="USERNAME"
+                  path="user.internet_handle"
+                  size="small"
+                  label-width="auto"
+                >
+                  <n-input
+                    size="small"
+                    v-model:value="formValue.user.internet_handle"
+                    placeholder=" (for social media in game)"
+                    style="width: 100vw"
+                    class="container_base_no_rotate"
+                  >
+                  </n-input>
+                </n-form-item>
+              </n-tab-pane>
+
+              <n-tab-pane name="FINANCIAL" tab="FINANCIAL">
+                <div class="text-xs m-2 subpixel-antialiased">BANK PIN</div>
+                <n-card embedded :bordered="false" class="self-center text-center">
+                  <n-input
+                    key="1"
+                    size="small"
+                    style="width: 10%"
+                    class="m-3"
+                    placeholder="*"
+                    path="user.pin"
+                    v-model="formValue.user.pin[0]"
+                    maxlength="1"
+                  />
+                  <n-input
+                    key="2"
+                    size="small"
+                    style="width: 10%"
+                    class="m-3"
+                    placeholder="*"
+                    v-model="formValue.user.pin[1]"
+                    path="user.pin"
+                    maxlength="1"
+                  />
+                  <n-input
+                    key="3"
+                    size="small"
+                    style="width: 10%"
+                    class="m-3"
+                    placeholder="*"
+                    v-model="formValue.user.pin[2]"
+                    path="user.pin"
+                    maxlength="1"
+                  />
+                  <n-input
+                    key="4"
+                    size="small"
+                    style="width: 10%"
+                    class="m-3"
+                    placeholder="*"
+                    v-model="formValue.user.pin[3]"
+                    path="user.pin"
+                    maxlength="1"
+                  />
+                </n-card>
+                <n-button type="primary" block secondary strong> SUBMIT </n-button>
+                <n-button type="error" block secondary strong> RESET </n-button>
+              </n-tab-pane>
+            </n-tabs>
+          </n-card>
         </n-space>
       </n-form>
-      <template #footer>
-        <n-space justify="center">
-          <n-button type="primary">Register</n-button>
-          <n-button type="error">Reset</n-button>
-        </n-space>
-      </template>
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -119,7 +191,14 @@ import {
   NFormItem,
   NDivider,
   NDatePicker,
-  NSelect
+  NSelect,
+  NCollapse,
+  NCollapseItem,
+  NCard,
+  NInputNumber,
+  NFormItemRow,
+  NTabs,
+  NTabPane
 } from 'naive-ui'
 
 export default defineComponent({
@@ -135,7 +214,14 @@ export default defineComponent({
     NFormItem,
     NDivider,
     NDatePicker,
-    NSelect
+    NSelect,
+    NCollapse,
+    NCollapseItem,
+    NCard,
+    NInputNumber,
+    NFormItemRow,
+    NTabs,
+    NTabPane
   },
   setup() {
     const formRef = ref(null)
@@ -162,7 +248,8 @@ export default defineComponent({
           last_name: '',
           age: 0,
           sex: '',
-          internet_handle: ''
+          internet_handle: '',
+          pin: [0, 0, 0, 0]
         }
       }),
       rules: {
@@ -184,6 +271,17 @@ export default defineComponent({
           },
           sex: {
             required: true
+          },
+          pin: {
+            required: true,
+            message: 'Please input your pin',
+            trigger: ['input', 'blur'],
+            validator: (rule, value) => {
+              console.log(rule, value)
+              if (typeof value != 'number') {
+                return 'Pin must be a number'
+              }
+            }
           }
         }
       },
