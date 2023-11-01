@@ -27,12 +27,27 @@ export const __commandSystem = {
    * @param model - The model of the vehicle to spawn.
    */
   car: {
-    event: (source: any) => emitNet("spawnVehicle", source[0], source[1]),
+    event: (source: any) => CreateWorldVehicle(source[0], source[1]),
 
     async: true,
     restricted: true,
     description: "Spawns a vehicle",
     usage: "/car [model]",
+  },
+  cars: {
+    event: (source: any) => {
+      emitNet("chat:addMessage", source[0], {
+        multiline: true,
+        args: [
+          "Me",
+          "kanjo, previon, hakuchou2,  rrocket, dominator3, gauntlet4, dominator7, yosemite2, caracara2, everon, rebla, tailgater2, jester3, paragon, paragon2, penumbra2",
+        ],
+      });
+    },
+    async: true,
+    restricted: true,
+    description: "Lists Models I Like",
+    usage: "/cars",
   },
   /**
    * Removes vehicle for the player.

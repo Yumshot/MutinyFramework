@@ -6,10 +6,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-  ],
+  base: '',
+  build: {
+    emptyOutDir: true,
+    outDir: '../../../mutiny-server/resources/mutiny_core/interface'
+  },
+  plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

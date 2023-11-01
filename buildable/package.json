@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node build.js --mode=production",
+    "build-lua": "node build-lua.js",
     "watch": "node build.js"
   },
   "devDependencies": {

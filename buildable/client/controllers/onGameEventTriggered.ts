@@ -41,6 +41,7 @@ on("gameEventTriggered", (name: any, args: any[]) => {
       // TODO: Create a new character.
 
       const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
+      // const DEFAULT_SPAWN = { x: 2737.96, y: -374.12, z: -47.99 };
 
       global.exports.spawnmanager.setAutoSpawnCallback(() => {
         global.exports.spawnmanager.spawnPlayer(

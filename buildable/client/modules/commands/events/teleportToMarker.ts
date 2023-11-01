@@ -1,24 +1,32 @@
 import { Vector3 } from "classes/Vector3";
+import { Delay } from "modules/utils/delay";
 
 /**
  * Listens for the "teleportToMarker" event and teleports the player to the location of their waypoint marker.
  * Emits the "teleportRequest" event with the coordinates of the waypoint marker.
  */
 
-onNet("teleportToMarker", () => {
+onNet("teleportToMarker", async () => {
   const WaypointHandle = GetFirstBlipInfoId(8);
   if (DoesBlipExist(WaypointHandle)) {
     const waypointCoords = GetBlipInfoIdCoord(WaypointHandle);
-    const groundCoords = GetGroundZCoordWithOffsets(
-      waypointCoords[0],
-      waypointCoords[1],
-      waypointCoords[2]
-    );
-    const coords = new Vector3([
-      waypointCoords[0],
-      waypointCoords[1],
-      groundCoords[1],
-    ]);
-    emitNet("teleportRequest", coords);
+    for (let height = 1; height < 1000; height++) {
+      const [foundGround, zPos] = GetGroundZFor_3dCoord(
+        waypointCoords[0],
+        waypointCoords[1],
+        height + 0.0,
+        false
+      );
+      if (foundGround) {
+        const coords = new Vector3([
+          waypointCoords[0],
+          waypointCoords[1],
+          zPos,
+        ]);
+        emitNet("teleportRequest", coords);
+        break;
+      }
+      await Delay(5);
+    }
   }
 });

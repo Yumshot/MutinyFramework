@@ -5,3 +5,21 @@ body {
   height: 100vh;
   background: transparent !important;
 }
+
+.container_base {
+  transform: rotateX(-15deg) rotateY(30deg) scale(1.25, 1.05);
+  color: black;
+  background: rgba(255, 255, 255, 0.226);
+  border: 1px solid rgba(255, 255, 255, 0.325);
+  border-radius: 20px;
+  -webkit-box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+  box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+}
+
+.container_base_no_rotate {
+  border-radius: 20px;
+  -webkit-box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+  box-shadow: -4px 3.5px 3.5px 1.5px rgba(0, 0, 0, 0.53);
+}
