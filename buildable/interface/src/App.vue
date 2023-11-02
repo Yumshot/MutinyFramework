@@ -12,6 +12,7 @@ onMounted(() => {
     switch (e.data.event) {
       case '__openRegister':
         registerState.value = e.data.state
+        console.log(e.data.state, registerState.value)
         break
       case '__openVehicle':
         vehicleState.value = e.data.state
