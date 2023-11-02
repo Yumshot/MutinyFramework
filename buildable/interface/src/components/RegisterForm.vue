@@ -12,8 +12,13 @@
         <n-space vertical size="small" style="padding: 10px">
           <n-divider title-placement="right" class="subpixel-antialiased"> MutinyRP </n-divider>
 
-          <n-card embedded :bordered="false">
-            <n-tabs default-value="IDENTIFICATION" size="small" justify-content="space-evenly">
+          <n-card :bordered="false" style="background: transparent !important">
+            <n-tabs
+              default-value="IDENTIFICATION"
+              size="small"
+              justify-content="space-evenly"
+              style="background: transparent !important"
+            >
               <n-tab-pane name="IDENTIFICATION" tab="IDENTIFICATION">
                 <div class="text-xs m-2 subpixel-antialiased">FIRST</div>
                 <n-form-item
@@ -125,7 +130,11 @@
 
               <n-tab-pane name="FINANCIAL" tab="FINANCIAL">
                 <div class="text-xs m-2 subpixel-antialiased">BANK PIN</div>
-                <n-card embedded :bordered="false" class="self-center text-center">
+                <n-card
+                  :bordered="false"
+                  class="self-center text-center"
+                  style="background: transparent !important"
+                >
                   <n-input
                     key="1"
                     size="small"
@@ -200,7 +209,7 @@ import {
   NTabs,
   NTabPane
 } from 'naive-ui'
-
+import axios from 'axios'
 export default defineComponent({
   name: 'RegisterForm',
   components: {
@@ -285,6 +294,16 @@ export default defineComponent({
       },
       handleValidateClick(e: MouseEvent) {
         e.preventDefault()
+        formRef.value?.validate((valid: boolean) => {
+          if (valid) {
+            axios.post('http://mutiny_core/createCharacter', {
+              data: formRef.value
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
       }
     }
   }
