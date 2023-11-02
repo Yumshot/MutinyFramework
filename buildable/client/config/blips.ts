@@ -647,6 +647,17 @@ export const MLO_BLIPS = [
     hidden: false,
     handle: null as number | null,
   },
+  {
+    name: "ARCADE",
+    x: 758.6769409179688,
+    y: -817.2000122070312,
+    z: 26.2806396484375,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
 ];
 
 export const DEFAULT_SPAWN_BLIPS = [{}];

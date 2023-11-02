@@ -1,4 +1,3 @@
--- CREDITS https://github.com/OfficialDarkzy/DRP-Core/blob/master/drp_core/client.lua
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     DisableVehicleDistantlights(true)
@@ -7,16 +6,24 @@ Citizen.CreateThread(function()
     SetRandomTrains(false)
     StartAudioScene("CHARACTER_CHANGE_IN_SKY_SCENE") -- disable shity ambience
     DistantCopCarSirens(false)
+    RemoveWeaponDrops()
 end)
----------------------------------------------------------------------------
---- You Can Edit The Below To Your Requirements,
---  only touch if you know what you are doing,
---  Darkzy will not help you if you break it
----------------------------------------------------------------------------
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        DisablePlayerVehicleRewards(PlayerId())
+    end
+end)
+
 AddEventHandler("playerSpawned", function()
     Citizen.Wait(1000)
     Citizen.CreateThread(function()
+        DisplayHud(false)
         local ped = PlayerPedId()
+        if not DoesEntityExist(ped) then
+            return
+        end
         NetworkSetFriendlyFireOption(true)                 -- Enable Friendly Fire
         SetCanAttackFriendly(ped, true, true)              -- Enable Friendly Fire
         SetMaxWantedLevel(0)                               -- Set Max Wanted Level to 0
@@ -41,14 +48,35 @@ end)
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
+        local ped = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(ped, false)
         ----------------------Remove Police Audio----------------------------------	
         DistantCopCarSirens(false)
         CancelCurrentPoliceReport();
         ----------------------Hiding Hud Components--------------------------------
-        DisablePlayerVehicleRewards(PlayerId())
-        SetPedConfigFlag(PlayerPedId(), 35, false) --To prevent auto-motorcycle helmet
+        SetPedConfigFlag(ped, 35, false) --To prevent auto-motorcycle helmet
         ---------------------------------------------------------------------------
-        Citizen.Wait(0)
+        if IsPedInAnyVehicle(ped, false) and IsVehicleDriveable(vehicle, false) and GetPedInVehicleSeat(vehicle, -1) == ped
+        then
+            DisplayRadar(true)
+            Citizen.Wait(50)
+            SendNuiMessage(json.encode({
+                event = "__openVehicle",
+                state = true,
+                options = {
+                    speed = {
+                        mph = math.ceil(GetEntitySpeed(vehicle) * 2.236936),
+                    }
+                }
+            }))
+        else
+            DisplayRadar(false)
+            SendNuiMessage(json.encode({
+                event = "__openVehicle",
+                state = false,
+            }))
+        end
+        Citizen.Wait(100)
     end
 end)
 
@@ -104,6 +132,3 @@ function RemoveWeaponDrops()
 end
 
 ---------------------------------------------------------------------------
-Citizen.CreateThread(function()
-    RemoveWeaponDrops()
-end)

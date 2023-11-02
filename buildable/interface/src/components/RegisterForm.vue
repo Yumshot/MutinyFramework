@@ -253,34 +253,32 @@ export default defineComponent({
         }
       }),
       rules: {
-        user: {
-          first_name: {
-            required: true,
-            message: 'Please input your first name',
-            trigger: 'blur'
-          },
-          last_name: {
-            required: true,
-            message: 'Please input your last name',
-            trigger: 'blur'
-          },
-          age: {
-            required: true,
-            message: 'Please input your age',
-            trigger: ['input', 'blur']
-          },
-          sex: {
-            required: true
-          },
-          pin: {
-            required: true,
-            message: 'Please input your pin',
-            trigger: ['input', 'blur'],
-            validator: (rule, value) => {
-              console.log(rule, value)
-              if (typeof value != 'number') {
-                return 'Pin must be a number'
-              }
+        first_name: {
+          required: true,
+          message: 'Please input your first name',
+          trigger: 'blur'
+        },
+        last_name: {
+          required: true,
+          message: 'Please input your last name',
+          trigger: 'blur'
+        },
+        age: {
+          required: true,
+          message: 'Please input your age',
+          trigger: ['input', 'blur']
+        },
+        sex: {
+          required: true
+        },
+        pin: {
+          required: true,
+          message: 'Please input your pin',
+          trigger: ['input', 'blur'],
+          validator: (rule: any, value: any) => {
+            console.log(rule, value)
+            if (typeof value != 'number') {
+              return 'Pin must be a number'
             }
           }
         }

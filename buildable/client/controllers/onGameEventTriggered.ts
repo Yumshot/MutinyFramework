@@ -37,11 +37,18 @@ onNet("startSpawn", (characters: any, last: number) => {
 
 on("gameEventTriggered", (name: any, args: any[]) => {
   if (name === "CEventNetworkStartMatch") {
+    DisplayHud(false);
+    DisplayRadar(false);
     if (__playerCharacters.length === 0) {
       // TODO: Create a new character.
 
-      const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
+      // const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
       // const DEFAULT_SPAWN = { x: 2737.96, y: -374.12, z: -47.99 };
+      const DEFAULT_SPAWN = {
+        x: 763.7538452148438,
+        y: -817.4901123046875,
+        z: 26.2974853515625,
+      };
 
       global.exports.spawnmanager.setAutoSpawnCallback(() => {
         global.exports.spawnmanager.spawnPlayer(

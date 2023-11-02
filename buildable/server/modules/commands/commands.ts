@@ -2,21 +2,19 @@ import { CreateWorldVehicle } from "./events/requestVehicle";
 import { getUserHex } from "./functions/getUserHex";
 
 /**
- * Object containing various commands for the command system.
+ * Defines a collection of commands for a game server.
  */
-
-/**
- * Defines a collection of commands for the Mutiny Framework server.
- */
-
 export const __commandSystem = {
   /**
    * Teleports the player to the marker on the map.
    * @param source - The player to teleport.
    */
   tpm: {
-    event: (source: any) => emitNet("teleportToMarker", source[0]),
-    async: false,
+    event: (source: any) => {
+      console.log("tpm trigger");
+      emitNet("teleportToMarker", source[0]);
+    },
+    async: true,
     restricted: true,
     description: "Teleports you to the marker on map",
     usage: "/tpm",
@@ -34,6 +32,10 @@ export const __commandSystem = {
     description: "Spawns a vehicle",
     usage: "/car [model]",
   },
+  /**
+   * Lists models of cars.
+   * @param source - The player to list the models for.
+   */
   cars: {
     event: (source: any) => {
       emitNet("chat:addMessage", source[0], {
@@ -126,6 +128,10 @@ export const __commandSystem = {
     description: "Sets the routing bucket of a player",
     usage: "/setRoutingBucket [player] [bucket]",
   },
+  /**
+   * Respawns the player.
+   * @param source - The player to respawn.
+   */
   respawn: {
     event: (source: any) => {
       emitNet("respawnPlayer", source[0]);
@@ -134,5 +140,27 @@ export const __commandSystem = {
     restricted: true,
     description: "Respawns the player",
     usage: "/respawn",
+  },
+  /**
+   * Gets the player's current position & logs to a file.
+   * @param source - The player to get the position of.
+   */
+  loc: {
+    event: (source: any) => {
+      emit("getLoc", source[0], source[1]);
+    },
+    async: true,
+    restricted: true,
+    description: "Gets the player's current position & logs to a file",
+    usage: "/loc [name of location]",
+  },
+  playSound: {
+    event: (source: any) => {
+      emitNet("playSoundFrontEnd", -1);
+    },
+    async: true,
+    restricted: true,
+    description: "Plays a sound",
+    usage: "/playSound [sound]",
   },
 };
