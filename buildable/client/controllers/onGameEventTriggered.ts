@@ -1,3 +1,5 @@
+import { SendCharacterCreate } from "modules/nui/createCharacter";
+
 /**
  * Event listener for the "startSpawn" network event.
  * @param {Array} characters - An array of player characters.
@@ -61,6 +63,7 @@ on("gameEventTriggered", (name: any, args: any[]) => {
           },
           () => {
             console.log(__playerCharacters, last, __targetCharacter);
+            SendCharacterCreate(true);
           }
         );
       });

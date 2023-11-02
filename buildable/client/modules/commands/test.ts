@@ -1,8 +1,10 @@
-let toggle = true;
+import { SendCharacterCreate } from "modules/nui/createCharacter";
+
 RegisterCommand(
   "test",
-  () => {
-    emitNet("getServerPeds");
+  (source: any, args: any, raw: any) => {
+    // emitNet("getServerPeds");
+    SendCharacterCreate(args[0]);
   },
   false
 );
