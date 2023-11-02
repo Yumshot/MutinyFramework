@@ -1,7 +1,7 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
 import { __database } from "../../config/globals";
-import { IUser } from "modules/interfaces/IUser";
-import { ICharacter } from "modules/interfaces/ICharacter";
+import { IUser } from "config/interfaces/IUser";
+import { ICharacter } from "config/interfaces/ICharacter";
 import { __databaseLocales } from "../../config/globals";
 
 /**
@@ -161,6 +161,36 @@ export default class Database {
       await this.__databaseCollectionCharacters.insertOne(data);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  public async InsertNewCharacterToUserCharacterData(query: {
+    steam_target: string;
+    composition: any;
+  }) {
+    try {
+      await this.__databaseCollectionCharacters.updateOne(
+        {
+          steam_target: query.steam_target,
+        },
+        {
+          $push: {
+            characters: query.composition,
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async CountCharactersForUser(query: any): Promise<number> {
+    try {
+      const __characters = await this.GetUsersCharacterData(query);
+      return __characters.characters.length;
+    } catch (e) {
+      console.log(e);
+      return null;
     }
   }
 }

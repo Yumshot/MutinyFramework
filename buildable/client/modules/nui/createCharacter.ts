@@ -5,8 +5,9 @@ export function SendCharacterCreate(toggle: boolean) {
     state: toggle,
   });
 }
-
-RegisterNuiCallbackType("__closeRegister");
-on("__closeRegister", () => {
+RegisterNuiCallback("++CreateCharacter", async (data: any, cb: any) => {
+  emitNet("CreateNewUserCharacter", data);
+  console.log("NUI CALLBACK ", data);
   SetNuiFocus(false, false);
+  cb("ok");
 });

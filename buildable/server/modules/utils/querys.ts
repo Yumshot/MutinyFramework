@@ -15,6 +15,5 @@ export const FindSteam = (source: string | number) => {
       }
     }
   }
-  console.log("Steam Identifier: ", steamIdentifier);
   return steamIdentifier ? steamIdentifier : null;
 };

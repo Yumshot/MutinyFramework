@@ -1,7 +1,7 @@
 import { __databaseInstance } from "server";
 import { Delay } from "../modules/utils/delay";
 import { FindSteam } from "../modules/utils/querys";
-import { IDeferrals } from "../modules/interfaces/IDeferrals";
+import { IDeferrals } from "../config/interfaces/IDeferrals";
 import BuildFreshUser from "classes/BuildFreshUser";
 import { ErrorKeys } from "config/errors";
 
