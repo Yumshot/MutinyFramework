@@ -1,4 +1,4 @@
-import { ICharacter } from "modules/interfaces/ICharacter";
+import { ICharacter } from "config/interfaces/ICharacter";
 
 /**
  * Creates a new instance of BuildFreshCharacter.

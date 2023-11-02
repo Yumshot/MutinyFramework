@@ -1,5 +1,5 @@
 import { Permissions } from "config/enums/permissions";
-import { IUser } from "modules/interfaces/IUser";
+import { IUser } from "config/interfaces/IUser";
 import { __databaseInstance } from "server";
 import { v4 as uuidv4 } from "uuid";
 
