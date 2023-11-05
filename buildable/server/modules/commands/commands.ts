@@ -183,4 +183,13 @@ export const __commandSystem = {
     description: "Reloads the join loop",
     usage: "/reload",
   },
+  ap: {
+    event: (source: any) => {
+      emitNet("handleAutoPilot", source[0], source[1]);
+    },
+    async: true,
+    restricted: false,
+    description: "Manipulate the Autopilot System",
+    usage: "/ap <start/stop> <mode 1 for city, 2 for highway>",
+  },
 };

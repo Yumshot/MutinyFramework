@@ -6,12 +6,7 @@ export type NotificationPositionType =
   | "bottom-left"
   | "bottom-center";
 
-export type NotificationColorType =
-  | "primary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "dark";
+export type NotificationColorType = "primary" | "success" | "danger" | "dark";
 
 export type NotificationColorRGBType = [number, number, number];
 export type NotificationColorHexType = string;
@@ -122,8 +117,7 @@ export class Notification implements INotification {
   }
 }
 
-on("MUTINY:NOTIFY:CREATE_NOTIFY", (data: INotification) => {
-  console.log("SOME DATA ", data);
+on("clientNotify", (data: INotification) => {
   const notify = new Notification(
     data.title,
     data.text,
@@ -139,15 +133,13 @@ on("MUTINY:NOTIFY:CREATE_NOTIFY", (data: INotification) => {
     data.progress,
     data.notPadding
   );
-  console.log(notify);
   SendNUIMessage({
     type: "notification",
     data: notify,
   });
 });
 
-onNet("MUTINY:NOTIFY:CREATE_NOTIFY_FROM_SERVER", (data: INotification) => {
-  console.log("SOME DATA ", data);
+onNet("serverNotify", (data: INotification) => {
   const notify = new Notification(
     data.title,
     data.text,
@@ -163,7 +155,6 @@ onNet("MUTINY:NOTIFY:CREATE_NOTIFY_FROM_SERVER", (data: INotification) => {
     data.progress,
     data.notPadding
   );
-  console.log(notify);
   SendNUIMessage({
     type: "notification",
     data: notify,

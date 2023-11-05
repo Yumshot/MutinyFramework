@@ -11,7 +11,7 @@ export let __globalStates = {
 export function InitialSync() {
   SetRoutingBucketEntityLockdownMode(1, "strict");
   SetRoutingBucketPopulationEnabled(1, false);
-  for (let i = 0; i < 9000000; i++) {
+  for (let i = 0; i < 200000; i++) {
     if (DoesEntityExist(i)) {
       DeleteEntity(i);
     }

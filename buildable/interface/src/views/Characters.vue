@@ -1,6 +1,7 @@
 <template>
   <div class="carousel-wrapper">
     <n-carousel
+      show-arrow
       keyboard
       :direction="direction"
       :dot-placement="direction === 'vertical' ? 'right' : 'bottom'"
@@ -31,7 +32,7 @@ export default defineComponent({
     NCard
   },
   setup() {
-    const directionRef = ref<'horizontal' | 'vertical'>('horizontal')
+    const directionRef = ref<'horizontal' | 'vertical'>('vertical')
     return {
       direction: directionRef,
       directions: ['horizontal', 'vertical']
@@ -50,6 +51,7 @@ export default defineComponent({
 }
 
 n-carousel {
+  position: relative;
   width: 100%;
   height: 100%;
   max-height: 80vh;
@@ -58,6 +60,10 @@ n-carousel {
 }
 
 .character_holder {
+  width: 100%;
+  height: 100%;
+  max-height: 80vh;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

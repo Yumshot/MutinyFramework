@@ -109,6 +109,27 @@ onNet("reloadSpawnEvent", () => {
     global.exports.spawnmanager.forceRespawn();
   } else {
     // TODO: Send Character Select Screen. --> into Spawn Character.
-    SendCharacterSelect(__playerCharacters, last, __targetCharacter);
+    const DEFAULT_SPAWN = {
+      x: 763.7538452148438,
+      y: -817.4901123046875,
+      z: 26.2974853515625,
+    };
+
+    global.exports.spawnmanager.setAutoSpawnCallback(() => {
+      global.exports.spawnmanager.spawnPlayer(
+        {
+          x: DEFAULT_SPAWN.x,
+          y: DEFAULT_SPAWN.y,
+          z: DEFAULT_SPAWN.z,
+
+          model: "Ghost",
+        },
+        () => {
+          SendCharacterSelect(__playerCharacters, last, __targetCharacter);
+        }
+      );
+    });
+    global.exports.spawnmanager.setAutoSpawn(true);
+    global.exports.spawnmanager.forceRespawn();
   }
 });

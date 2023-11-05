@@ -1,45 +1,44 @@
-Citizen.CreateThread(function()
-    SetNuiFocus(false, false)
-    DisableVehicleDistantlights(true)
-    SwitchTrainTrack(0, true)
-    SwitchTrainTrack(3, true)
-    SetRandomTrains(false)
-    StartAudioScene("CHARACTER_CHANGE_IN_SKY_SCENE") -- disable shity ambience
-    DistantCopCarSirens(false)
-    RemoveWeaponDrops()
-end)
+Config = {}
+
+Config.VehicleEnterKey = 49 -- they button you press when entering a vehicle / Default 'F - 49'
+Config.SecondKey = 19       -- Default '19 - ALT' is used to access hanging spots on cars
+
+Config.ShuffCommand = 'shuff'
+
+
 
 Citizen.CreateThread(function()
     while true do
+        local playerId = PlayerId();
+        if (NetworkIsPlayerActive(playerId)) then
+            DisablePlayerVehicleRewards(playerId)
+        end
         Citizen.Wait(0)
-        DisablePlayerVehicleRewards(PlayerId())
     end
 end)
 
 AddEventHandler("playerSpawned", function()
+    SetNuiFocus(false, false)
     Citizen.Wait(1000)
     Citizen.CreateThread(function()
         DisplayHud(false)
         local ped = PlayerPedId()
+        local playerId = PlayerId()
         if not DoesEntityExist(ped) then
             return
         end
-        NetworkSetFriendlyFireOption(true)                 -- Enable Friendly Fire
-        SetCanAttackFriendly(ped, true, true)              -- Enable Friendly Fire
-        SetMaxWantedLevel(0)                               -- Set Max Wanted Level to 0
-        SetCreateRandomCops(false)                         -- Prevent AI Cop Creation
-        SetCreateRandomCopsNotOnScenarios(false)           -- Prevent AI Cop Creation
-        SetCreateRandomCopsOnScenarios(false)              -- Prevent AI Cop Creation
-        SetPlayerHealthRechargeLimit(PlayerId(), 0)        -- Disable Health Recharge
-        SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0) -- Disable Health Recharge
-        SetPedCanBeKnockedOffVehicle(ped, 0)               -- Disable Ped Knocked Off Vehicle
-        SetAggressiveHorns(false)                          -- Disable Aggressive Horns
-        SetPoliceIgnorePlayer(ped, true)                   -- Disable Police Ignore Player
-        SetPedMinGroundTimeForStungun(ped, 6000)           -- Time spent on ground after being tased (in ms)
-        SetPedConfigFlag(ped, 184, true)                   -- Disable Seat Shuffle
-        SetPedConfigFlag(ped, 35, false)                   -- Disable Automatic Bike Helmet
-        SwitchTrainTrack(0, true)
-        SwitchTrainTrack(3, true)
+        NetworkSetFriendlyFireOption(true)               -- Enable Friendly Fire
+        SetCanAttackFriendly(ped, true, true)            -- Enable Friendly Fire
+        SetMaxWantedLevel(0)                             -- Set Max Wanted Level to 0
+        SetCreateRandomCops(false)                       -- Prevent AI Cop Creation
+        SetCreateRandomCopsNotOnScenarios(false)         -- Prevent AI Cop Creation
+        SetCreateRandomCopsOnScenarios(false)            -- Prevent AI Cop Creation
+        SetPlayerHealthRechargeLimit(playerId, 0)        -- Disable Health Recharge
+        SetPlayerHealthRechargeMultiplier(playerId, 0.0) -- Disable Health Recharge
+        SetPedCanBeKnockedOffVehicle(ped, 0)             -- Disable Ped Knocked Off Vehicle
+        SetAggressiveHorns(false)                        -- Disable Aggressive Horns
+        SetPoliceIgnorePlayer(ped, true)                 -- Disable Police Ignore Player
+        SetPedMinGroundTimeForStungun(ped, 6000)         -- Time spent on ground after being tased (in ms)
         StartAudioScene("CHARACTER_CHANGE_IN_SKY_SCENE") -- disable shity ambience
     end)
 end)
@@ -131,4 +130,147 @@ function RemoveWeaponDrops()
     end
 end
 
+isActive = false;
+autoPilotTimer = 2500;
+driveThread = nil;
+
 ---------------------------------------------------------------------------
+RegisterNetEvent('handleAutoPilot')
+AddEventHandler('handleAutoPilot', function(value)
+    checkAutoPilotToggle(value[1])
+    if value[1] == 'start' then
+        mode = checkAutoPilotMode(value[2])
+        ped = PlayerPedId()
+        vehicle = GetVehiclePedIsIn(ped, false)
+        local blip = GetFirstBlipInfoId(8)
+        blipCoords = GetBlipCoords(blip)
+        local startDistance = #(GetEntityCoords(ped) - blipCoords)
+        if not IsPedInAnyVehicle(ped, false) or not IsVehicleDriveable(vehicle, false) or GetPedInVehicleSeat(vehicle, -1) ~= ped then
+            return
+        end
+        if startDistance >= 100 then
+            driveThread = Citizen.CreateThread(function()
+                while isActive do
+                    local distance = #(GetEntityCoords(ped) - blipCoords)
+                    if distance >= 50.0 then
+                        TaskVehicleDriveToCoordLongrange(ped, vehicle, blipCoords.x, blipCoords.y, blipCoords.z, mode[1],
+                            mode[2], 5.0)
+                    elseif distance >= 25.0 then
+                        TaskVehicleDriveToCoordLongrange(ped, vehicle, blipCoords.x, blipCoords.y, blipCoords.z, 10.0,
+                            mode[2], 2.0)
+                    else
+                        checkAutoPilotToggle('stop')
+                    end
+                    Citizen.Wait(autoPilotTimer)
+                end
+            end)
+        end
+    end
+end)
+
+
+
+
+function checkAutoPilotToggle(value)
+    if value == 'start' then
+        isActive = true;
+        autoPilotTimer = 500;
+        local notification = {
+            title = 'Autism Autopilot',
+            text = "Autopilot has been started, please do not leave the vehicle.",
+            icon =
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 17l-1-4l-4-1l9-4z"></path></g></svg>',
+            position = "top-right",
+            sticky = true,
+            width = "auto",
+            progress = "auto",
+        };
+
+        TriggerEvent("clientNotify", notification);
+    elseif value == 'stop' then
+        isActive = false;
+        autoPilotTimer = 2500;
+        local notification = {
+            title = 'Autism Autopilot',
+            text = "Autopilot has been stopped.",
+            color = "danger",
+            icon =
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M18 1c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 6c-.28 0-.5-.22-.5-.5v-3c0-.28.22-.5.5-.5s.5.22.5.5v3c0 .28-.22.5-.5.5zm.5 1.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5s.22-.5.5-.5s.5.22.5.5zm1 11.5c.82 0 1.5-.67 1.5-1.5v-6.18c-1.05.51-2.16.69-3.09.68c.06.16.09.33.09.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5c0-.39.15-.74.39-1.01A7.032 7.032 0 0 1 11.68 9H5.81l1.04-3H11c0-.69.1-1.37.29-2H6.5c-.66 0-1.21.42-1.42 1.01l-1.97 5.67c-.07.21-.11.43-.11.66v7.16c0 .83.67 1.5 1.5 1.5S6 19.33 6 18.5V18h12v.5c0 .83.68 1.5 1.5 1.5zm-12-5c-.83 0-1.5-.67-1.5-1.5S6.67 12 7.5 12s1.5.67 1.5 1.5S8.33 15 7.5 15z" fill="currentColor"></path></svg>',
+            position = "top-right",
+            sticky = true,
+            width = "auto",
+            progress = "auto",
+        };
+        TriggerEvent("clientNotify", notification);
+        ClearPedTasks(PlayerPedId())
+        if driveThread ~= nil then
+            Citizen.Wait(1000)
+            Citizen.KillThread(driveThread)
+        end
+    end
+end
+
+function checkAutoPilotMode(value)
+    speed = 25.0;
+    driveModifier = 447;
+    value = tonumber(value)
+
+    if value == 1 then
+        speed = 25.0;
+        driveModifier = 447;
+    end
+
+    if value == 2 then
+        speed = 95.0;
+        driveModifier = 787261;
+    end
+
+    return { speed, driveModifier };
+end
+
+local stopShuffle = true
+
+function DenyShuffle()
+    stopShuffle = true
+end
+
+function AllowShuffle()
+    stopShuffle = false
+end
+
+RegisterNetEvent('shuff')
+AddEventHandler('shuff', function()
+    local playerPed = PlayerPedId()
+
+    if IsPedInAnyVehicle(playerPed, false) then
+        AllowShuffle()
+
+        Wait(5000)
+
+        DenyShuffle()
+    else
+        CancelEvent()
+    end
+end)
+
+RegisterCommand(Config.ShuffCommand, function(source, args, raw)
+    TriggerEvent('shuff')
+end, false)
+
+CreateThread(function()
+    while true do
+        local playerPed = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(playerPed, false)
+
+        if IsPedInAnyVehicle(playerPed, false) and stopShuffle then
+            Wait(0)
+            if GetPedInVehicleSeat(vehicle, 0) == playerPed then
+                if GetIsTaskActive(playerPed, 165) then
+                    SetPedIntoVehicle(playerPed, vehicle, 0)
+                end
+            end
+        else
+            Wait(500)
+        end
+    end
+end)
