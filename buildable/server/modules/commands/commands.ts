@@ -1,3 +1,4 @@
+import { addNewDoor } from "./events/addDoor";
 import { CreateWorldVehicle } from "./events/requestVehicle";
 import { getUserHex } from "./functions/getUserHex";
 
@@ -162,5 +163,15 @@ export const __commandSystem = {
     restricted: true,
     description: "Plays a sound",
     usage: "/playSound [sound]",
+  },
+  addDoor: {
+    event: async (source: any) => {
+      await addNewDoor(source[0], source[1]);
+    },
+    async: true,
+    restricted: true,
+    description: "Adds a door",
+    usage:
+      "/addDoor [doorId] [lockedHeading] [openHeading] [locked] [canOpen] [double] [lockedHeading2] [openHeading2]",
   },
 };

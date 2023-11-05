@@ -1,4 +1,13 @@
+import { gatherDoorData } from "test";
 import { __interactionPeds } from "../../config/peds/interactions";
+
+export let __globalStates = {
+  time: {
+    day: false,
+    night: false,
+  },
+};
+
 export function InitialSync() {
   SetRoutingBucketEntityLockdownMode(1, "strict");
   SetRoutingBucketPopulationEnabled(1, false);
@@ -7,6 +16,7 @@ export function InitialSync() {
       DeleteEntity(i);
     }
   }
+  //REVIEW - Sync Doors here? is this a good solution for long term?
 }
 let NPCS: {
   ped: number;
@@ -55,3 +65,15 @@ export function GetNPCS() {
 onNet("getServerPeds", () => {
   emitNet("setupJobPeds", source, GetNPCS());
 });
+
+onNet("getServerDoors", async () => {
+  try {
+    const doorData = await gatherDoorData();
+    emitNet("setupDoorStatusClient", -1, doorData);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// onNet("getWeather", () => {});
+// onNet("getServerTime", () => {});

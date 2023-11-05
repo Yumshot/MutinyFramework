@@ -6,6 +6,8 @@ import Vehicle from './views/Vehicle.vue'
 let registerState = ref(false)
 let vehicleState = ref(false)
 let vehicleData = ref({})
+let characterState = ref(false)
+let characterData = ref([])
 
 onMounted(() => {
   window.addEventListener('message', (e) => {
@@ -18,6 +20,10 @@ onMounted(() => {
         vehicleState.value = e.data.state
         vehicleData.value = e.data.options
         break
+      case '__openCharacter':
+        characterState.value = e.data.state
+        characterData.value = e.data.options
+        break
     }
   })
 })
@@ -26,6 +32,7 @@ onMounted(() => {
 <template>
   <main>
     <Register v-if="registerState" />
+    <Character v-if="characterState" :data="characterData" />
     <Vehicle v-if="vehicleState" :data="vehicleData" />
   </main>
 </template>

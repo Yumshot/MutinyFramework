@@ -3,6 +3,7 @@ import { __database } from "../../config/globals";
 import { IUser } from "config/interfaces/IUser";
 import { ICharacter } from "config/interfaces/ICharacter";
 import { __databaseLocales } from "../../config/globals";
+import { DoorInsert } from "test";
 
 /**
  * Represents a database connection and provides access to collections.
@@ -18,6 +19,8 @@ export default class Database {
   public __databaseCollectionGarages: Collection;
   /** The "housing" collection. */
   public __databaseCollectionHousing: Collection;
+
+  public __databaseDoors: Collection;
 
   /**
    * Creates a new instance of the Database class.
@@ -43,6 +46,9 @@ export default class Database {
         .db("mutiny_roleplay")
         .collection("housing");
     });
+    this.__databaseDoors = this.__database
+      .db("mutiny_roleplay")
+      .collection("doors");
   }
 
   /**
@@ -191,6 +197,44 @@ export default class Database {
     } catch (e) {
       console.log(e);
       return null;
+    }
+  }
+
+  public async GatherDoorData(): Promise<any> {
+    try {
+      const __doors = await this.__databaseDoors.find({}).toArray();
+      return __doors;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
+  public async UpdateDoorStatus(doorId: number, state: boolean): Promise<any> {
+    try {
+      console.log(state);
+      const __doors = await this.GatherDoorData();
+      const targetDoor = __doors[0].global_doors.find(
+        (door: any) => door.id === doorId
+      );
+      targetDoor.locked = state;
+      await this.__databaseDoors.updateOne(
+        { _id: __doors[0]._id },
+        { $set: { global_doors: __doors[0].global_doors } }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  public async InsertNewDoor(query: DoorInsert) {
+    try {
+      const __doors = await this.GatherDoorData();
+      __doors[0].global_doors.push(query);
+      await this.__databaseDoors.updateOne(
+        { _id: __doors[0]._id },
+        { $set: { global_doors: __doors[0].global_doors } }
+      );
+    } catch (error) {
+      console.log(error);
     }
   }
 }

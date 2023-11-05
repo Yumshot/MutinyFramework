@@ -1,4 +1,5 @@
 import { InitialPedSetup, InitialSync } from "modules/utils/sync";
+import { gatherDoorData } from "test";
 
 /**
  * Event handler for when a resource starts.
@@ -13,4 +14,6 @@ on("onResourceStart", async (resource: string) => {
   console.log(`\n ⌠Mutiny Rp⌡ - Setting up peds!`);
   await InitialPedSetup();
   console.log(`\n ⌠Mutiny Rp⌡ - Peds set!`);
+  console.log(`\n ⌠Mutiny Rp⌡ - Syncing doors!`);
+  await gatherDoorData();
 });

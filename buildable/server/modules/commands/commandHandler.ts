@@ -19,11 +19,15 @@ setImmediate(() => {
       usage: __commandSystem[key as keyof typeof __commandSystem].usage,
     });
   }
-  emitNet(
-    "chat:addSuggestions",
-    -1,
-    keys.map((key) => {
-      return { name: key.key, help: key.description, params: key.usage };
-    })
-  );
+
+  for (const key in keys) {
+    // console.log(keys[key].key, keys[key].description);
+    emitNet(
+      "chat:addSuggestion",
+      -1,
+      `/` + keys[key].key,
+      keys[key].description,
+      [{ name: keys[key].usage, help: "" }]
+    );
+  }
 });

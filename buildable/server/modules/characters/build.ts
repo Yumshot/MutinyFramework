@@ -15,7 +15,6 @@ onNet("CreateNewUserCharacter", async (data: any) => {
     { cash: 0, bank: [], pin: data.pin }
   );
   const __character = await character.build();
-  console.log(__character);
   try {
     await __databaseInstance.InsertNewCharacterToUserCharacterData({
       steam_target: steam_target,
