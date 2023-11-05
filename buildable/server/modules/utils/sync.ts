@@ -74,6 +74,3 @@ onNet("getServerDoors", async () => {
     console.log(error);
   }
 });
-
-// onNet("getWeather", () => {});
-// onNet("getServerTime", () => {});

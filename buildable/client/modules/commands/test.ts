@@ -1,9 +1,9 @@
-import { SendCharacterCreate } from "modules/nui/createCharacter";
+import { SendCharacterSelect } from "modules/nui/characterSelect";
 
 RegisterCommand(
   "test",
   async (source: any, args: any, raw: any) => {
-    console.log(global.exports["cfx-anes-worldsync"].getTime());
+    console.log(source);
   },
   false
 );

@@ -2,12 +2,13 @@
 import { onMounted, ref } from 'vue'
 import Register from './views/Register.vue'
 import Vehicle from './views/Vehicle.vue'
+import Character from './views/Characters.vue'
 
 let registerState = ref(false)
 let vehicleState = ref(false)
 let vehicleData = ref({})
 let characterState = ref(false)
-let characterData = ref([])
+let characterData = ref<any>([])
 
 onMounted(() => {
   window.addEventListener('message', (e) => {
@@ -30,11 +31,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>
+  <div>
     <Register v-if="registerState" />
     <Character v-if="characterState" :data="characterData" />
     <Vehicle v-if="vehicleState" :data="vehicleData" />
-  </main>
+  </div>
 </template>
 
 <style scoped>

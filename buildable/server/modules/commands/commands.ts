@@ -174,4 +174,13 @@ export const __commandSystem = {
     usage:
       "/addDoor [doorId] [lockedHeading] [openHeading] [locked] [canOpen] [double] [lockedHeading2] [openHeading2]",
   },
+  reload: {
+    event: (source: any) => {
+      emit("relogUser", source[0]);
+    },
+    async: true,
+    restricted: true,
+    description: "Reloads the join loop",
+    usage: "/reload",
+  },
 };

@@ -1,5 +1,5 @@
+import { gatherDoorData } from "modules/utils/doors";
 import { InitialPedSetup, InitialSync } from "modules/utils/sync";
-import { gatherDoorData } from "test";
 
 /**
  * Event handler for when a resource starts.

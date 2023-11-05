@@ -65,10 +65,15 @@ async function CreateNewCharacter(
  * @param last - The last character ID of the player.
  * @param src - The source of the player joining.
  */
-async function HandoffCharacterData(player: any, last: number, src: string) {
+export async function HandoffCharacterData(
+  player: any,
+  last: number,
+  src: string
+) {
   // TODO: Hand off data for Character UI.
   emitNet("startSpawn", src, player, last);
   SetPlayerRoutingBucket(src, 1);
+  emitNet("reloadSpawnEvent", src);
 }
 
 /**

@@ -19,15 +19,19 @@ setImmediate(() => {
       usage: __commandSystem[key as keyof typeof __commandSystem].usage,
     });
   }
-
-  for (const key in keys) {
-    // console.log(keys[key].key, keys[key].description);
-    emitNet(
-      "chat:addSuggestion",
-      -1,
-      `/` + keys[key].key,
-      keys[key].description,
-      [{ name: keys[key].usage, help: "" }]
+  if (keys.length > 0) {
+    for (const key in keys) {
+      emitNet(
+        "chat:addSuggestion",
+        -1,
+        `/` + keys[key].key,
+        keys[key].description,
+        [{ name: keys[key].usage, help: "" }]
+      );
+    }
+  } else {
+    console.log(
+      `\n ⌠Mutiny Rp⌡ - No commands found! Please check your command folder!`
     );
   }
 });

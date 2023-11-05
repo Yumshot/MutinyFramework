@@ -5,29 +5,26 @@
     :dot-placement="direction === 'vertical' ? 'right' : 'bottom'"
     style="height: 240px"
   >
-    <img
-      class="carousel-img"
-      src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg"
-    />
-    <img
-      class="carousel-img"
-      src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-    />
-    <img
-      class="carousel-img"
-      src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-    />
-    <img
-      class="carousel-img"
-      src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
-    />
+    <n-card :bordered="false"> </n-card>
   </n-carousel>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { NCarousel, NCard } from 'naive-ui'
 
 export default defineComponent({
+  name: 'CharacterList',
+  props: {
+    data: {
+      type: Array,
+      default: () => []
+    }
+  },
+  components: {
+    NCarousel,
+    NCard
+  },
   setup() {
     const directionRef = ref<'horizontal' | 'vertical'>('horizontal')
     return {
