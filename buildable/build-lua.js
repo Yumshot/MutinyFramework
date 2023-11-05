@@ -1,33 +1,62 @@
 const { readFileSync, writeFileSync } = require("fs");
 const { join } = require("path");
 
-const mutinyFrameworkDir = join(
+const mutinyFrameworkDirClient = join(
   __dirname,
   "..",
   "..",
-  "mutiny-framework/buildable/client/defaults.lua"
+  "mutiny-framework/buildable/client/c_defaults.lua"
 );
-const mutinyServerDir = join(
+
+const mutinyFrameworkDirServer = join(
   __dirname,
   "..",
   "..",
-  "mutiny-server/resources/mutiny_core/defaults.lua"
+  "mutiny-framework/buildable/server/s_defaults.lua"
+);
+
+const mutinyServerDirClient = join(
+  __dirname,
+  "..",
+  "..",
+  "mutiny-server/resources/mutiny_core/c_defaults.lua"
+);
+const mutinyServerDirServer = join(
+  __dirname,
+  "..",
+  "..",
+  "mutiny-server/resources/mutiny_core/s_defaults.lua"
 );
 
 // Log the directories
-console.log(`Mutiny Framework directory: ${mutinyFrameworkDir}`);
-console.log(`Mutiny Server directory: ${mutinyServerDir}`);
+console.log(
+  `Mutiny Framework directory: ${mutinyFrameworkDirClient} ${mutinyFrameworkDirServer}`
+);
+console.log(
+  `Mutiny Server directory: ${mutinyServerDirClient} ${mutinyServerDirServer}`
+);
 try {
   // Check if the file exists in mutinyServerDir
-  if (!readFileSync(mutinyServerDir)) {
+  if (!readFileSync(mutinyServerDirClient)) {
     // create the file
-    writeFileSync(mutinyServerDir, "");
+    writeFileSync(mutinyServerDirClient, "");
+  } else {
+    console.log("Mutiny Server directory found.");
+  }
+
+  // Check if the file exists in mutinyServerDir
+  if (!readFileSync(mutinyServerDirServer)) {
+    // create the file
+    writeFileSync(mutinyServerDirServer, "");
   } else {
     console.log("Mutiny Server directory found.");
   }
 
   // Check if the file exists in mutinyFrameworkDir
-  if (!readFileSync(mutinyFrameworkDir)) {
+  if (
+    !readFileSync(mutinyFrameworkDirClient) ||
+    !readFileSync(mutinyFrameworkDirServer)
+  ) {
     console.log("Mutiny Framework directory not found.");
     process.exit(1);
   } else {
@@ -35,11 +64,15 @@ try {
   }
 
   // Read the file
-  const mutinyFrameworkFile = readFileSync(mutinyFrameworkDir, "utf8");
+  const mutinyFrameworkFile = readFileSync(mutinyFrameworkDirClient, "utf8");
+  const mutinyFrameworkFileServer = readFileSync(
+    mutinyFrameworkDirServer,
+    "utf8"
+  );
 
   // Take contents of Framework File, and replace the contents of the Server File with it
-  writeFileSync(mutinyServerDir, mutinyFrameworkFile);
-
+  writeFileSync(mutinyServerDirClient, mutinyFrameworkFile);
+  writeFileSync(mutinyServerDirServer, mutinyFrameworkFileServer);
   // Log we're done
   console.log("Done.");
 } catch (error) {
