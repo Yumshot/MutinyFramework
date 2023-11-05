@@ -1,3 +1,6 @@
+import { Vector3 } from "classes/Vector3";
+import { Delay } from "modules/utils/delay";
+
 function SetupJobPeds(pedHandle: number) {
   SetEntityAsMissionEntity(pedHandle, true, true);
   SetBlockingOfNonTemporaryEvents(pedHandle, true);
@@ -27,8 +30,10 @@ onNet("setupJobPeds", async () => {
     if (ped !== PlayerPedId() && !IsPedAPlayer(ped)) {
       const scenarioState = Entity(ped).state.scenario;
       if (scenarioState) {
-        SetupJobPeds(ped);
-        TaskStartScenarioInPlace(ped, scenarioState, 0, true);
+        if (!IsPedUsingAnyScenario(ped)) {
+          SetupJobPeds(ped);
+          TaskStartScenarioInPlace(ped, scenarioState, 0, true);
+        }
       }
     }
   }
