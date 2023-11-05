@@ -1,5 +1,5 @@
-import { gatherDoorData } from "test";
 import { __interactionPeds } from "../../config/peds/interactions";
+import { gatherDoorData } from "./doors";
 
 export let __globalStates = {
   time: {

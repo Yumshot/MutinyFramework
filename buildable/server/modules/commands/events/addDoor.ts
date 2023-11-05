@@ -1,5 +1,5 @@
+import { DoorInsert } from "modules/utils/doors";
 import { __databaseInstance } from "server";
-import { DoorInsert } from "test";
 
 export async function addNewDoor(source: string, args: string | any[]) {
   if (args.length === 0) {
