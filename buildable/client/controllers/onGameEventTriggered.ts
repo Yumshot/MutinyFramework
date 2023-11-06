@@ -4,15 +4,8 @@ import { SendCharacterCreate } from "modules/nui/createCharacter";
 /**
  * Event listener for the "startSpawn" network event.
  * @param {Array} characters - An array of player characters.
- * @param {number} last - The index of the last player character.
  */
 let __playerCharacters: any = [];
-
-/**
- * The index of the last player character.
- * @type {number}
- */
-let last: number = 0;
 
 /**
  * The target character.
@@ -20,16 +13,19 @@ let last: number = 0;
  */
 let __targetCharacter: any = {};
 
+export function SetTargetCharacter(character: any) {
+  __targetCharacter = character;
+  StartCharacterSetup();
+}
+
 /**
  * Event listener for the "startSpawn" network event.
  * @param {Array} characters - An array of player characters.
  * @param {number} last - The index of the last player character.
  */
 
-onNet("startSpawn", (characters: any, last: number) => {
+onNet("startSpawn", (characters: any) => {
   __playerCharacters = characters;
-  last = last;
-  __targetCharacter = __playerCharacters[last];
 });
 
 /**
@@ -71,65 +67,89 @@ on("gameEventTriggered", (name: any, args: any[]) => {
       global.exports.spawnmanager.forceRespawn();
     } else {
       // TODO: Send Character Select Screen. --> into Spawn Character.
-      SendCharacterSelect(__playerCharacters, last, __targetCharacter);
+      SendCharacterSelect(__playerCharacters);
     }
   }
 });
 
-onNet("reloadSpawnEvent", () => {
-  console.log("TRIGGERED");
-  DisplayHud(false);
-  DisplayRadar(false);
-  if (__playerCharacters.length === 0) {
-    // TODO: Create a new character.
+function StartCharacterSetup() {
+  const exp = (global as any).exports;
+  DoScreenFadeOut(0);
+  global.exports.spawnmanager.setAutoSpawnCallback(() => {
+    global.exports.spawnmanager.spawnPlayer(
+      {
+        x: __targetCharacter.last_location.x,
+        y: __targetCharacter.last_location.y,
+        z: __targetCharacter.last_location.z,
 
-    // const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
-    // const DEFAULT_SPAWN = { x: 2737.96, y: -374.12, z: -47.99 };
-    const DEFAULT_SPAWN = {
-      x: 763.7538452148438,
-      y: -817.4901123046875,
-      z: 26.2974853515625,
-    };
+        model: "mp_m_freemode_01",
+      },
+      () => {
+        exp["mutiny-appearance"].setPlayerAppearance(
+          __targetCharacter.appearance
+        );
+        DoScreenFadeIn(2500);
+      }
+    );
+  });
+  global.exports.spawnmanager.setAutoSpawn(true);
+  global.exports.spawnmanager.forceRespawn();
+}
 
-    global.exports.spawnmanager.setAutoSpawnCallback(() => {
-      global.exports.spawnmanager.spawnPlayer(
-        {
-          x: DEFAULT_SPAWN.x,
-          y: DEFAULT_SPAWN.y,
-          z: DEFAULT_SPAWN.z,
+// onNet("reloadSpawnEvent", () => {
+//   console.log("TRIGGERED");
+//   DisplayHud(false);
+//   DisplayRadar(false);
+//   if (__playerCharacters.length === 0) {
+//     // TODO: Create a new character.
 
-          model: "Ghost",
-        },
-        () => {
-          SendCharacterCreate(true);
-        }
-      );
-    });
-    global.exports.spawnmanager.setAutoSpawn(true);
-    global.exports.spawnmanager.forceRespawn();
-  } else {
-    // TODO: Send Character Select Screen. --> into Spawn Character.
-    const DEFAULT_SPAWN = {
-      x: 763.7538452148438,
-      y: -817.4901123046875,
-      z: 26.2974853515625,
-    };
+//     // const DEFAULT_SPAWN = { x: 7614.787, y: 1064.8, z: 1678.407 };
+//     // const DEFAULT_SPAWN = { x: 2737.96, y: -374.12, z: -47.99 };
+//     const DEFAULT_SPAWN = {
+//       x: 763.7538452148438,
+//       y: -817.4901123046875,
+//       z: 26.2974853515625,
+//     };
 
-    global.exports.spawnmanager.setAutoSpawnCallback(() => {
-      global.exports.spawnmanager.spawnPlayer(
-        {
-          x: DEFAULT_SPAWN.x,
-          y: DEFAULT_SPAWN.y,
-          z: DEFAULT_SPAWN.z,
+//     global.exports.spawnmanager.setAutoSpawnCallback(() => {
+//       global.exports.spawnmanager.spawnPlayer(
+//         {
+//           x: DEFAULT_SPAWN.x,
+//           y: DEFAULT_SPAWN.y,
+//           z: DEFAULT_SPAWN.z,
 
-          model: "Ghost",
-        },
-        () => {
-          SendCharacterSelect(__playerCharacters, last, __targetCharacter);
-        }
-      );
-    });
-    global.exports.spawnmanager.setAutoSpawn(true);
-    global.exports.spawnmanager.forceRespawn();
-  }
-});
+//           model: "Ghost",
+//         },
+//         () => {
+//           SendCharacterCreate(true);
+//         }
+//       );
+//     });
+//     global.exports.spawnmanager.setAutoSpawn(true);
+//     global.exports.spawnmanager.forceRespawn();
+//   } else {
+//     // TODO: Send Character Select Screen. --> into Spawn Character.
+//     const DEFAULT_SPAWN = {
+//       x: 763.7538452148438,
+//       y: -817.4901123046875,
+//       z: 26.2974853515625,
+//     };
+
+//     global.exports.spawnmanager.setAutoSpawnCallback(() => {
+//       global.exports.spawnmanager.spawnPlayer(
+//         {
+//           x: DEFAULT_SPAWN.x,
+//           y: DEFAULT_SPAWN.y,
+//           z: DEFAULT_SPAWN.z,
+
+//           model: "Ghost",
+//         },
+//         () => {
+//           SendCharacterSelect(__playerCharacters);
+//         }
+//       );
+//     });
+//     global.exports.spawnmanager.setAutoSpawn(true);
+//     global.exports.spawnmanager.forceRespawn();
+//   }
+// });
