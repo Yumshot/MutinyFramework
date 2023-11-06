@@ -1,5 +1,5 @@
 import { HandoffCharacterData } from "controllers/playerJoining";
-import { FindSteam } from "modules/utils/querys";
+import { FindSteam } from "modules/utils/queries";
 import { __databaseInstance } from "server";
 
 onNet("relogUser", async (source: any) => {

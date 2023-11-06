@@ -1,6 +1,7 @@
 import { __commandSystem } from "./commands";
 let keys: { key: string; description: string; usage: string }[] = [];
-setImmediate(() => {
+
+export const commandHandler = async (src: string) => {
   for (const key in __commandSystem) {
     RegisterCommand(
       key,
@@ -23,7 +24,7 @@ setImmediate(() => {
     for (const key in keys) {
       emitNet(
         "chat:addSuggestion",
-        -1,
+        src,
         `/` + keys[key].key,
         keys[key].description,
         [{ name: keys[key].usage, help: "" }]
@@ -34,4 +35,4 @@ setImmediate(() => {
       `\n ⌠Mutiny Rp⌡ - No commands found! Please check your command folder!`
     );
   }
-});
+};

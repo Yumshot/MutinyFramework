@@ -1,6 +1,7 @@
 import { ErrorKeys } from "config/errors";
 import { __locations } from "config/globals";
-import { FindSteam } from "modules/utils/querys";
+import { commandHandler } from "modules/commands/commandHandler";
+import { FindSteam } from "modules/utils/queries";
 import { __databaseInstance } from "server";
 
 /**
@@ -34,5 +35,6 @@ export async function HandoffCharacterData(player: any, src: string) {
   // TODO: Hand off data for Character UI.
   emitNet("startSpawn", src, player);
   SetPlayerRoutingBucket(src, 1);
+  commandHandler(src);
   emitNet("reloadSpawnEvent", src);
 }
