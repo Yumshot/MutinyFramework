@@ -1,4 +1,5 @@
 import { Permissions } from "config/enums/permissions";
+import { ICharacterData } from "./ICharacter";
 
 /**
  * Interface for creating a user.
@@ -15,4 +16,5 @@ export interface IUser {
   last_connection: Date;
   last_ip: string;
   last_character: number;
+  characters: ICharacterData[];
 }
