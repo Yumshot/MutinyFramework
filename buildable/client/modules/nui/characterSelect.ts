@@ -1,8 +1,6 @@
-export function SendCharacterSelect(
-  characters: any,
-  last: number,
-  target: any
-) {
+import { SetTargetCharacter } from "controllers/onGameEventTriggered";
+
+export function SendCharacterSelect(characters: any) {
   SetNuiFocus(true, true);
   SendNUIMessage({
     event: "__openCharacter",
@@ -10,3 +8,9 @@ export function SendCharacterSelect(
     options: characters,
   });
 }
+
+RegisterNuiCallback("__selectedCharacter", (data: any, cb: any) => {
+  SetNuiFocus(false, false);
+  SetTargetCharacter(data.character);
+  cb("ok");
+});
