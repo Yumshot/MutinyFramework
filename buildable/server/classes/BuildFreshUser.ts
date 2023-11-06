@@ -49,6 +49,7 @@ export default class BuildFreshUser {
       last_connection: new Date(),
       last_ip: GetPlayerEndpoint(this.__source.toString()),
       last_character: 0,
+      characters: [],
     };
     return __builder;
   }
