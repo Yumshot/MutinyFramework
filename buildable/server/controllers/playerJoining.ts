@@ -1,7 +1,6 @@
 import { ErrorKeys } from "config/errors";
 import { __locations } from "config/globals";
 import { FindSteam } from "modules/utils/querys";
-import BuildFreshCharacter from "classes/BuildFreshCharacter";
 import { __databaseInstance } from "server";
 
 /**
@@ -9,7 +8,7 @@ import { __databaseInstance } from "server";
  * @param __steam_target The Steam target to retrieve character data for.
  * @returns A Promise that resolves with the retrieved character data.
  */
-on("playerJoining", async (source: string, oldID?: string) => {
+on("playerJoining", async (source: string, _oldID?: string) => {
   const __player = source;
   const __steam_target = FindSteam(__player);
   const __characters = await __databaseInstance.GetUsersCharacterData({
@@ -17,47 +16,13 @@ on("playerJoining", async (source: string, oldID?: string) => {
   });
 
   if (!__characters) {
-    await CreateNewCharacter(__player, __steam_target);
-  } else {
-    const __lastCharacter = await __databaseInstance.GetUserData({
-      steam_target: __steam_target,
-    });
-    await HandoffCharacterData(
-      __characters.characters,
-      __lastCharacter.last_character,
-      __player
-    );
-  }
-});
-
-/**
- * Creates a new character for the given player and steam target.
- * @param {string} player - The player's identifier.
- * @param {string} steam_target - The steam target identifier.
- * @returns {Promise<void>} - A Promise that resolves when the character is created.
- */
-async function CreateNewCharacter(
-  player: string,
-  steam_target: string
-): Promise<void> {
-  let __user = await __databaseInstance.GetUserData({
-    steam_target: steam_target,
-  });
-  const __builder = await new BuildFreshCharacter(
-    __user.id,
-    steam_target
-  ).__execute();
-
-  if (__builder) {
-    await __databaseInstance.SetNewCharacterData(__builder);
-    await HandoffCharacterData(__builder.characters, 0, player);
-  } else {
     DropPlayer(
-      player,
+      GetPlayerName(__player),
       `\n ⌠Mutiny Rp⌡ - Error creating your character! \n Please try again! \n If you have received this message more than once, please contact a staff member on discord! \n ${ErrorKeys[2]}`
     );
   }
-}
+  await HandoffCharacterData(__characters, source);
+});
 
 /**
  * Hand off data for Character UI and start the spawn process for the player.
@@ -65,39 +30,9 @@ async function CreateNewCharacter(
  * @param last - The last character ID of the player.
  * @param src - The source of the player joining.
  */
-export async function HandoffCharacterData(
-  player: any,
-  last: number,
-  src: string
-) {
+export async function HandoffCharacterData(player: any, src: string) {
   // TODO: Hand off data for Character UI.
-  emitNet("startSpawn", src, player, last);
+  emitNet("startSpawn", src, player);
   SetPlayerRoutingBucket(src, 1);
   emitNet("reloadSpawnEvent", src);
 }
-
-/**
- * Retrieves character data for a given Steam target from the database on Join.
- * @param __steam_target The Steam target to retrieve character data for.
- * @returns A Promise that resolves with the retrieved character data.
- */
-on("playerJoining", async (source: string, oldID?: string) => {
-  const __player = source;
-  const __steam_target = FindSteam(__player);
-  const __characters = await __databaseInstance.GetUsersCharacterData({
-    steam_target: __steam_target,
-  });
-
-  if (!__characters) {
-    await CreateNewCharacter(__player, __steam_target);
-  } else {
-    const __lastCharacter = await __databaseInstance.GetUserData({
-      steam_target: __steam_target,
-    });
-    await HandoffCharacterData(
-      __characters.characters,
-      __lastCharacter.last_character,
-      __player
-    );
-  }
-});
