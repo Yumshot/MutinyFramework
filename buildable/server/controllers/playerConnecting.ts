@@ -122,10 +122,6 @@ async function handlePlayerConnecting(
     deferrals.update(`\n ⌠Mutiny Rp⌡ - No ban found!`);
     await d();
 
-    const __user = await __databaseInstance.GetUserData({
-      steam_target: __query,
-    });
-
     try {
       await __databaseInstance.UpdateUserData(__query, {
         last_connection: new Date(),
