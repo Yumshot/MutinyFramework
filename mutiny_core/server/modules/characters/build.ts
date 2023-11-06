@@ -1,5 +1,5 @@
 import { CreateNewCharacter } from "classes/BuildNewCharacter";
-import { FindSteam } from "modules/utils/querys";
+import { FindSteam } from "modules/utils/queries";
 import { __databaseInstance } from "server";
 
 onNet("CreateNewUserCharacter", async (data: any) => {

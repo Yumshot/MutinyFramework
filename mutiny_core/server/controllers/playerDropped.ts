@@ -3,7 +3,7 @@
  * @param reason The reason for the player's disconnection.
  */
 
-import { FindSteam } from "modules/utils/querys";
+import { FindSteam } from "modules/utils/queries";
 import { __databaseInstance } from "server";
 
 on("playerDropped", async (reason: any) => {
