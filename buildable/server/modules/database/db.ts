@@ -3,7 +3,7 @@ import { __database } from "../../config/globals";
 import { IUser } from "config/interfaces/IUser";
 import { ICharacter } from "config/interfaces/ICharacter";
 import { __databaseLocales } from "../../config/globals";
-import { DoorInsert } from "test";
+import { DoorInsert } from "modules/utils/doors";
 
 /**
  * Represents a database connection and provides access to collections.
@@ -13,8 +13,7 @@ export default class Database {
   public __database: MongoClient;
   /** The "users" collection. */
   public __databaseCollectionUsers: Collection;
-  /** The "characters" collection. */
-  public __databaseCollectionCharacters: Collection;
+
   /** The "garages" collection. */
   public __databaseCollectionGarages: Collection;
   /** The "housing" collection. */
@@ -36,9 +35,7 @@ export default class Database {
       this.__databaseCollectionUsers = this.__database
         .db("mutiny_roleplay")
         .collection("users");
-      this.__databaseCollectionCharacters = this.__database
-        .db("mutiny_roleplay")
-        .collection("characters");
+
       this.__databaseCollectionGarages = this.__database
         .db("mutiny_roleplay")
         .collection("garages");
@@ -58,19 +55,6 @@ export default class Database {
   public async GetUsersCollection(): Promise<Collection> {
     try {
       return this.__databaseCollectionUsers;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  }
-
-  /**
-   * Gets the "characters" collection.
-   * @returns A Promise that resolves to the "characters" collection.
-   */
-  public async GetCharactersCollection(): Promise<Collection> {
-    try {
-      return this.__databaseCollectionCharacters;
     } catch (e) {
       console.log(e);
       return null;
@@ -154,19 +138,11 @@ export default class Database {
    */
   public async GetUsersCharacterData(query: any): Promise<any> {
     try {
-      const __user = await this.__databaseCollectionCharacters.findOne(query);
-      return __user;
+      const __user = await this.__databaseCollectionUsers.findOne(query);
+      return __user.characters;
     } catch (error) {
       console.log(error);
       return null;
-    }
-  }
-
-  public async SetNewCharacterData(data: ICharacter): Promise<void> {
-    try {
-      await this.__databaseCollectionCharacters.insertOne(data);
-    } catch (e) {
-      console.log(e);
     }
   }
 
@@ -175,7 +151,7 @@ export default class Database {
     composition: any;
   }) {
     try {
-      await this.__databaseCollectionCharacters.updateOne(
+      await this.__databaseCollectionUsers.updateOne(
         {
           steam_target: query.steam_target,
         },
@@ -192,8 +168,22 @@ export default class Database {
 
   public async CountCharactersForUser(query: any): Promise<number> {
     try {
-      const __characters = await this.GetUsersCharacterData(query);
-      return __characters.characters.length;
+      const agg = [
+        {
+          $match: query,
+        },
+        {
+          $project: {
+            characters: {
+              $size: "$characters",
+            },
+          },
+        },
+      ];
+      const coll = this.__databaseCollectionUsers;
+      const cursor = coll.aggregate(agg);
+      const result = await cursor.toArray();
+      return result[0].characters;
     } catch (e) {
       console.log(e);
       return null;
@@ -235,6 +225,17 @@ export default class Database {
       );
     } catch (error) {
       console.log(error);
+    }
+  }
+  public async CheckPhoneNumber(query: any): Promise<boolean> {
+    try {
+      const __user = await this.__databaseCollectionUsers.find({}).toArray();
+      const __phoneNumbers = __user.map((user: any) => user.phone_number);
+      const __isUnique = __phoneNumbers.includes(query.phone_number);
+      return __isUnique;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 }
