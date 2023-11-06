@@ -19,7 +19,7 @@
               default-value="IDENTIFICATION"
               size="small"
               type="segment"
-              tabs-padding="10"
+              :tabs-padding="10"
               justify-content="space-evenly"
               style="background: transparent !important"
               class="text-white"

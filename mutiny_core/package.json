@@ -1,8 +1,8 @@
 {
-  "name": "buildable",
+  "name": "mutiny_core",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "you",
+  "author": "Yumshot",
   "license": "MIT",
   "scripts": {
     "build": "node build.js --mode=production",

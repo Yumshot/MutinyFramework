@@ -11,6 +11,10 @@ export function SendCharacterSelect(characters: any) {
 
 RegisterNuiCallback("__selectedCharacter", (data: any, cb: any) => {
   SetNuiFocus(false, false);
-  SetTargetCharacter(data.character);
+  SendNUIMessage({
+    event: "__openCharacter",
+    state: false,
+  });
+  SetTargetCharacter(data);
   cb("ok");
 });

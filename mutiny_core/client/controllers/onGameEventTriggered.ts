@@ -15,7 +15,7 @@ let __targetCharacter: any = {};
 
 export function SetTargetCharacter(character: any) {
   __targetCharacter = character;
-  StartCharacterSetup();
+  StartCharacterSetup(__targetCharacter);
 }
 
 /**
@@ -34,10 +34,21 @@ onNet("startSpawn", (characters: any) => {
  * @param {Array} args - An array of arguments passed to the event.
  */
 
-on("gameEventTriggered", (name: any, args: any[]) => {
+on("gameEventTriggered", async (name: any, args: any[]) => {
   if (name === "CEventNetworkStartMatch") {
     DisplayHud(false);
     DisplayRadar(false);
+    console.log(__playerCharacters.length, __playerCharacters);
+    // request model
+    RequestModel("mp_m_freemode_01");
+    while (!HasModelLoaded("mp_m_freemode_01")) {
+      // use a promise to prevent crashing
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100);
+      });
+    }
+    SetPlayerModel(PlayerId(), "mp_m_freemode_01");
+
     if (__playerCharacters.length === 0) {
       // TODO: Create a new character.
 
@@ -48,7 +59,7 @@ on("gameEventTriggered", (name: any, args: any[]) => {
         y: -817.4901123046875,
         z: 26.2974853515625,
       };
-
+      SetNuiFocus(true, true);
       global.exports.spawnmanager.setAutoSpawnCallback(() => {
         global.exports.spawnmanager.spawnPlayer(
           {
@@ -56,7 +67,7 @@ on("gameEventTriggered", (name: any, args: any[]) => {
             y: DEFAULT_SPAWN.y,
             z: DEFAULT_SPAWN.z,
 
-            model: "Ghost",
+            model: "mp_m_freemode_01",
           },
           () => {
             SendCharacterCreate(true);
@@ -67,27 +78,27 @@ on("gameEventTriggered", (name: any, args: any[]) => {
       global.exports.spawnmanager.forceRespawn();
     } else {
       // TODO: Send Character Select Screen. --> into Spawn Character.
+      SetNuiFocus(true, true);
       SendCharacterSelect(__playerCharacters);
     }
   }
 });
 
-function StartCharacterSetup() {
+function StartCharacterSetup(character: any) {
   const exp = (global as any).exports;
   DoScreenFadeOut(0);
+  const target = character.data.character;
   global.exports.spawnmanager.setAutoSpawnCallback(() => {
     global.exports.spawnmanager.spawnPlayer(
       {
-        x: __targetCharacter.last_location.x,
-        y: __targetCharacter.last_location.y,
-        z: __targetCharacter.last_location.z,
-
-        model: "mp_m_freemode_01",
+        x: target.last_location.x,
+        y: target.last_location.y,
+        z: target.last_location.z,
+        skipFade: true,
+        model: target.appearance.model,
       },
       () => {
-        exp["mutiny-appearance"].setPlayerAppearance(
-          __targetCharacter.appearance
-        );
+        exp["mutiny_appearance"].setPlayerAppearance(target.appearance);
         DoScreenFadeIn(2500);
       }
     );

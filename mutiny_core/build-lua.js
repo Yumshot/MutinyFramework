@@ -5,14 +5,14 @@ const mutinyFrameworkDirClient = join(
   __dirname,
   "..",
   "..",
-  "mutiny-framework/buildable/client/c_defaults.lua"
+  "mutiny-framework/mutiny_core/client/c_defaults.lua"
 );
 
 const mutinyFrameworkDirServer = join(
   __dirname,
   "..",
   "..",
-  "mutiny-framework/buildable/server/s_defaults.lua"
+  "mutiny-framework/mutiny_core/server/s_defaults.lua"
 );
 
 const mutinyServerDirClient = join(
@@ -93,7 +93,7 @@ try {
 //   "..",
 //   "..",
 //   "mutiny-framework",
-//   "buildable",
+//   "mutiny_core",
 //   context,
 //   defaultsFileName
 // );
