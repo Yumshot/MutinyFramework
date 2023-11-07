@@ -1,5 +1,4 @@
 import { __interactionPeds } from "../../config/peds/interactions";
-import { gatherDoorData } from "./doors";
 
 export let __globalStates = {
   time: {
@@ -64,13 +63,4 @@ export function GetNPCS() {
 
 onNet("getServerPeds", () => {
   emitNet("setupJobPeds", source, GetNPCS());
-});
-
-onNet("getServerDoors", async () => {
-  try {
-    const doorData = await gatherDoorData();
-    emitNet("setupDoorStatusClient", -1, doorData);
-  } catch (error) {
-    console.log(error);
-  }
 });

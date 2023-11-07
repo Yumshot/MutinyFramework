@@ -81,6 +81,9 @@ export interface IBasicNeeds {
   bloodLevel: number;
   oxygenLevel: number;
   stress: number;
+  adrenaline: number;
+  stamina: number;
+  armor: number;
 }
 export interface IBusinessLicenses {
   business: LicenseBase[];

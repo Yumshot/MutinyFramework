@@ -3,12 +3,14 @@ import { onMounted, ref } from 'vue'
 import Register from './views/Register.vue'
 import Vehicle from './views/Vehicle.vue'
 import Character from './views/Characters.vue'
+import BlackBars from './views/BlackBars.vue'
 
 let registerState = ref(false)
 let vehicleState = ref(false)
 let vehicleData = ref({})
 let characterState = ref(false)
 let characterData = ref<any>([])
+let blackBarState = ref(false)
 
 onMounted(() => {
   window.addEventListener('message', (e) => {
@@ -25,6 +27,9 @@ onMounted(() => {
         characterState.value = e.data.state
         characterData.value = e.data.options
         break
+      case '__blackBars':
+        blackBarState.value = e.data.state
+        break
     }
   })
 })
@@ -32,6 +37,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <BlackBars v-if="blackBarState" />
     <Register v-if="registerState" />
     <Character v-if="characterState" :data="characterData" />
     <Vehicle v-if="vehicleState" :data="vehicleData" />
@@ -44,6 +50,7 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   background: transparent !important;
 }
 </style>

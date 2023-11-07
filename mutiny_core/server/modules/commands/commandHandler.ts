@@ -36,3 +36,7 @@ export const commandHandler = async (src: string) => {
     );
   }
 };
+
+setImmediate(() => {
+  commandHandler("-1");
+});

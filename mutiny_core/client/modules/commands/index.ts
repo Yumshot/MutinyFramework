@@ -4,4 +4,5 @@ import "./events/spawnVehicle";
 import "./events/deleteVehicle";
 import "./events/respawnPlayer";
 import "./events/playSoundFE";
+import "./events/cinematicMode";
 import "./test";

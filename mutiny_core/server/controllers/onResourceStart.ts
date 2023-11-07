@@ -1,4 +1,4 @@
-import { gatherDoorData } from "modules/utils/doors";
+import { commandHandler } from "modules/commands/commandHandler";
 import { InitialPedSetup, InitialSync } from "modules/utils/sync";
 
 /**
@@ -14,6 +14,5 @@ on("onResourceStart", async (resource: string) => {
   console.log(`\n ⌠Mutiny Rp⌡ - Setting up peds!`);
   await InitialPedSetup();
   console.log(`\n ⌠Mutiny Rp⌡ - Peds set!`);
-  console.log(`\n ⌠Mutiny Rp⌡ - Syncing doors!`);
-  await gatherDoorData();
+  commandHandler("-1");
 });
