@@ -16,6 +16,41 @@ import {
 } from "config/interfaces/ICharacter";
 import { __databaseInstance } from "server";
 
+/**
+ * Represents a class for creating a new character with various properties.
+ * @class
+ * @property {string} first_name - The first name of the character.
+ * @property {string} last_name - The last name of the character.
+ * @property {string} sex - The sex of the character.
+ * @property {Date} date_of_birth - The date of birth of the character.
+ * @property {LastLocation} last_location - The last location of the character.
+ * @property {string} internet_handle - The internet handle of the character.
+ * @property {Object} funding - The funding details of the character.
+ * @property {number} funding.cash - The cash funding of the character.
+ * @property {IBankAccount[]} funding.bank - The bank account funding of the character.
+ * @property {string} funding.pin - The pin of the character's funding.
+ * @property {Object} funding.crypto - The crypto funding details of the character.
+ * @property {number} funding.crypto.yumSats - The yumSats funding of the character.
+ * @property {number} funding.crypto.jizzCoin - The jizzCoin funding of the character.
+ * @property {ITransaction[]} funding.crypto.transactions - The transactions of the character's crypto funding.
+ * @property {string} steam_target - The steam target of the character.
+ * @property {string} phone_number - The phone number of the character.
+ * @property {Object} appearance - The appearance details of the character.
+ * @property {Object} licenses - The licenses of the character.
+ * @property {IWeaponLicenses} licenses.weapon - The weapon licenses of the character.
+ * @property {IVehicleLicenses} licenses.vehicle - The vehicle licenses of the character.
+ * @property {IPilotLicenses} licenses.pilot - The pilot licenses of the character.
+ * @property {IBusinessLicenses} licenses.business - The business licenses of the character.
+ * @property {string} tax_bracket - The tax bracket of the character.
+ * @property {ICriminalRecord} criminal_record - The criminal record of the character.
+ * @property {any[]} employment - The employment details of the character.
+ * @property {any[]} keys - The keys of the character.
+ * @property {Object} welfare - The welfare details of the character.
+ * @property {IBasicNeeds} welfare.needs - The basic needs of the character.
+ * @property {MedicalStatus} welfare.medicalStatus - The medical status of the character.
+ * @property {IMedicalHistory[]} welfare.medicalHistory - The medical history of the character.
+ * @property {IMedicalBill[]} welfare.medicalBills - The medical bills of the character.
+ */
 export class CreateNewCharacter {
   first_name: string;
   last_name: string;
