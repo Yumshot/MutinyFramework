@@ -32,6 +32,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent !important;
+}
 .speed {
   font-family: 'Black Ops One', sans-serif;
   width: 100vw;

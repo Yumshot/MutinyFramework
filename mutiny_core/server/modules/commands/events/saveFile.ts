@@ -13,7 +13,7 @@ on("getLoc", (source: any, params?: any) => {
     label: params,
   };
   const file = "locations.ts";
-  const dir = "C:\\Code\\mutiny\\mutiny-framework\\buildable\\docs";
+  const dir = "C:\\Code\\mutiny\\mutiny-framework\\mutiny_core\\docs";
   const path = join(dir, file);
 
   if (!fs.existsSync(path)) {
