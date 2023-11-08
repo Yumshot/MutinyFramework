@@ -17,7 +17,7 @@
     "esbuild": "^0.14.10"
   },
   "dependencies": {
-    "discord-webhook-node": "^1.1.8",
+    "@faker-js/faker": "^8.2.0",
     "mongodb": "^6.1.0",
     "uuid": "^9.0.1"
   }
