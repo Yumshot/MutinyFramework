@@ -582,6 +582,17 @@ export const MLO_BLIPS = [
     handle: null as number | null,
   },
   {
+    name: "CENTRAL LOS SANTOS MEDICAL CENTER",
+    x: 342.989013671875,
+    y: -1397.96044921875,
+    z: 32.4981689453125,
+    scale: 0.6,
+    colour: 15,
+    blip: 304,
+    hidden: false,
+    handle: null as number | null,
+  },
+  {
     name: "CARHARTT BIG BOX",
     x: 5134.02197265625,
     y: -5170.87890625,

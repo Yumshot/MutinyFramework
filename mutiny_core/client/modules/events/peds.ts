@@ -1,6 +1,3 @@
-import { Vector3 } from "classes/Vector3";
-import { Delay } from "modules/utils/delay";
-
 function SetupJobPeds(pedHandle: number) {
   SetEntityAsMissionEntity(pedHandle, true, true);
   SetBlockingOfNonTemporaryEvents(pedHandle, true);

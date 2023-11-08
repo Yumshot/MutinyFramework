@@ -23,10 +23,72 @@ global.exports.ox_target.addModel("ig_djsolmanager", {
   },
 });
 
+global.exports.ox_target.addModel(-1502319666, {
+  label: "Play Clumsy Bird",
+  name: "play_clumsy_bird",
+  icon: "fa-solid fa-ghost",
+  distance: 2.5,
+  onSelect: async (target: any) => {
+    const ped = PlayerPedId();
+    TaskStartScenarioInPlace(ped, "WORLD_HUMAN_INSPECT_STAND", 0, true);
+    new CreateNotification({
+      title: "Arcade",
+      text: "Starting Clumsy Bird",
+      duration: 2500,
+      progress: "auto",
+    });
+    DoScreenFadeOut(1000);
+    SetNuiFocus(true, true);
+    SendNUIMessage({
+      event: "__openArcadeGame",
+      state: true,
+      name: "https://ellisonleao.github.io/clumsy-bird/",
+    });
+    DoScreenFadeIn(1000);
+  },
+});
+
+global.exports.ox_target.addModel(1876055757, {
+  label: "Play Wipeout",
+  name: "play_wipeout",
+  icon: "fa-solid fa-ghost",
+  distance: 2.5,
+  onSelect: async (target: any) => {
+    const ped = PlayerPedId();
+    TaskStartScenarioInPlace(ped, "WORLD_HUMAN_INSPECT_STAND", 0, true);
+    new CreateNotification({
+      title: "Arcade",
+      text: "Starting Wipeout",
+      duration: 2500,
+      progress: "auto",
+    });
+    DoScreenFadeOut(1000);
+    SetNuiFocus(true, true);
+    SendNUIMessage({
+      event: "__openArcadeGame",
+      state: true,
+      name: "https://phoboslab.org/wipegame/",
+    });
+    DoScreenFadeIn(1000);
+  },
+});
+
+RegisterNuiCallback("__closeArcadeGame", (data: any, cb: any) => {
+  SetNuiFocus(false, false);
+  SendNUIMessage({
+    event: "__openArcadeGame",
+    state: false,
+    name: "",
+  });
+  cb("ok");
+  const ped = PlayerPedId();
+  ClearPedTasks(ped);
+  ClearPedTasksImmediately(ped);
+});
+
 global.exports.ox_target.addSphereZone({
   coords: new Vector3([2737.96, -373.7, -47.99]),
   radius: 1,
-  // debug: true,
   options: [
     {
       label: "Exit Arcade",

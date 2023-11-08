@@ -34,7 +34,7 @@ on("playerJoining", async (source: string, _oldID?: string) => {
 export async function HandoffCharacterData(player: any, src: string) {
   // TODO: Hand off data for Character UI.
   emitNet("startSpawn", src, player);
-  SetPlayerRoutingBucket(src, 1);
+  SetPlayerRoutingBucket(src, 0);
   commandHandler(src);
   emitNet("reloadSpawnEvent", src);
 }

@@ -1,8 +1,6 @@
 <template>
-  <body>
-    <div id="top-bar"></div>
-    <div id="bottom-bar"></div>
-  </body>
+  <div id="top-bar"></div>
+  <div id="bottom-bar"></div>
 </template>
 <script lang="ts">
 import { ref } from 'vue'
@@ -29,10 +27,11 @@ body {
 #top-bar,
 #bottom-bar {
   position: fixed;
-  width: 100%;
+  width: 100vw;
   height: 25vh;
   /* Adjust this value to change the height of the black bars */
   background-color: black;
+  overflow: hidden;
 }
 
 #top-bar {

@@ -10,3 +10,4 @@ import "./targets/phones";
 import "./events/peds";
 import "./events/doors";
 import "./events/time";
+import "./jobs/dock";
