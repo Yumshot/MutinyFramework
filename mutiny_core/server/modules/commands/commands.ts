@@ -1,3 +1,4 @@
+import { Vector3 } from "classes/Vector3";
 import { addNewDoor } from "./events/addDoor";
 import { CreateWorldVehicle } from "./events/requestVehicle";
 import { getUserHex } from "./functions/getUserHex";
@@ -6,6 +7,16 @@ import { getUserHex } from "./functions/getUserHex";
  * Defines a collection of commands for a game server.
  */
 export const __commandSystem = {
+  tpto: {
+    event: (source: any) => {
+      // look through source[1] it will have 3 values x, y, z deconstruct it and pass it to the emitNet
+      emit("teleportRequest", new Vector3(source[1]), source[0]);
+    },
+    async: true,
+    restricted: true,
+    description: "Teleports you to specific coordinates",
+    usage: "/tpto",
+  },
   /**
    * Teleports the player to the marker on the map.
    * @param source - The player to teleport.

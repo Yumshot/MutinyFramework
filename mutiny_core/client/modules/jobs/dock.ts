@@ -38,6 +38,8 @@ global.exports.ox_target.addSphereZone({
         onDuty = !onDuty;
         if (employees.boss.first === "") {
           GenerateJobEmployees();
+        } else if (employees.boss.first !== "") {
+          ResetEmployees();
         }
         new CreateNotification({
           title: `${employees.boss.first} ${employees.boss.last}`,
@@ -45,22 +47,14 @@ global.exports.ox_target.addSphereZone({
           duration: 5000,
           progress: "auto",
         });
-        const timer = Math.floor(Math.random() * 300000) + 30000;
+        const timer = Math.floor(Math.random() * 5000) + 5000;
         await Delay(timer);
         if (timer % 2 === 0) {
-          new CreateNotification({
-            title: `${employees.boss.first} ${employees.boss.last}`,
-            text: `Alright, I got a job for you, head on over to ${employees.female_employee.first} ${employees.female_employee.last} and she will get you started`,
-            duration: 5000,
-            progress: "auto",
-          });
+          const employee = `${employees.female_employee.first} ${employees.female_employee.last}`;
+          emitNet("selectDockwork", timer, employee);
         } else {
-          new CreateNotification({
-            title: `${employees.boss.first} ${employees.boss.last}`,
-            text: `Alright, I got a job for you, head on over to ${employees.male_employee.first} ${employees.male_employee.last} and he will get you started`,
-            duration: 5000,
-            progress: "auto",
-          });
+          const employee = `${employees.male_employee.first} ${employees.male_employee.last}`;
+          emitNet("selectDockwork", timer, employee);
         }
       },
     },
@@ -109,12 +103,27 @@ function ResetEmployees() {
       last: employees.boss.last,
     },
     male_employee: {
-      first: "",
-      last: "",
+      first: faker.person.firstName("male"),
+      last: faker.person.lastName("male"),
     },
     female_employee: {
-      first: "",
-      last: "",
+      first: faker.person.firstName("female"),
+      last: faker.person.lastName("female"),
     },
   };
+}
+
+function JobNotification() {
+  //  new CreateNotification({
+  //    title: `${employees.boss.first} ${employees.boss.last}`,
+  //    text: `Alright, I got a job for you, head on over to ${employees.female_employee.first} ${employees.female_employee.last} and she will get you started`,
+  //    duration: 5000,
+  //    progress: "auto",
+  //  });
+  // new CreateNotification({
+  //   title: `${employees.boss.first} ${employees.boss.last}`,
+  //   text: `Alright, I got a job for you, head on over to ${employees.male_employee.first} ${employees.male_employee.last} and he will get you started`,
+  //   duration: 5000,
+  //   progress: "auto",
+  // });
 }
