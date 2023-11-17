@@ -10,11 +10,11 @@ export let __globalStates = {
 export function InitialSync() {
   SetRoutingBucketEntityLockdownMode(1, "strict");
   SetRoutingBucketPopulationEnabled(1, false);
-  for (let i = 0; i < 200000; i++) {
-    if (DoesEntityExist(i)) {
-      DeleteEntity(i);
-    }
-  }
+  // for (let i = 0; i < 200000; i++) {
+  //   if (DoesEntityExist(i) ) {
+  //     DeleteEntity(i);
+  //   }
+  // }
   //REVIEW - Sync Doors here? is this a good solution for long term?
 }
 let NPCS: {
