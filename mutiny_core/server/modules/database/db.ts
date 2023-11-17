@@ -1,9 +1,9 @@
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
 import { __database } from "../../config/globals";
 import { IUser } from "config/interfaces/IUser";
-import { ICharacter } from "config/interfaces/ICharacter";
 import { __databaseLocales } from "../../config/globals";
 import { DoorInsert } from "modules/utils/doors";
+import { ICharacterData } from "config/interfaces/ICharacter";
 
 /**
  * Represents a database connection and provides access to collections.
@@ -236,6 +236,35 @@ export default class Database {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  }
+  public async RemoveCharacterFunds(query: {
+    target: ICharacterData;
+    amount: number;
+  }) {
+    //check if user has enough cash, if so, remove cash if not remove bank funds
+    try {
+      const __user = await this.__databaseCollectionUsers.findOne({
+        steam_target: query.target.steam_target,
+      });
+      const __targetCharacter = __user.characters[query.target.index];
+      const __targetCharacterFunds = __targetCharacter.funding;
+      console.log(__targetCharacterFunds);
+      if (__targetCharacterFunds.cash >= query.amount) {
+        __targetCharacterFunds.cash -= query.amount;
+      } else {
+        //remove funds from bank
+        const __bankAccount = __targetCharacterFunds.bank.find(
+          (account: any) => account.id === 1
+        );
+        __bankAccount.balance -= query.amount;
+      }
+      await this.__databaseCollectionUsers.updateOne(
+        { steam_target: query.target.steam_target },
+        { $set: { characters: __user.characters } }
+      );
+    } catch (error) {
+      console.log(error);
     }
   }
 }
