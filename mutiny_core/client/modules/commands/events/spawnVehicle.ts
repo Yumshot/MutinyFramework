@@ -18,4 +18,5 @@ onNet("spawnVehicle", async () => {
   SetVehicleMod(vehicle, 18, 0, true);
   SetVehicleMod(vehicle, 22, 0, true);
   SetVehicleMod(vehicle, 46, 2, true);
+  SetDriftTyresEnabled(vehicle, false);
 });
